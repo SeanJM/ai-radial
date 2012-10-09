@@ -70,7 +70,7 @@ $(function(){
         totalIcons      = icon.size(),
         rad             = (totalIcons * (icon.width() + 10)) / 1.7;
 
-    $(this).find('.more-ring')
+      $(this).find('.more-ring')
       .css('width',(rad * 2))
       .css('height',(rad * 2))
       .css('top',(rad * -1))
@@ -171,11 +171,51 @@ $(function(){
   });
 
   /* Undo & Redo spinner */
+  function spinnerInput(data) {
+    var key = data['key'],
+        el  = data['el'];
+    console.log(key);
+    if (key == '40') {
+      spinnerVal({
+        'el': el,
+        'inc': -1
+      });
+    } 
+    if (key == '38') {
+      spinnerVal({
+        'el': el,
+        'inc': 1
+      });
+    }
+    if (key == '13') { 
+      el
+        .toggleClass('edit')
+        .toggleClass('visible'); 
+    }
+  }
+
+  function spinnerVal(data) {
+    var el  = data['el'],
+        inc = data['inc'],
+        val = parseInt(el.find('.value').text()) + inc;
+
+    el.find('input').val(val);
+    el.find('.value').text(val);
+  }
+
   $('html').click(function(){
     var spinner = $('#keyboard .undo.spinner');
     if (spinner.hasClass('visible')) {
-      spinner.toggleClass('visible');
+      spinner.toggleClass('visible').removeClass('edit');
     }
+  });
+
+  $('html').on('keydown',function(event){
+    $('.spinner').each(function(){
+      if ($(this).is(':visible') && !$(this).hasClass('edit') && $(this).hasClass('visible')) {
+        spinnerInput({'key':event.which,'el': $(this)});
+      }
+    });
   }); 
 
   $('#keyboard .undo.key-container').click(function(event){
@@ -184,12 +224,17 @@ $(function(){
     event.stopPropagation();
   });
 
+  $('#keyboard .spinner').click(function(event){
+    event.stopPropagation();
+  });
   $('#keyboard .spinner .value').click(function(event){
     var input   = $(this).parents('.spinner').find('input'),
-        spinner = $(this).parents('.spinner');
+        spinner = $(this).parents('.spinner'),
+        value   = $(this).parents('.spinner').find('.value').text();
 
-    input.focus().val(input.val());
     spinner.toggleClass('edit');
+    console.log(value);
+    input.focus().val(value);
     
     event.stopPropagation();
   });
@@ -198,14 +243,9 @@ $(function(){
     event.stopPropagation();
   });
 
-  $('#keyboard .spinner input').keyup(function(event){
-    var key = event.which;
-    if (key == '13') { 
-      var spinner = $(this).parents('.spinner');
-      spinner
-        .toggleClass('edit')
-        .toggleClass('visible'); 
-    }
+
+  $('#keyboard .spinner').on('keydown',function(event){
+    spinnerInput({'key': event.which, 'el': $(this)});
   });
 
   $('#keyboard .spinner .handle').click(function(event){
