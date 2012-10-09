@@ -1,0 +1,540 @@
+
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/*                 Keyboard                 */
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+#keyboard .sprite {
+  background: url('../img/ai_keyboard.png') no-repeat;
+}
+
+#keyboard {
+  position        : absolute;
+  width           : 288px;
+  height          : 288px;
+  border-radius   : 144px;
+  background-image: -webkit-radial-gradient(center, rgba(255, 255, 255, 0.0) 65%, rgba(0, 0, 0, 0.1) 70% );
+  background-image: -moz-radial-gradient(center, rgba(255, 255, 255, 0.0) 65%, rgba(0, 0, 0, 0.1) 70% );
+}
+
+  #keyboard .key-container {
+    width   : 42px;
+    height  : 52px;
+    position: absolute;
+  }
+
+    #keyboard .key-container .key {
+      width             : 100%;
+      height            : 100%;
+      position          : absolute;
+      -webkit-transition: opacity 0.2s;
+    }
+
+    #keyboard .key-container .key.up{
+      background-position: 0 -73px;
+    }
+
+    #keyboard .key-container .key.hover,
+    #keyboard .key-container.toggled .key.hover{
+      background-position: 0 -125px;
+      opacity            : 0;
+    }
+
+    #keyboard .key-container:hover .key.hover{
+      opacity: 1;
+    }
+    #keyboard .key-container.toggled:hover .key.hover{
+      opacity: 0;
+    }
+
+    #keyboard .key-container:hover .key.up{
+      opacity: 0;
+    }
+
+    #keyboard .key-container.toggle-key .key.toggle{
+      background-position: 0 -177px;
+      opacity: 0;
+    }
+
+    #keyboard .key-container.toggle-key.toggled .key.toggle{
+      opacity: 1;
+    }
+  #keyboard .spinner {
+    position  : absolute;
+    width     : 91px;
+    height    : 93px;
+    background: url('../img/ai_spinner.png');
+    -webkit-transform: scale(0);
+    -webkit-transition: all 0.1s;
+  }
+  #keyboard .spinner.visible {
+    -webkit-transform: scale(1);
+  }
+  #keyboard .undo.spinner {
+    z-index          : 10;
+    top              : 194px;
+    left             : 164px;
+    -webkit-transform: scale(0);
+  }
+  #keyboard .undo.spinner.visible {
+    -webkit-transform: scale(1);
+  }
+    #keyboard .spinner .handle {
+      position          : absolute;
+      top               : 0;
+      left              : 43px;
+      width             : 5px;
+      height            : 5px;
+      border-radius     : 3px;
+      background-image  : -webkit-radial-gradient(center,rgba(25,156,255,1) 30%,rgba(25,156,255,1) 60%);
+      -webkit-transition: all 0.1s;
+      cursor            : pointer;
+    }
+    #keyboard .spinner .handle:hover {
+      top             : -5px;
+      left            : 38px;
+      width           : 15px;
+      height          : 15px;
+      border-radius   : 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      background-image: 
+        -webkit-radial-gradient(
+          center,
+          rgba(255,255,255,1) 10%,
+          rgba(210,210,210,1) 45%,
+          rgba(255,255,255,1) 55%,
+          rgba(240,240,240,1) 70%
+        );
+    }
+    #keyboard .spinner .handle:hover .gradient{
+      width           : 15px;
+      height          : 15px;
+      border-radius   : 8px;
+      background-image: -webkit-linear-gradient(bottom,rgba(0,0,0,0.15) 0,rgba(0,0,0,0) 80%);
+    }
+    #keyboard .spinner .value {
+     position  : absolute;
+     top       : 40px;
+     width     : 100%;
+     text-align: center;
+     font-size : 12px;
+     color     : #A2A2A2;
+    }
+    #keyboard .spinner.edit .value {
+      display: none;
+    }
+    #keyboard .spinner input {
+     display         : none;
+     position        : absolute;
+     top             : 35px;
+     left            : 30px;
+     width           : 32px;
+     padding         : 0;
+     border          : none;
+     border-radius   : 7px;
+     text-align      : center;
+     font-size       : 12px;
+     line-height     : 21px;
+     color           : #199CFF;
+     background-image: -webkit-linear-gradient(bottom,rgba(255,255,255,1) 80%,rgba(230,230,230,1) );
+     box-shadow      : inset 0 0 6px rgba(0,0,0,0.3);
+    }
+    #keyboard .spinner.edit input {
+      display: block;
+    }
+/* Arrow Keys */
+
+#keyboard #arrows.key-container:hover{
+  -webkit-transform:scale(1.4);
+  -webkit-transition:all 0.08s;
+}
+#keyboard #arrows.key-container{
+  z-index         : 10;
+  bottom          : 3px;
+  width           : 51px;
+  height          : 51px;
+  border-radius   : 26px;
+  background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.3) 40%,rgba(255,255,255,0.7) 70%);
+}
+
+#keyboard #arrows.key-container:hover{
+  opacity         : 1;
+  background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.7) 30%,rgba(255,255,255,0.9) 70%);
+  box-shadow      : 0 1px 6px rgba(0,0,0,0.5);
+}
+#keyboard #arrows .key {
+  position           : absolute;
+  width              : 51px;
+  height             : 51px;
+  border-radius      : 26px;
+  background-image   : -webkit-radial-gradient(center,transparent 56%,rgba(0, 0, 0, 0.2) 71%,rgba(0, 0, 0, 0.25) 87%);
+  background-position: 0 0;
+}
+#keyboard #arrows:hover .key {
+  background-image   : -webkit-radial-gradient(center,transparent 63%,rgba(0, 0, 0, 0.18) 76%);
+}
+
+#keyboard #arrows .key.up {
+}
+
+#keyboard #arrows .key.hover {
+}
+
+#keyboard #arrows .arrow {
+  width   : 12px;
+  height  : 12px;
+  position: absolute;
+}
+#keyboard #arrows .arrow.left {
+  background-position: -42px -22px;
+  top                : 20px;
+  left               : 7px;
+}
+#keyboard #arrows .arrow.left:hover { 
+  background-position: -42px -34px;
+}
+#keyboard #arrows .arrow.right{
+  background-position: -54px -22px;
+  top                : 20px;
+  right              : 6px;
+}
+#keyboard #arrows .arrow.right:hover{ 
+  background-position: -54px -34px;
+}
+#keyboard #arrows .arrow.up{
+  background-position: -66px -22px;
+  top                : 7px;
+  left               : 20px;
+}
+#keyboard #arrows .arrow.up:hover{
+  background-position: -66px -34px;
+}
+#keyboard #arrows .arrow.down{
+  background-position: -78px -22px;
+  bottom             : 7px;
+  left               : 20px;
+}
+#keyboard #arrows .arrow.down:hover{
+  background-position: -78px -34px;
+}
+
+/* End Arrows */
+
+/* Alt */
+#keyboard .alt.key-container {
+  bottom: 4px;
+  left  : 82px;
+  width : 54px;
+  height: 61px;
+}
+#keyboard .alt.key-container {
+  bottom: 4px;
+  left  : 82px;
+}
+
+  #keyboard .alt .key.up {
+    background-position: -42px -73px;
+  }
+  #keyboard .alt .key.hover {
+    background-position: -42px -134px;
+  }
+  #keyboard .alt.key-container.toggle-key.toggled.hover .key.toggle,
+  #keyboard .alt.key-container.toggle-key.toggled .key.toggle {
+    background-position: -42px -195px;
+  }
+  #keyboard .alt .keyval {
+    position           : absolute;
+    top                : 24px;
+    left               : 17px;
+    width              : 14px;
+    height             : 13px;
+    background-position: -28px -22px;
+    -webkit-transform  : rotate(9deg);
+  }
+  #keyboard .alt.toggled .keyval {
+    background-position: -28px -35px;
+  }
+
+#keyboard .ctrl {
+  bottom           : 26px;
+  left             : 56px;
+  -webkit-transform: rotate(37.89deg);
+  -moz-transform   : rotate(37.89deg);
+}
+  #keyboard .ctrl .keyval {
+    position           : absolute;
+    top                : 21px;
+    left               : 14px;
+    width              : 14px;
+    height             : 13px;
+    background-position: -14px -22px;
+  }
+  #keyboard .ctrl.toggled .keyval {
+    background-position: -14px -35px;
+  }
+
+#keyboard .shift {
+  bottom           : 53px;
+  left             : 30px;
+  -webkit-transform: rotate(56.84deg);
+  -moz-transform   : rotate(56.84deg);
+}
+  #keyboard .shift .keyval {
+    position           : absolute;
+    top                : 21px;
+    left               : 14px;
+    width              : 14px;
+    height             : 13px;
+    background-position: 0 -22px;
+  }
+  #keyboard .shift.toggled .keyval {
+    background-position: 0 -35px;
+  }
+
+/* ----------------------------------- Function Keys ---------------------------- */
+#keyboard .f-key{}
+  #keyboard .f-key .keyval {
+    position: absolute;
+    width   : 20px;
+    height  : 11px;
+  }
+  #keyboard .f-key.left .keyval {
+    top              : 32px;
+    left             : 4px;
+    -webkit-transform: rotate(270deg);
+  }
+  #keyboard .f-key.right .keyval {
+    top              : 32px;
+    left             : 19px;
+    -webkit-transform: rotate(82deg);
+  }
+
+  /* --------------- Function Key Toggles ----------------- */
+  #keyboard .f-key .toggle-key {
+    position          : absolute;
+    width             : 12px;
+    height            : 12px;
+    opacity           : 0.30;
+    -webkit-transition: opacity 0.2s;
+  }
+  
+  /* Left */
+  #keyboard .f-key.left .toggle-key     { -webkit-transform: rotate(270deg); }
+  
+  /* Right */
+  #keyboard .f-key.right .toggle-key    { -webkit-transform: rotate(95deg); }
+
+  #keyboard .f-key:hover .toggle-key    { opacity: 0.7; }
+  
+  #keyboard .f-key .toggle-key:hover,
+  #keyboard .f-key .toggle-key.toggled  { opacity: 1; }
+  
+  /* ----------------- Shift Toggle -------------- */
+  #keyboard .f-key .toggle-key.shift { 
+    background-position: 0 -48px;
+  }
+
+  /* left Side */
+  #keyboard .f-key.left .toggle-key.shift { 
+    top : 34px;
+    left: 23px;
+  }
+  /* Right Side */
+  #keyboard .f-key.right .toggle-key.shift { 
+    top : 34px;
+    left: 6px;
+  }
+
+  #keyboard .f-key .toggle-key.shift:hover,
+  #keyboard .f-key .toggle-key.shift.toggled { background-position: 0 -60px; }
+
+  /* ----------------- Ctrl Toggle --------------- */
+  #keyboard .f-key .toggle-key.ctrl { background-position: -24px -48px; }
+  
+  /* left Side */
+  #keyboard .f-key.left .toggle-key.ctrl { 
+    top : 22px;
+    left: 22px;
+  }
+  /* Right Side */
+  #keyboard .f-key.right .toggle-key.ctrl { 
+    top : 22px;
+    left: 7px;
+  }
+
+  #keyboard .f-key .toggle-key.ctrl:hover,
+  #keyboard .f-key .toggle-key.ctrl.toggled { background-position: -24px -60px; }
+  /* ------------------ Alt Toggle --------------- */
+  #keyboard .f-key .toggle-key.alt          { background-position: -12px -48px; }
+  
+  /* left Side */
+  #keyboard .f-key.left .toggle-key.alt {
+    top : 11px;
+    left: 20px;
+  }
+  /* Right Side */
+  #keyboard .f-key.right .toggle-key.alt {
+    top : 11px;
+    left: 9px;
+  }
+
+  #keyboard .f-key .toggle-key.alt:hover, 
+  #keyboard .f-key .toggle-key.alt.toggled { 
+    background-position: -12px -60px;
+  }
+
+#keyboard .f1 {
+  bottom           : 87px;
+  left             : 15px;
+  -webkit-transform: rotate(76deg);
+  -moz-transform   : rotate(76deg);
+}
+
+#keyboard .f2 {
+  bottom           : 123px;
+  left             : 11px;
+  -webkit-transform: rotate(94.73deg);
+  -moz-transform   : rotate(94.73deg);
+}
+  #keyboard .f2 .keyval { background-position: -20px 0; }
+
+#keyboard .f3 {
+  bottom           : 160px;
+  left             : 18px;
+  -webkit-transform: rotate(113.68deg);
+  -moz-transform   : rotate(113.68deg);
+}
+  #keyboard .f3 .keyval { background-position: -40px 0; }
+
+#keyboard .f4 {
+  bottom           : 192px;
+  left             : 39px;
+  -webkit-transform: rotate(132.63deg);
+  -moz-transform   : rotate(132.63deg);
+}
+  #keyboard .f4 .keyval { background-position: -60px 0; }
+
+
+#keyboard .f5 {
+  bottom           : 216px;
+  left             : 70px;
+  -webkit-transform: rotate(151.57deg);
+  -moz-transform   : rotate(151.57deg);
+}
+  #keyboard .f5 .keyval { background-position: -80px 0; }
+
+#keyboard .f6 {
+  bottom           : 228px;
+  left             : 107px;
+  -webkit-transform:rotate(171.52deg);
+  -moz-transform   :rotate(170.52deg);
+}
+  #keyboard .f6 .keyval { background-position: -100px 0; }
+
+#keyboard .f7 {
+  bottom           : 228px;
+  left             : 146px;
+  -webkit-transform:rotate(189.473deg);
+  -moz-transform   :rotate(189.473deg);
+}
+  #keyboard .f7 .keyval { background-position: -120px 0; }
+
+#keyboard .f8 {
+  bottom           : 215px;
+  left             : 181px;
+  -webkit-transform:rotate(209.421deg);
+  -moz-transform   :rotate(209.421deg);
+}
+  #keyboard .f8 .keyval { background-position: -140px 0; }
+
+#keyboard .f9 {
+  bottom           : 191px;
+  left             : 210px;
+  -webkit-transform:rotate(227.368deg);
+  -moz-transform   :rotate(227.368deg);
+}
+  #keyboard .f9 .keyval { background-position: -160px 0; }
+
+#keyboard .f10 {
+  bottom           : 159px;
+  left             : 229px;
+  -webkit-transform:rotate(246.315deg);
+  -moz-transform   :rotate(246.315deg);
+}
+  #keyboard .f10 .keyval { background-position: -180px 0; }
+
+#keyboard .f11 {
+  bottom           : 123px;
+  left             : 237px;
+  -webkit-transform:rotate(265.263deg);
+  -moz-transform   :rotate(265.263deg);
+}
+  #keyboard .f11 .keyval { background-position: -200px 0; }
+
+#keyboard .f12 {
+  bottom           : 87px;
+  left             : 233px;
+  -webkit-transform:rotate(284.210deg);
+  -moz-transform   :rotate(284.210deg);
+}
+  #keyboard .f12 .keyval { background-position: -220px 0; }
+/* --------------------------------- End Function Keys -------------------------- */
+#keyboard .redo {
+  bottom           : 53px;
+  left             : 217px;
+  -webkit-transform:rotate(303.157deg);
+  -moz-transform   :rotate(303.157deg);
+}
+  #keyboard .redo .keyval,
+  #keyboard .undo .keyval {
+    position           : absolute;
+    width              : 20px;
+    height             : 20px;
+    background-position: -90px -22px;
+  }
+  #keyboard .redo.disabled .keyval,
+  #keyboard .undo.disabled .keyval {
+    opacity: 0.3;
+  }
+  #keyboard .redo .keyval{ 
+    background-position: -90px -22px; 
+    top: 19px;
+    left: 12px;
+  }
+
+#keyboard .undo.key-container {
+  bottom           : 25px;
+  left             : 191px;
+  -webkit-transform:rotate(324.105deg);
+  -moz-transform   :rotate(324.105deg);
+}
+  #keyboard .undo .keyval { 
+    background-position: -110px -22px; 
+    top: 18px;
+    left: 10px;
+  }
+
+#keyboard .del {
+  bottom: 4px;
+  left  : 154px;
+  width : 54px;
+  height: 61px;
+}
+  #keyboard .del .key {
+    width : 54px;
+    height: 61px;
+  }
+  #keyboard .del .key.up {
+    background-position: -96px -73px;
+  }
+  #keyboard .del .key.hover {
+    background-position: -96px -134px;
+  }
+  #keyboard .del .keyval {
+    width: 20px;
+    height: 20px;
+    background-position: -130px -22px;
+    position: absolute;
+    top: 18px;
+    left: 19px;
+    -webkit-transform: rotate(335deg);
+  }

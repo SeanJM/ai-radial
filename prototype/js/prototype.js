@@ -4,20 +4,25 @@ $(function(){
     var outterRingW   = $('#outter-ring').width()/2,
         innerRingW    = $(this).width()/2,
         innerRingPos  = outterRingW-innerRingW;
+    
     $(this)
       .css('left',innerRingPos)
       .css('top',innerRingPos);
   });
+  
   $('#fillStroke').click(function(){
     $(this).toggleClass('stroke');
     $('#microFillControl').toggleClass('stroke');
   });
+  
   $('#swapFillStroke').click(function(){
     $('#fillStroke').toggleClass('swap');
   });
+  
   $('#dFillStroke').click(function(){
     $('#fillStroke').addClass('default');
   });
+  
   $('#drawModes').click(function(){
     if ($(this).hasClass('front')) {
       $(this).removeClass('front').addClass('behind');
@@ -32,6 +37,7 @@ $(function(){
       return false;
     }
   });
+
   function putOnCircle(arr) {
     var parent = arr['parent'];
     var child = arr['child'];
@@ -82,6 +88,7 @@ $(function(){
         event     = data['event'],
         morering  = el.find('.more-ring'),
         timer;
+    
     if (event == 'init') {
       setTimeout(function(){
         /* Check to make sure the mouse is down */
@@ -90,6 +97,7 @@ $(function(){
         }
       },200);
     }
+    
     if (event == 'leave') {
       if (morering.is(':visible')) {
         el.addClass('hide-tools');
@@ -100,6 +108,7 @@ $(function(){
         },200);
       }
     }
+  
   }
 
   $('.icon-container').on('mousedown',function(){
@@ -115,11 +124,11 @@ $(function(){
   });
 
   $('.icon-container').on('mouseleave',function(){
-    /*$(this).removeClass('mousedown');
+    $(this).removeClass('mousedown');
     moretools({
       'target'  : $(this),
       'event'   : 'leave'
-    });*/
+    });
   });
 
   $('.icon-container').click(function(){
@@ -131,15 +140,76 @@ $(function(){
     var selectedIcon  = $(this),
         replaceIcon   = $(this).parents('.icon-container').find('.icon:first');
     replaceIcon.replaceWith(selectedIcon.clone());
+    
     moretools({
       'target'  : $(this).parents('.icon-container'),
       'event'   : 'leave'
     });
   });
-
+  
+  function arrowKeyPos() {
+    var arrowkey  = $('#arrows'),
+        arrowkeyW = arrowkey.width(),
+        keyboardW = $('#keyboard').width();
+    
+    arrowkey.css('left',(keyboardW/2) - (arrowkeyW/2));
+  }
+  
+  /* Position the arrow keys */
+  arrowKeyPos();
+  
   $('.key-container').hover(function(){
     $(this).addClass('hover');
   },function(){
     $(this).removeClass('hover');
+  });
+
+  /* Toggle the Alt, Ctrl and Shift Keys */
+  $('#keyboard .toggle-key').click(function(){
+    $(this).toggleClass('toggled');
+    
+  });
+
+  /* Undo & Redo spinner */
+  $('html').click(function(){
+    var spinner = $('#keyboard .undo.spinner');
+    if (spinner.hasClass('visible')) {
+      spinner.toggleClass('visible');
+    }
   }); 
+
+  $('#keyboard .undo.key-container').click(function(event){
+    $('#keyboard .undo.spinner').toggleClass('visible');
+
+    event.stopPropagation();
+  });
+
+  $('#keyboard .spinner .value').click(function(event){
+    var input   = $(this).parents('.spinner').find('input'),
+        spinner = $(this).parents('.spinner');
+
+    input.focus().val(input.val());
+    spinner.toggleClass('edit');
+    
+    event.stopPropagation();
+  });
+
+  $('#keyboard .spinner input').click(function(event){
+    event.stopPropagation();
+  });
+
+  $('#keyboard .spinner input').keyup(function(event){
+    var key = event.which;
+    if (key == '13') { 
+      var spinner = $(this).parents('.spinner');
+      spinner
+        .toggleClass('edit')
+        .toggleClass('visible'); 
+    }
+  });
+
+  $('#keyboard .spinner .handle').click(function(event){
+    event.stopPropagation();
+  });
+
 });

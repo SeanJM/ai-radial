@@ -1,0 +1,105 @@
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/*                 Proton                   */
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+#proton {
+  width           :83px;
+  height          :83px;
+  position        : absolute;
+  border-radius   : 43px;
+  background-image: -webkit-radial-gradient(center, rgba(0,0,0,0.0) 61%, rgba(0,0,0,0.1) 69%);
+  background-image: -moz-radial-gradient(center, rgba(0,0,0,0.0) 61%, rgba(0,0,0,0.1) 69%);
+}
+#proton:hover {
+  opacity: 1;
+}
+#fillStroke {
+  width              : 30px;
+  height             : 30px;
+  background-position: -83px 0;
+  position           : absolute;
+  top                : 14px;
+  left               : 26px;
+}
+#fillStroke.stroke {
+  background-position: -113px 0;
+}
+#fillStroke.swap {
+  background-position: -83px -30px;
+}
+#fillStroke.stroke.swap {
+  background-position: -113px -30px;
+}
+#fillStroke.default {
+  background-position: -143px 0;
+}
+#fillStroke.default.swap {
+  background-position: -143px -30px;
+}
+#fillStroke.default.stroke {
+  background-position: -173px 0;
+}
+#fillStroke.default.stroke.swap {
+  background-position: -173px -30px;
+}
+#swapFillStroke {
+  width              : 16px;
+  height             : 16px;
+  background-position: -83px -60px;
+  position           : absolute;
+  top                : 8px;
+  right              : 20px;
+  cursor             : pointer;
+}
+#dFillStroke {
+  width              : 16px;
+  height             : 16px;
+  background-position: -99px -60px;
+  position           : absolute;
+  top                : 33px;
+  left               : 8px;
+  cursor             : pointer;
+}
+#microFillControl {
+  position: absolute;
+  top     :50px;
+  left    : 27px;
+  width   : 30px;
+  height  : 10px;
+}
+#microFillControl .sprite {
+  width : 10px;
+  height: 10px;
+  float : left;
+}
+#microFillControl .color {
+  background-position: -125px -60px;
+  margin-right       :-1px;
+}
+#microFillControl.stroke .color {
+  background-position: -115px -60px;
+  margin-right       :-1px;
+}
+#microFillControl .gradient {
+  background-position: -115px -70px;
+  margin-right       :-1px;
+}
+#microFillControl .none {
+  background-position: -125px -70px;
+}
+#drawModes {
+  width   : 16px;
+  height  : 16px;
+  position: absolute;
+  top     :62px;
+  left    : 34px;
+}
+#drawModes.front {
+  background-position: -173px -60px;
+}
+#drawModes.behind {
+  background-position: -173px -76px;
+}
+#drawModes.clip {
+  background-position: -173px -92px;
+}

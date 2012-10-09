@@ -2,42 +2,33 @@ body {
   font-family: Arial, Helvetica, Sans-serif;
   background: url('../illustrator-background.png') no-repeat;
 }
-.sprite{
+.sprite {
   background: url('../img/ai-sprite-01.png') no-repeat;
 }
 .wheel-sprite,
-.icon-container .more-tools .arrow{
+.icon-container .more-tools .arrow {
   background: url('../img/ai_wheel.png') no-repeat;
 }
-#keyboard .sprite{
-  background: url('../img/ai_keyboard.png') no-repeat;
-}
+
 /* >>>>>>>>>>>>>>>>>>>>> Wheel <<<<<<<<<<<<<<<<<<<<<< */
 #ai-wheel {
-  width:380px;
-  height:380px;
-  border-radius: 190px;
-  background-image: -webkit-radial-gradient(
-    center,
-    rgba(255,255,255,0.6) 0%,
-    rgba(255,255,255,0.85) 80%
-    );
-  position: relative;
-  left:335px;
-  top: 200px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.27);
+  width           :380px;
+  height          :380px;
+  border-radius   : 190px;
+  background-image: -webkit-radial-gradient(center, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.85) 80% );
+  background-image: -moz-radial-gradient(center, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.85) 80% );
+  position        : relative;
+  left            :335px;
+  top             : 200px;
+  box-shadow      : 0 1px 6px rgba(0, 0, 0, 0.33);
 }
-  #ai-wheel .inner-shadow{
-    width:380px;
-    height:380px;
-    border-radius: 190px;
-    background-image: 
-    -webkit-radial-gradient( 
-      center, 
-      transparent 69%, 
-      rgba(0, 0, 0, 0.11) 71% 
-     );
-    position: relative;
+  #ai-wheel .inner-shadow {
+    width           :380px;
+    height          :380px;
+    border-radius   : 190px;
+    background-image: -webkit-radial-gradient(center, transparent 69%, rgba(0, 0, 0, 0.11) 71% );
+    background-image: -moz-radial-gradient(center, transparent 69%, rgba(0, 0, 0, 0.11) 71% );
+    position        : relative;
   }
 
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
@@ -45,268 +36,44 @@ body {
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
 
 #outter-ring {
-  width:380px;
-  height:380px;
+  width              :380px;
+  height             :380px;
   background-position: 0 -255px;
-  position: absolute;
+  position           : absolute;
 }
 #outter-ring:hover {
   opacity: 1;
 }
 
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
-/* Keyboard                    */
-/* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
-
-#keyboard {
-  position: absolute;
-  width: 284px;
-  height: 284px;
-  border-radius: 142px;
-  background-image: 
-  -webkit-radial-gradient(
-    center,
-    rgba(255, 255, 255, 0.0) 65%,
-    rgba(0, 0, 0, 0.1) 70%
-  );
-}
-
-  #keyboard .key-container{
-    width: 42px;
-    height: 52px;
-    position: absolute;
-  }
-
-    #keyboard .key-container .key{
-      width: 100%;
-      height: 100%;
-      position: absolute;
-    }
-
-    #keyboard .key-container .key.up{
-      background-position: 0 -73px;
-    }
-
-    #keyboard .key-container .key.hover{
-      background-position: 0 -125px;
-      opacity: 0;
-    }
-
-    #keyboard .key-container:hover .key.hover{
-      opacity: 1;
-    }
-
-    #keyboard .key-container:hover .key.up{
-      opacity: 0;
-    }
-
-#keyboard .key.up.hover,
-#keyboard .key.up:hover{
-  opacity: 1;
-}
-
-#keyboard .label{
-  width: 100%;
-  height: 100%;
-}
-
-#keyboard #arrows.key-container{
-  left: 116px;
-  bottom: 3px;
-  width: 51px;
-  height: 51px;
-}
-
-#keyboard #arrows .key {
-  width: 51px;
-  height: 51px;
-  position: absolute;
-}
-
-#keyboard #arrows .key.up {
-  background-position: -150px -73px;
-}
-
-#keyboard #arrows .key.hover {
-  background-position: -150px -125px;
-}
-
-#keyboard #arrows .arrow {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-}
-#keyboard #arrows .arrow.left {
-  background-position: -48px -22px;
-  top:15px;
-  left: 2px;
-}
-#keyboard #arrows .arrow.left:hover { 
-  background-position: -48px -42px;
-}
-#keyboard #arrows .arrow.right{
-  background-position: -68px -22px;
-  top:15px;
-  right: 2px;
-}
-#keyboard #arrows .arrow.right:hover{ 
-  background-position: -68px -42px;
-}
-#keyboard #arrows .arrow.up{
-  background-position: -88px -22px;
-  top: 3px;
-  left: 15px;
-}
-#keyboard #arrows .arrow.up:hover{
-  background-position: -88px -42px;
-}
-#keyboard #arrows .arrow.down{
-  background-position: -108px -22px;
-  bottom: 3px;
-  left: 16px;
-}
-#keyboard #arrows .arrow.down:hover{
-  background-position: -108px -42px;
-}
-#keyboard .alt{
-  bottom: 4px;
-  left: 78px;
-  width: 54px;
-  height: 61px;
-}
-  #keyboard .alt .key.up{
-    background-position: -42px -73px;
-    width: 54px;
-    height: 61px;
-  }
-  #keyboard .alt .key.hover{
-    background-position: -42px -134px;
-  }
-#keyboard .ctrl{
-  bottom: 25px;
-  left: 54px;
-  -webkit-transform:rotate(37.89deg);
-}
-#keyboard .shift{
-  bottom: 53px;
-  left: 30px;
-  -webkit-transform:rotate(56.84deg);
-}
-#keyboard .f1{
-  bottom: 86px;
-  left: 15px;
-  -webkit-transform:rotate(76deg);
-}
-#keyboard .f2{
-  bottom: 123px;
-  left: 11px;
-  -webkit-transform:rotate(94.73deg);
-}
-#keyboard .f3{
-  bottom: 159px;
-  left: 19px;
-  -webkit-transform:rotate(113.68deg);
-}
-#keyboard .f4{
-  bottom: 190px;
-  left: 40px;
-  -webkit-transform:rotate(132.63deg);
-}
-#keyboard .f5{
-  bottom: 213px;
-  left: 69px;
-  -webkit-transform:rotate(151.57deg);
-}
-#keyboard .f6{
-  bottom: 225px;
-  left: 104px;
-  -webkit-transform:rotate(170.52deg);
-}
-#keyboard .f7{
-  bottom: 225px;
-  left: 141px;
-  -webkit-transform:rotate(189.473deg);
-}
-#keyboard .f8{
-  bottom: 213px;
-  left: 176px;
-  -webkit-transform:rotate(208.421deg);
-}
-#keyboard .f9{
-  bottom: 189px;
-  left: 204px;
-  -webkit-transform:rotate(227.368deg);
-}
-#keyboard .f10{
-  bottom: 159px;
-  left: 224px;
-  -webkit-transform:rotate(246.315deg);
-}
-#keyboard .f11{
-  bottom: 123px;
-  left: 233px;
-  -webkit-transform:rotate(265.263deg);
-}
-#keyboard .f12{
-  bottom: 87px;
-  left: 230px;
-  -webkit-transform:rotate(284.210deg);
-}
-#keyboard .redo{
-  bottom: 54px;
-  left: 215px;
-  -webkit-transform:rotate(303.157deg);
-}
-#keyboard .undo{
-  bottom: 28px;
-  left: 190px;
-  -webkit-transform:rotate(322.105deg);
-}
-#keyboard .del{
-  bottom: 4px;
-  left: 151px;
-  width: 54px;
-  height: 61px;
-}
-  #keyboard .del .key{
-    width: 54px;
-    height: 61px;
-  }
-  #keyboard .del .key.up{
-    background-position: -96px -73px;
-  }
-  #keyboard .del .key.hover{
-    background-position: -96px -134px;
-  }
-
-/* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /* Tool Icons                  */
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
 
 .icon-container {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  padding: 1px 4px;
-  border: 1px solid transparent;
+  position     : absolute;
+  width        : 22px;
+  height       : 22px;
+  padding      : 1px 4px;
+  border       : 1px solid transparent;
   border-radius: 2px;
-  float: left;
+  float        : left;
 }
 .icon-container:hover,
 .icon-container.selected {
-  border:1px solid rgba(0,0,0,0.3);
+  border          :1px solid rgba(0,0,0,0.3);
   background-image: -webkit-radial-gradient(center,rgba(255,255,255,0),rgba(255,255,255,0.5));
+  background-image: -moz-radial-gradient(center,rgba(255,255,255,0),rgba(255,255,255,0.5));
 }
   .icon-container .icon {
-    width: 22px;
-    height: 22px;
-    background: url('../img/ai_tools.png') no-repeat;
-    float: left;
-    -webkit-transition: all 0.10s ease-out;
+    width             : 22px;
+    height            : 22px;
+    -webkit-transition:all 0.08s;
+    -moz-transition   :all 0.08s;
   }
-  .icon-container:hover .icon,
-  .icon-container.selected .icon {
-    -webkit-transform: scale(1.4);
+  .icon-container:hover > .icon,
+  .more-tools .icon:hover{
+    -webkit-transform: scale(1.38);
+    -moz-transform   : scale(1.38);
   }
   .icon-container.selected > .icon {
     opacity: 0.6;
@@ -315,21 +82,22 @@ body {
 /* More tools */
 
 .icon-container .more-tools {
-  z-index: 1;
-  float: right;
+  z-index : 1;
+  float   : right;
   position: relative;
-  width:4px;
-  height:4px;
-  top: -5px;
-  right: -2px;
+  width   : 4px;
+  height  : 4px;
+  top     : -5px;
+  right   : -2px;
 }
   
   .icon-container .more-tools .arrow {
-    width: 4px;
-    height: 4px;
+    width              : 4px;
+    height             : 4px;
     background-position: -189px -76px;
-    float: right;
+    float              : right;
   }
+  /* WEBKIT */
   @-webkit-keyframes pop {
     0% {
       -webkit-transform: scale(0.2);
@@ -346,297 +114,59 @@ body {
       -webkit-transform: scale(0);
     }
   }
+  /* MOZ */
+  @-moz-keyframes pop {
+    0% {
+      -moz-transform: scale(0.2);
+    }
+    100% {
+      -moz-transform: scale(1);
+    }
+  }
+  @-moz-keyframes pop-out {
+    0% {
+      -moz-transform: scale(1);
+    }
+    100% {
+      -moz-transform: scale(0);
+    }
+  }
   .icon-container .more-tools .more-ring {
-    position: relative;
-    background-image: 
-      -webkit-radial-gradient(
-       center,
-       rgba(255, 255, 255, 0.88) 60%, 
-       rgba(220, 220, 220, 0.9) 68%, 
-       rgba(255, 255, 255, 0.9) 72% );
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-    display: none;
+    position        : relative;
+    background-image: -webkit-radial-gradient(center, rgba(255, 255, 255, 0.88) 60%, rgba(220, 220, 220, 0.9) 68%, rgba(255, 255, 255, 0.9) 72% );
+    background-image: -moz-radial-gradient(center, rgba(255, 255, 255, 0.88) 60%, rgba(220, 220, 220, 0.9) 68%, rgba(255, 255, 255, 0.9) 72% );
+    box-shadow      : 0 1px 4px rgba(0, 0, 0, 0.5);
+    display         : none;
   }
   .icon-container.show-tools .more-tools .more-ring {
-    display: block;
+    display          : block;
     -webkit-animation:pop 0.15s;
+    -moz-animation   :pop 0.15s;
   }
   .icon-container.hide-tools .more-tools .more-ring {
     -webkit-animation:pop-out 0.15s;
+    -moz-animation   :pop-out 0.15s;
     -webkit-transform:scale(0);
+    -moz-transform   :scale(0);
   }
 
-    .icon-container .more-tools .more-ring .icon{
+    .icon-container .more-tools .more-ring .icon {
       position: absolute;
     }
-
-/* Column 1 */
-
-.icon.selection             { background-position: 0 0; }
-      /* group start */
-.icon.direct-selection      { background-position: 0 -22px; }
-.icon.group-selection       { background-position: 0 -44px; }
-      /* group end */
-.icon.magic-wand            { background-position: 0 -66px; }
-.icon.lasso                 { background-position: 0 -88px; }
-      /* group start */
-.icon.pen                   { background-position: 0 -110px; }
-.icon.add-anchor-point      { background-position: 0 -132px; }
-.icon.remove-anchor-point   { background-position: 0 -154px; }
-.icon.convert-anchor-point  { background-position: 0 -176px; }
-      /* group end */
-      /* group start */
-.icon.type                  { background-position: 0 -198px; }
-.icon.area-type             { background-position: 0 -220px; }
-
-/* Column 2 */
-
-.icon.type-on-path          { background-position: -22px 0; }
-.icon.vertical-type         { background-position: -22px -22px; }
-.icon.vertical-area-type    { background-position: -22px -44px; }
-.icon.vertical-type-on-path { background-position: -22px -66px; }
-      /* group end */
-      /* group start */
-.icon.line-segment          { background-position: -22px -88px; }
-.icon.arc                   { background-position: -22px -110px; }
-.icon.spiral                { background-position: -22px -132px; }
-.icon.rectangular-grid      { background-position: -22px -154px; }
-.icon.polar-grid            { background-position: -22px -176px; }
-      /* group end */
-      /* group start */
-.icon.rectangle             { background-position: -22px -198px; }
-.icon.rounded-rectangle     { background-position: -22px -220px; }
-
-/* Column 3 */
-
-.icon.ellipse               { background-position: -44px 0; }
-.icon.polygon               { background-position: -44px -22px; }
-.icon.star                  { background-position: -44px -44px; }
-.icon.flare                 { background-position: -44px -66px; }
-      /* group end */
-.icon.paintbrush            { background-position: -44px -88px; }
-      /* group start */
-.icon.pencil                { background-position: -44px -110px; }
-.icon.smooth                { background-position: -44px -132px; }
-.icon.path-eraser           { background-position: -44px -154px; }
-      /* group end */
-.icon.blob-brush            { background-position: -44px -176px; }
-.icon.eraser                { background-position: -44px -198px; }
-      /* group start */
-.icon.scissors              { background-position: -44px -220px; }
-
-/* Column 4 */
-
-.icon.knife                 { background-position: -66px 0; }
-      /* group end */
-      /* group start */
-.icon.rotate                { background-position: -66px -22px; }
-.icon.reflect               { background-position: -66px -44px; }
-      /* group end */
-      /* group start */
-.icon.scale                 { background-position: -66px -66px; }
-.icon.shear                 { background-position: -66px -88px; }
-.icon.reshape               { background-position: -66px -110px; }
-      /* group end */
-      /* group start */
-.icon.width                 { background-position: -66px -132px; }
-.icon.warp                  { background-position: -66px -154px; }
-.icon.twirl                 { background-position: -66px -176px; }
-.icon.pucker                { background-position: -66px -198px; }
-.icon.bloat                 { background-position: -66px -220px; }
-
-/* Column 5 */
-
-.icon.scallop               { background-position: -88px 0; }
-.icon.crystalize            { background-position: -88px -22px; }
-.icon.wrinkle               { background-position: -88px -44px; }
-      /* group end */
-.icon.free-transform        { background-position: -88px -66px; }
-      /* group start */
-.icon.shape-builder         { background-position: -88px -88px; }
-.icon.live-paint-bucket     { background-position: -88px -110px; }
-.icon.live-paint-selection  { background-position: -88px -132px; }
-      /* group end */
-      /* group start */
-.icon.perspective-grid      { background-position: -88px -154px; }
-.icon.perspective-selection { background-position: -88px -176px; }
-      /* group end */
-.icon.mesh                  { background-position: -88px -198px; }
-.icon.gradient              { background-position: -88px -220px; }
-
-/* Column 5 */
-
-      /* group start */
-.icon.eyedropper            { background-position: -110px 0; }
-.icon.measure               { background-position: -110px -22px; }
-      /* group end */
-.icon.blend                 { background-position: -110px -44px; }
-      /* group start */
-.icon.symbol-sprayer        { background-position: -110px -66px; }
-.icon.symbol-shifter        { background-position: -110px -88px; }
-.icon.symbol-scruncher      { background-position: -110px -110px; }
-.icon.symbol-sizer          { background-position: -110px -132px; }
-.icon.symbol-spinner        { background-position: -110px -154px; }
-.icon.symbol-stainer        { background-position: -110px -176px; }
-.icon.symbol-screener       { background-position: -110px -198px; }
-.icon.symbol-styler         { background-position: -110px -220px; }
-      /* group end */
-
-/* Column 6 */
-
-      /* group start */
-.icon.column-graph          { background-position: -132px 0; }
-.icon.stacked-column-graph  { background-position: -132px -22px; }
-.icon.bar-graph             { background-position: -132px -44px; }
-.icon.stacked-bar-graph     { background-position: -132px -66px; }
-.icon.line-graph            { background-position: -132px -88px; }
-.icon.area-graph            { background-position: -132px -110px; }
-.icon.scatter-graph         { background-position: -132px -132px; }
-.icon.pie-graph             { background-position: -132px -154px; }
-.icon.radar-graph           { background-position: -132px -176px; }
-      /* group end */
-.icon.art-board             { background-position: -132px -198px; }
-      /* group start */
-.icon.slice                 { background-position: -132px -220px; }
-
-/* Column 7 */
-
-.icon.slice-selection       { background-position: -154px 0; }
-      /* group end */
-      /* group start */
-.icon.hand                  { background-position: -154px -22px; }
-.icon.print-tiling          { background-position: -154px -44px; }
-      /* group end */
-.icon.zoom                  { background-position: -154px -66px; }
-.icon.configure             { background-position: -154px -88px; }
-.icon.ai-icon               { background-position: -154px -110px; }
 
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /* Second Ring                 */
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
 
 #secondRing {
-  width:171px;
-  height:171px;
-  position: absolute;
-  border-radius: 136px;
-  background-image: 
-    -webkit-radial-gradient(
-      center,
-      rgba(0, 0, 0, 0.0) 67%,
-      rgba(0, 0, 0, 0.1) 71%
-    );
+  width           :171px;
+  height          :171px;
+  position        : absolute;
+  border-radius   : 136px;
+  background-image: -webkit-radial-gradient(center, rgba(0, 0, 0, 0.0) 67%, rgba(0, 0, 0, 0.1) 71% );
+  background-image: -moz-radial-gradient(center, rgba(0, 0, 0, 0.0) 67%, rgba(0, 0, 0, 0.1) 71% );
 }
 
 #secondRing:hover {
   opacity: 1;
-}
-
-
-/* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
-/* Proton                      */
-/* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
-
-#proton {
-  width:83px;
-  height:83px;
-  position: absolute;
-  border-radius: 43px;
-  background-image: -webkit-radial-gradient(
-    center,
-    rgba(0,0,0,0.0) 61%,
-    rgba(0,0,0,0.1) 69%)
-}
-#proton:hover{
-  opacity: 1;
-}
-#fillStroke {
-  width: 30px;
-  height: 30px;
-  background-position: -83px 0;
-  position: absolute;
-  top: 14px;
-  left: 26px;
-}
-#fillStroke.stroke {
-  background-position: -113px 0;
-}
-#fillStroke.swap {
-  background-position: -83px -30px;
-}
-#fillStroke.stroke.swap {
-  background-position: -113px -30px;
-}
-#fillStroke.default {
-  background-position: -143px 0;
-}
-#fillStroke.default.swap {
-  background-position: -143px -30px;
-}
-#fillStroke.default.stroke {
-  background-position: -173px 0;
-}
-#fillStroke.default.stroke.swap {
-  background-position: -173px -30px;
-}
-#swapFillStroke {
-  width: 16px;
-  height: 16px;
-  background-position: -83px -60px;
-  position: absolute;
-  top: 8px;
-  right: 20px;
-  cursor: pointer;
-}
-#dFillStroke {
-  width: 16px;
-  height: 16px;
-  background-position: -99px -60px;
-  position: absolute;
-  top: 33px;
-  left: 8px;
-  cursor: pointer;
-}
-#microFillControl {
-  position: absolute;
-  top:50px;
-  left: 27px;
-  width: 30px;
-  height: 10px;
-}
-#microFillControl .sprite{
-  width: 10px;
-  height: 10px;
-  float: left;
-}
-#microFillControl .color{
-  background-position: -125px -60px;
-  margin-right:-1px;
-}
-#microFillControl.stroke .color{
-  background-position: -115px -60px;
-  margin-right:-1px;
-}
-#microFillControl .gradient{
-  background-position: -115px -70px;
-  margin-right:-1px;
-}
-#microFillControl .none{
-  background-position: -125px -70px;
-}
-#drawModes {
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  top:62px;
-  left: 34px;
-}
-#drawModes.front {
-  background-position: -173px -60px;
-}
-#drawModes.behind {
-  background-position: -173px -76px;
-}
-#drawModes.clip {
-  background-position: -173px -92px;
 }
