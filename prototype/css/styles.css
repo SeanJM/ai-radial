@@ -132,11 +132,11 @@ body {
     }
   }
   .icon-container .more-tools .more-ring {
-    position        : relative;
-    background-image: -webkit-radial-gradient(center, rgba(255, 255, 255, 0.88) 60%, rgba(220, 220, 220, 0.9) 68%, rgba(255, 255, 255, 0.9) 72% );
-    background-image: -moz-radial-gradient(center, rgba(255, 255, 255, 0.88) 60%, rgba(220, 220, 220, 0.9) 68%, rgba(255, 255, 255, 0.9) 72% );
-    box-shadow      : 0 1px 4px rgba(0, 0, 0, 0.5);
     display         : none;
+    position        : relative;
+    background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.88) 60%,rgba(220,220,220,0.9) 68%,rgba(255,255,255,0.9) 72%);
+    background-image: -moz-radial-gradient(center,rgba(255,255,255,0.88) 60%,rgba(220,220,220,0.9) 68%,rgba(255,255,255,0.9) 72%);
+    box-shadow      : 0 1px 4px rgba(0,0,0,0.5);
   }
   .icon-container.show-tools .more-tools .more-ring {
     display          : block;
@@ -170,3 +170,85 @@ body {
 #secondRing:hover {
   opacity: 1;
 }
+/* >>>>>>>>>>>>>>>>>>>>>>>>> */
+/*            Spinner        */
+/* >>>>>>>>>>>>>>>>>>>>>>>>> */
+.spinner {
+  position  : absolute;
+  width     : 91px;
+  height    : 93px;
+  background: url('../img/ai_spinner.png');
+  -webkit-transform: scale(0);
+  -webkit-transition: all 0.1s;
+}
+.spinner.visible {
+  -webkit-transform: scale(1);
+}
+  .spinner .handle {
+    position          : absolute;
+    top               : 0;
+    left              : 43px;
+    width             : 5px;
+    height            : 5px;
+    border-radius     : 3px;
+    background-image  : -webkit-radial-gradient(center,rgba(25,156,255,1) 30%,rgba(25,156,255,1) 60%);
+    -webkit-transition: all 0.1s;
+    cursor            : pointer;
+  }
+  .spinner .handle:hover {
+    top             : -5px;
+    left            : 38px;
+    width           : 15px;
+    height          : 15px;
+    border-radius   : 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    background-image: 
+      -webkit-radial-gradient(
+        center,
+        rgba(255,255,255,1) 10%,
+        rgba(210,210,210,1) 45%,
+        rgba(255,255,255,1) 55%,
+        rgba(240,240,240,1) 70%
+      );
+  }
+  .spinner .handle:hover .gradient{
+    width           : 15px;
+    height          : 15px;
+    border-radius   : 8px;
+    background-image: -webkit-linear-gradient(bottom,rgba(0,0,0,0.15) 0,rgba(0,0,0,0) 80%);
+  }
+  .spinner .value {
+    position  : absolute;
+    top       : 40px;
+    width     : 100%;
+    text-align: center;
+    font-size : 11px;
+    color     : #A2A2A2;
+  }
+  .spinner.edit .value {
+    display: none;
+  }
+  .spinner input {
+    display         : none;
+    position        : absolute;
+    top             : 35px;
+    left            : 30px;
+    width           : 32px;
+    padding         : 0;
+    border          : none;
+    border-radius   : 7px;
+    text-align      : center;
+    font-size       : 11px;
+    line-height     : 21px;
+    color           : #199CFF;
+    background-image: -webkit-linear-gradient(bottom,rgba(255,255,255,1) 80%,rgba(230,230,230,1) );
+    box-shadow      : inset 0 0 6px rgba(0,0,0,0.3);
+  }
+  .spinner.edit input {
+    display: block;
+  }
+  /* ----- Various Spinner Button and Icon Spawns ------ */
+  .zoom.spinner {
+    top : 194px;
+    left: 307px;
+  }
