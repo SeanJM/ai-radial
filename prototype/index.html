@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/keyboard.css">
     <link rel="stylesheet" type="text/css" href="css/icons.css">
     <link rel="stylesheet" type="text/css" href="css/proton.css">
+    <link rel="stylesheet" type="text/css" href="css/main-menu.css">
     <!-- JavaScript -->
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
@@ -16,421 +17,474 @@
   </head>
   <body>
     <div id="ai-wheel">
-      <div class="inner-shadow">
-        <div id="outter-ring">
-          <div class="icon-container">
-            <div class="icon magic-wand"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon lasso"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon pen"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon pen"></div>
-                <div class="icon add-anchor-point"></div>
-                <div class="icon remove-anchor-point"></div>
-                <div class="icon convert-anchor-point"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon paintbrush"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon pencil"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon pencil"></div>
-                <div class="icon smooth"></div>
-                <div class="icon path-eraser"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon blob-brush"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon eraser"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon scissors"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon scissors"></div>
-                <div class="icon knife"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon rotate"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon rotate"></div>
-                <div class="icon reflect"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon scale"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon scale"></div>
-                <div class="icon shear"></div>
-                <div class="icon reshape"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon width"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon width"></div>
-                <div class="icon warp"></div>
-                <div class="icon twirl"></div>
-                <div class="icon pucker"></div>
-                <div class="icon bloat"></div>
-                <div class="icon scallop"></div>
-                <div class="icon crystalize"></div>
-                <div class="icon wrinkle"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon free-transform"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon shape-builder"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon shape-builder"></div>
-                <div class="icon live-paint-bucket"></div>
-                <div class="icon live-paint-selection"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon perspective-grid"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon perspective-grid"></div>
-                <div class="icon perspective-selection"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon mesh"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon blend"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon symbol-sprayer"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon symbol-sprayer"></div>
-                <div class="icon symbol-shifter"></div>
-                <div class="icon symbol-scruncher"></div>
-                <div class="icon symbol-sizer"></div>
-                <div class="icon symbol-spinner"></div>
-                <div class="icon symbol-stainer"></div>
-                <div class="icon symbol-screener"></div>
-                <div class="icon symbol-styler"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon column-graph"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon column-graph"></div>
-                <div class="icon stacked-column-graph"></div>
-                <div class="icon bar-graph"></div>
-                <div class="icon stacked-bar-graph"></div>
-                <div class="icon line-graph"></div>
-                <div class="icon area-graph"></div>
-                <div class="icon scatter-graph"></div>
-                <div class="icon pie-graph"></div>
-                <div class="icon radar-graph"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon art-board"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon slice"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon slice"></div>
-                <div class="icon slice-selection"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon zoom"></div>
-          </div>
-          <div class="zoom spinner">
-            <div class="value">100%</div>
-            <input type="text"></input>
-            <div class="handle">
-              <div class="gradient"></div>
-            </div>
+      <div id="main-menu">
+        <div class="button">
+          <div class="inner-shadow">
+            <div class="icon ai"></div>
           </div>
         </div>
-        <div id="keyboard" class="ring">
-          <div id="arrows" class="key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="arrow right sprite"></div>
-            <div class="arrow left sprite"></div>
-            <div class="arrow up sprite"></div>
-            <div class="arrow down sprite"></div>
-          </div>
-          <div class="alt key-container toggle-key">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="key toggle sprite"></div>
-            <div class="keyval sprite"></div>
-          </div>
-          <div class="ctrl key-container toggle-key">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="key toggle sprite"></div>
-            <div class="keyval sprite"></div>
-          </div>
-          <div class="shift key-container toggle-key">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="key toggle sprite"></div>
-            <div class="keyval sprite"></div>
-          </div>
-          <div class="f-key left f1 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key left f2 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key left f3 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key left f4 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key left f5 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key left f6 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key right f7 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key right f8 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key right f9 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key right f10 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key right f11 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="f-key right f12 key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-            <div class="toggle-key shift sprite"></div>
-            <div class="toggle-key ctrl sprite"></div>
-            <div class="toggle-key alt sprite"></div>
-          </div>
-          <div class="redo disabled key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-          </div>
-          <div class="undo key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-          </div>
-          <div class="undo spinner">
-            <div class="value">90</div>
-            <input type="text"></input>
-            <div class="handle">
-              <div class="gradient"></div>
-            </div>
-          </div>
-          <div class="del key-container">
-            <div class="key up sprite"></div>
-            <div class="key hover sprite"></div>
-            <div class="keyval sprite"></div>
-          </div>
+        <ul class="menu first">
+          <li class="file center">
+            File
+            <ul>
+              <li>New...</li>
+              <li>New From Template...</li>
+              <li>Open...</li>
+              <li>Open Recent Files...</li>
+              <li>Browse In Bridge...</li>
+              <div class="break"></div>
+              <li>Close</li>
+              <li>Save</li>
+            </ul>
+          </li>
+          <li class="edit right">Edit</li>
+          <li class="object right">Object</li>
+          <li class="type right">Type</li>
+          <li class="select center">Select</li>
+          <li class="effect left">Effect</li>
+          <li class="view left">View</li>
+          <li class="window left">Window</li>
+        </ul>
+      </div>
+      <div id="menu-quickpick">
+        <div class="left">
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
         </div>
-        <div id="secondRing" class="ring">
-          <div class="icon-container">
-            <div class="icon selection"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon direct-selection"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon direct-selection"></div>
-                <div class="icon group-selection"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon type"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon type"></div>
-                <div class="icon area-type"></div>
-                <div class="icon type-on-path"></div>
-                <div class="icon vertical-type"></div>
-                <div class="icon vertical-area-type"></div>
-                <div class="icon vertical-type-on-path"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon eyedropper"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon eyedropper"></div>
-                <div class="icon measure"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon line-segment"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon line-segment"></div>
-                <div class="icon arc"></div>
-                <div class="icon spiral"></div>
-                <div class="icon rectangular-grid"></div>
-                <div class="icon polar-grid"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon rectangle"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon rectangle"></div>
-                <div class="icon rounded-rectangle"></div>
-                <div class="icon ellipse"></div>
-                <div class="icon polygon"></div>
-                <div class="icon star"></div>
-                <div class="icon flare"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon gradient"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon hand"></div>
-            <div class="more-tools">
-              <div class="arrow"></div>
-              <div class="more-ring">
-                <div class="icon hand"></div>
-                <div class="icon print-tiling"></div>
-              </div>
-            </div>
-          </div>
-          <div class="icon-container">
-            <div class="icon ellipse"></div>
-          </div>
-          <div class="icon-container">
-            <div class="icon slice-selection"></div>
-          </div>
+        <div class="right">
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
+          <div class="pick"></div>
         </div>
-        <div id="proton" class="ring">
-          <div id="fillStroke" class="sprite"></div>
-          <div id="swapFillStroke" class="sprite"></div>
-          <div id="dFillStroke" class="sprite"></div>
-          <div id="microFillControl">
-            <div class="color sprite"></div>
-            <div class="gradient sprite"></div>
-            <div class="none sprite"></div>
+      </div>
+      <div id="main-wheel">
+        <div class="inner-shadow">
+          <div id="outter-ring">
+            <div class="icon-container">
+              <div class="icon magic-wand"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon lasso"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon pen"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon pen"></div>
+                  <div class="icon add-anchor-point"></div>
+                  <div class="icon remove-anchor-point"></div>
+                  <div class="icon convert-anchor-point"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon paintbrush"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon pencil"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon pencil"></div>
+                  <div class="icon smooth"></div>
+                  <div class="icon path-eraser"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon blob-brush"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon eraser"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon scissors"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon scissors"></div>
+                  <div class="icon knife"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon rotate"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon rotate"></div>
+                  <div class="icon reflect"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon scale"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon scale"></div>
+                  <div class="icon shear"></div>
+                  <div class="icon reshape"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon width"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon width"></div>
+                  <div class="icon warp"></div>
+                  <div class="icon twirl"></div>
+                  <div class="icon pucker"></div>
+                  <div class="icon bloat"></div>
+                  <div class="icon scallop"></div>
+                  <div class="icon crystalize"></div>
+                  <div class="icon wrinkle"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon free-transform"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon shape-builder"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon shape-builder"></div>
+                  <div class="icon live-paint-bucket"></div>
+                  <div class="icon live-paint-selection"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon perspective-grid"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon perspective-grid"></div>
+                  <div class="icon perspective-selection"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon mesh"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon blend"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon symbol-sprayer"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon symbol-sprayer"></div>
+                  <div class="icon symbol-shifter"></div>
+                  <div class="icon symbol-scruncher"></div>
+                  <div class="icon symbol-sizer"></div>
+                  <div class="icon symbol-spinner"></div>
+                  <div class="icon symbol-stainer"></div>
+                  <div class="icon symbol-screener"></div>
+                  <div class="icon symbol-styler"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon column-graph"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon column-graph"></div>
+                  <div class="icon stacked-column-graph"></div>
+                  <div class="icon bar-graph"></div>
+                  <div class="icon stacked-bar-graph"></div>
+                  <div class="icon line-graph"></div>
+                  <div class="icon area-graph"></div>
+                  <div class="icon scatter-graph"></div>
+                  <div class="icon pie-graph"></div>
+                  <div class="icon radar-graph"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon art-board"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon slice"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon slice"></div>
+                  <div class="icon slice-selection"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon zoom"></div>
+            </div>
+            <div class="zoom spinner">
+              <div class="value">100%</div>
+              <input type="text"></input>
+              <div class="handle">
+                <div class="gradient"></div>
+              </div>
+            </div>
           </div>
-          <div id="drawModes" class="sprite front"></div>
+          <div id="keyboard" class="ring">
+            <div id="arrows" class="key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="arrow right sprite"></div>
+              <div class="arrow left sprite"></div>
+              <div class="arrow up sprite"></div>
+              <div class="arrow down sprite"></div>
+            </div>
+            <div class="alt key-container toggle-key">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="key toggle sprite"></div>
+              <div class="keyval sprite"></div>
+            </div>
+            <div class="ctrl key-container toggle-key">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="key toggle sprite"></div>
+              <div class="keyval sprite"></div>
+            </div>
+            <div class="shift key-container toggle-key">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="key toggle sprite"></div>
+              <div class="keyval sprite"></div>
+            </div>
+            <div class="f-key left f1 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key left f2 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key left f3 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key left f4 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key left f5 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key left f6 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key right f7 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key right f8 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key right f9 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key right f10 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key right f11 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="f-key right f12 key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+              <div class="toggle-key shift sprite"></div>
+              <div class="toggle-key ctrl sprite"></div>
+              <div class="toggle-key alt sprite"></div>
+            </div>
+            <div class="redo disabled key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+            </div>
+            <div class="undo key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+            </div>
+            <div class="undo spinner">
+              <div class="value">90</div>
+              <input type="text"></input>
+              <div class="handle">
+                <div class="gradient"></div>
+              </div>
+            </div>
+            <div class="del key-container">
+              <div class="key up sprite"></div>
+              <div class="key hover sprite"></div>
+              <div class="keyval sprite"></div>
+            </div>
+          </div>
+          <div id="secondRing" class="ring">
+            <div class="icon-container">
+              <div class="icon selection"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon direct-selection"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon direct-selection"></div>
+                  <div class="icon group-selection"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon type"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon type"></div>
+                  <div class="icon area-type"></div>
+                  <div class="icon type-on-path"></div>
+                  <div class="icon vertical-type"></div>
+                  <div class="icon vertical-area-type"></div>
+                  <div class="icon vertical-type-on-path"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon eyedropper"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon eyedropper"></div>
+                  <div class="icon measure"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon line-segment"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon line-segment"></div>
+                  <div class="icon arc"></div>
+                  <div class="icon spiral"></div>
+                  <div class="icon rectangular-grid"></div>
+                  <div class="icon polar-grid"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon rectangle"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon rectangle"></div>
+                  <div class="icon rounded-rectangle"></div>
+                  <div class="icon ellipse"></div>
+                  <div class="icon polygon"></div>
+                  <div class="icon star"></div>
+                  <div class="icon flare"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon gradient"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon hand"></div>
+              <div class="more-tools">
+                <div class="arrow"></div>
+                <div class="more-ring">
+                  <div class="icon hand"></div>
+                  <div class="icon print-tiling"></div>
+                </div>
+              </div>
+            </div>
+            <div class="icon-container">
+              <div class="icon ellipse"></div>
+            </div>
+            <div class="icon-container">
+              <div class="icon slice-selection"></div>
+            </div>
+          </div>
+          <div id="proton" class="ring">
+            <div id="fillStroke" class="sprite"></div>
+            <div id="swapFillStroke" class="sprite"></div>
+            <div id="dFillStroke" class="sprite"></div>
+            <div id="microFillControl">
+              <div class="color sprite"></div>
+              <div class="gradient sprite"></div>
+              <div class="none sprite"></div>
+            </div>
+            <div id="drawModes" class="sprite front"></div>
+          </div>
         </div>
       </div>
     </div>

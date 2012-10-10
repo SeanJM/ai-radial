@@ -1,42 +1,18 @@
 $(function(){
-  /* Position Rings */
-  $('.ring').each(function(){
-    var outterRingW   = $('#outter-ring').width()/2,
-        innerRingW    = $(this).width()/2,
-        innerRingPos  = outterRingW-innerRingW;
-    
-    $(this)
-      .css('left',innerRingPos)
-      .css('top',innerRingPos);
-  });
+
+  /* ----------------------- Functions ------------------ */
   
-  $('#fillStroke').click(function(){
-    $(this).toggleClass('stroke');
-    $('#microFillControl').toggleClass('stroke');
-  });
+  /* Main Menu */
   
-  $('#swapFillStroke').click(function(){
-    $('#fillStroke').toggleClass('swap');
-  });
-  
-  $('#dFillStroke').click(function(){
-    $('#fillStroke').addClass('default');
-  });
-  
-  $('#drawModes').click(function(){
-    if ($(this).hasClass('front')) {
-      $(this).removeClass('front').addClass('behind');
-      return false;
-    }
-    if ($(this).hasClass('behind')) {
-      $(this).removeClass('behind').addClass('clip');
-      return false;
-    }
-    if ($(this).hasClass('clip')) {
-      $(this).removeClass('clip').addClass('front');
-      return false;
-    }
-  });
+  function positionMenu() {
+    var menu = $('#main-menu'),
+        menuW = menu.width(),
+        mainW = $('#ai-wheel').width(),
+        menuPos = (mainW/2) - (menuW/2);
+    menu.css('left',menuPos);
+  }
+
+  /* Drawing Icons on a Circle */
 
   function putOnCircle(arr) {
     var parent     = arr['parent'],
@@ -53,7 +29,7 @@ $(function(){
         h          = parseInt((ringWidth /2) - (child.outerWidth() / 2));
         k          = parseInt((ringWidth / 2) - (child.outerHeight() / 2));
       }
-      
+
     child.each(function(){
       var x        = h + parseInt(r * Math.cos(theta)),
           y        = k - parseInt(r * Math.sin(theta));
@@ -61,44 +37,16 @@ $(function(){
       $(this).css('top',y).css('left',x);
     });
   }
-
-  /* Second Ring */
-  putOnCircle({'parent':$('#secondRing'),'child':$('.icon-container')});
   
   /* More tools */
-  /* Circumference = 2piR */
+
   function moreRad(n) {
-    var value = {
-      1:10,
-      2:40,
-      3:45,
-      4:45,
-      5:55,
-      6:60,
-      7:70,
-      8:75,
-      9:80
-    }
+    var value = { 1:10, 2:40, 3:45, 4:45, 5:55, 6:60, 7:70, 8:75, 9:80 };
     return value[n];
   }
-  $('.more-tools').each(function(){
-    var icon            = $(this).find('.icon'),
-        totalIcons      = icon.size(),
-        rad             = moreRad(totalIcons);
-      
-      $(this).find('.more-ring')
-        .css('width'        ,(rad * 2))
-        .css('height'       ,(rad * 2))
-        .css('top'          ,(rad * -1))
-        .css('left'         ,(rad * -1))
-        .css('border-radius',(rad));
-    
-    putOnCircle({
-      'parent':$(this).find('.more-ring'),
-      'child':$(this).find('.more-ring .icon')});
-  });
-  
+
   /* Icon Container More Tools Menu */
+  
   function moretools(data) {
     var el        = data['target'],
         event     = data['event'],
@@ -130,42 +78,6 @@ $(function(){
   
   }
 
-  $('.icon-container').on('mousedown',function(){
-    $(this).addClass('mousedown');
-    moretools({
-      'target'  : $(this),
-      'event'   : 'init'
-    });
-  });
-
-  $('.icon-container').on('mouseup',function(){
-    $(this).removeClass('mousedown');
-  });
-
-  $('.icon-container').on('mouseleave',function(){
-    $(this).removeClass('mousedown');
-    moretools({
-      'target'  : $(this),
-      'event'   : 'leave'
-    });
-  });
-
-  $('.icon-container').click(function(){
-    $('.icon-container.selected').removeClass('selected');
-    $(this).addClass('selected');
-  });
-
-  $('.icon-container .more-ring .icon').on('click',function(){
-    var selectedIcon  = $(this),
-        replaceIcon   = $(this).parents('.icon-container').find('.icon:first');
-    replaceIcon.replaceWith(selectedIcon.clone());
-    
-    moretools({
-      'target'  : $(this).parents('.icon-container'),
-      'event'   : 'leave'
-    });
-  });
-
   /* Keyboard */
   
   function arrowKeyPos() {
@@ -175,21 +87,6 @@ $(function(){
     
     arrowkey.css('left',(keyboardW/2) - (arrowkeyW/2));
   }
-  
-  /* Position the arrow keys */
-  arrowKeyPos();
-  
-  $('.key-container').hover(function(){
-    $(this).addClass('hover');
-  },function(){
-    $(this).removeClass('hover');
-  });
-
-  /* Toggle the Alt, Ctrl and Shift Keys */
-  $('#keyboard .toggle-key').click(function(){
-    $(this).toggleClass('toggled');
-    
-  });
 
   /* Spinner */
   function spinnerInput(data) {
@@ -233,6 +130,158 @@ $(function(){
     el.find('input').val(val);
     el.find('.value').text(val);
   }
+
+  function miniMenu() {
+    var i = 0;
+    $('#main-menu .menu.first ul li').each(function(){
+      i++;
+      var parent    = $(this).parent(),
+          miniMenu  = $('<div class="miniMenu" index="' + i + '" />').css('top',((i-1)*8) + 4);
+      $(this).attr('index',i);
+      parent.append(miniMenu);
+      $(this).bind('hover',function(){
+        var index = $(this).attr('index');
+        $('.miniMenu').removeClass('hover');
+        $(this).parent().find('li').removeClass('hover');
+        $('.miniMenu[index="' + index + '"]').addClass('hover');
+      });
+      $('.miniMenu').bind('hover',function(){
+        var index = $(this).attr('index');
+        $('.miniMenu').removeClass('hover');
+        $(this).parent().find('li').removeClass('hover');
+        $(this).parent().find('li[index="' + index + '"]').addClass('hover');
+      });
+    });
+  }
+
+  /* --------------------- End Functions ---------------- */
+
+  /* Main Menu */
+  
+  positionMenu();
+  $('#main-menu .ai').click(function(){
+    $('#main-menu').addClass('visible');
+  });
+
+  miniMenu();
+  /* Position Rings */
+
+  $('.ring').each(function(){
+    var outterRingW   = $('#outter-ring').width()/2,
+        innerRingW    = $(this).width()/2,
+        innerRingPos  = outterRingW-innerRingW;
+    
+    $(this)
+      .css('left',innerRingPos)
+      .css('top',innerRingPos);
+  });
+  
+  $('#fillStroke').click(function(){
+    $(this).toggleClass('stroke');
+    $('#microFillControl').toggleClass('stroke');
+  });
+  
+  $('#swapFillStroke').click(function(){
+    $('#fillStroke').toggleClass('swap');
+  });
+  
+  $('#dFillStroke').click(function(){
+    $('#fillStroke').addClass('default');
+  });
+  
+  $('#drawModes').click(function(){
+    if ($(this).hasClass('front')) {
+      $(this).removeClass('front').addClass('behind');
+      return false;
+    }
+    if ($(this).hasClass('behind')) {
+      $(this).removeClass('behind').addClass('clip');
+      return false;
+    }
+    if ($(this).hasClass('clip')) {
+      $(this).removeClass('clip').addClass('front');
+      return false;
+    }
+  });
+
+  /* Second Ring */
+
+  putOnCircle({'parent':$('#secondRing'),'child':$('.icon-container')});
+  
+  $('.more-tools').each(function(){
+    var icon            = $(this).find('.icon'),
+        totalIcons      = icon.size(),
+        rad             = moreRad(totalIcons);
+      
+      $(this).find('.more-ring')
+        .css('width'        ,(rad * 2))
+        .css('height'       ,(rad * 2))
+        .css('top'          ,(rad * -1))
+        .css('left'         ,(rad * -1))
+        .css('border-radius',(rad));
+    
+    putOnCircle({
+      'parent':$(this).find('.more-ring'),
+      'child':$(this).find('.more-ring .icon')});
+  });
+  
+  /* Icon Container More Tools Menu */
+
+  $('.icon-container').on('mousedown',function(){
+    $(this).addClass('mousedown');
+    moretools({
+      'target'  : $(this),
+      'event'   : 'init'
+    });
+  });
+
+  $('.icon-container').on('mouseup',function(){
+    $(this).removeClass('mousedown');
+  });
+
+  $('.icon-container').on('mouseleave',function(){
+    $(this).removeClass('mousedown');
+    moretools({
+      'target'  : $(this),
+      'event'   : 'leave'
+    });
+  });
+
+  $('.icon-container').click(function(){
+    $('.icon-container.selected').removeClass('selected');
+    $(this).addClass('selected');
+  });
+
+  $('.icon-container .more-ring .icon').on('click',function(){
+    var selectedIcon  = $(this),
+        replaceIcon   = $(this).parents('.icon-container').find('.icon:first');
+    replaceIcon.replaceWith(selectedIcon.clone());
+    
+    moretools({
+      'target'  : $(this).parents('.icon-container'),
+      'event'   : 'leave'
+    });
+  });
+
+  /* Keyboard */
+  
+  /* Position the arrow keys */
+  
+  arrowKeyPos();
+  
+  $('.key-container').hover(function(){
+    $(this).addClass('hover');
+  },function(){
+    $(this).removeClass('hover');
+  });
+
+  /* Toggle the Alt, Ctrl and Shift Keys */
+  $('#keyboard .toggle-key').click(function(){
+    $(this).toggleClass('toggled');
+    
+  });
+
+  /* Spinner */
 
   $('html').click(function(){
     $('.spinner').each(function() {
@@ -289,7 +338,8 @@ $(function(){
     $('.zoom.spinner').toggleClass('visible');
     event.stopPropagation();
   });
-  /* Outter Wheel */
 
+  /* Outter Wheel */
+  
   putOnCircle({'parent':$('#outter-ring'),'child':$('.icon-container')});
 });

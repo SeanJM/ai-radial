@@ -2,6 +2,10 @@ body {
   font-family: Arial, Helvetica, Sans-serif;
   background: url('../illustrator-background.png') no-repeat;
 }
+* {
+  margin : 0;
+  padding: 0;
+}
 .sprite {
   background: url('../img/ai-sprite-01.png') no-repeat;
 }
@@ -12,17 +16,24 @@ body {
 
 /* >>>>>>>>>>>>>>>>>>>>> Wheel <<<<<<<<<<<<<<<<<<<<<< */
 #ai-wheel {
-  width           :380px;
-  height          :380px;
-  border-radius   : 190px;
-  background-image: -webkit-radial-gradient(center, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.85) 80% );
-  background-image: -moz-radial-gradient(center, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.85) 80% );
-  position        : relative;
-  left            :335px;
-  top             : 200px;
-  box-shadow      : 0 1px 6px rgba(0, 0, 0, 0.33);
+  position: relative;
+  top     : 200px;
+  left    : 335px;
+  width   : 380px;
+  height  : 400px;
 }
-  #ai-wheel .inner-shadow {
+
+#main-wheel {
+  position        : absolute;
+  top             : 54px;
+  width           : 380px;
+  height          : 380px;
+  border-radius   : 190px;
+  background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.85) 80%);
+  background-image: -moz-radial-gradient(center,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.85) 80%);
+  box-shadow      : 0 1px 6px rgba(0,0,0,0.33);
+}
+  #main-wheel .inner-shadow {
     width           :380px;
     height          :380px;
     border-radius   : 190px;
@@ -92,10 +103,13 @@ body {
 }
   
   .icon-container .more-tools .arrow {
-    width              : 4px;
-    height             : 4px;
-    background-position: -189px -76px;
     float              : right;
+    position           : relative;
+    top                : 1px;
+    right              : -1px;
+    width              : 10px;
+    height             : 10px;
+    background-position: -189px -76px;
   }
   /* WEBKIT */
   @-webkit-keyframes pop {
