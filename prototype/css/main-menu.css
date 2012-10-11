@@ -1,7 +1,7 @@
 #main-menu {
-  position          : absolute;
-  width             : 50px;
-  height            : 50px;
+  position: absolute;
+  width   : 50px;
+  height  : 50px;
 }
   #main-menu .button:hover,
   #main-menu.visible .button {
@@ -57,7 +57,7 @@
 
     #main-menu ul.menu.first {
       display      : none;
-      z-index      : 1;
+      z-index      : 2;
       position     : absolute;
       top          : -51px;
       left         : -51px;
@@ -112,17 +112,17 @@
           z-index         : 10;
           position        : absolute;
           list-style      : none;
-          background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 1));
+          background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.87), rgba(255, 255, 255, 0.93));
           box-shadow      : 0 1px 6px rgba(0, 0, 0, 0.4); 
         }
         #main-menu ul.menu.first > li ul.visible {
           display: block;
         }
         #main-menu.right-handed ul.menu.first > li > ul {
-          padding: 0px 20px 0px 0px;
+          padding: 0px 30px 0px 0px;
         }
         #main-menu.left-handed ul.menu.first > li > ul {
-          padding: 0px 0px 0px 20px;
+          padding: 0px 0px 0px 30px;
         }
 
         #main-menu.right-handed ul.menu.first > li ul .container {
@@ -139,7 +139,7 @@
 
         #main-menu ul.menu > li ul li {
           position   : relative;
-          padding    : 0 10px;
+          padding    : 0 12px;
           border     : 1px solid transparent;
           text-align : left;
           line-height: 24px;
@@ -149,25 +149,50 @@
         #main-menu ul.menu > li ul li:last-child { margin: 0 0 6px 0; }
         
         #main-menu ul.menu > li ul li:hover,
-        #main-menu ul.menu > li ul li.hover {
-          background-image: -webkit-linear-gradient(bottom, rgba(10, 146, 253, 0.16), rgba(2, 154, 255, 0.05));
+        #main-menu ul.menu > li ul li.hover,
+        #main-menu ul.menu > li ul li:hover li:hover,
+        #main-menu ul.menu > li ul li.hover li.hover{
+          background-image: -webkit-linear-gradient(bottom, rgba(0, 144, 240, 0.78), rgba(39, 169, 255, 0.91));
+          color: #fff;
+        }
+        #main-menu ul.menu > li ul li:hover li,
+        #main-menu ul.menu > li ul li.hover li{
+          color: #797979;
         }
         #main-menu ul.menu > li ul li .marker {
           position: absolute;
-          top     : 2px;
+          top     : 4px;
           width   : 2px;
-          height  : 20px;
+          height  : 15px;
         }
 
         #main-menu ul.menu > li ul li .purple { background: #D90AFE; }
         #main-menu ul.menu > li ul li .orange { background: #FE890A; }
         #main-menu ul.menu > li ul li .green  { background: #46E000; }
-        #main-menu ul.menu > li ul li .teal   { background: #00D1B2; }
+        #main-menu ul.menu > li ul li .red    { background: #CE0000; }
+        #main-menu ul.menu > li ul li .grey   { background: #BDBDBD; }
+        #main-menu ul.menu > li ul li .sky    { background: #64E2FF; }
+        #main-menu ul.menu > li ul li .yellow { background: #FFD900; }
+        #main-menu ul.menu > li ul li .poupre { background: #F500C0; }
         
         #main-menu ul.menu > li ul li .marker { 
-          left: 1px;
+          left: 2px;
         }
-
+        #main-menu ul.menu > li ul li .disclosure { 
+          z-index            : 1;
+          position           : absolute;
+          top                : 6px;
+          right              : 7px;
+          width              : 10px;
+          height             : 10px;
+          opacity            : 0.5;
+          background         : url('../img/ai_wheel.png') no-repeat;
+          background-position: -189px -86px;
+          -webkit-transition : all 0.2s;
+        }
+        #main-menu ul.menu > li ul li:hover .disclosure { 
+          opacity: 1;
+        }
         #main-menu ul.menu.first > li ul div.break {
           height    : 0;
           margin    : 2px 0 3px;
@@ -176,27 +201,27 @@
 
         #main-menu ul.menu.first > li ul .mini-menu-container {
           position          : absolute;
-          top               : 7px;
+          top               : 12px;
           -webkit-transition: all 0.2s;
         }
         #main-menu.right-handed ul.menu.first > li ul .mini-menu-container {
-          right: 8px;
+          right: 12px;
         }
         #main-menu.right-handed ul.menu.first > li ul .mini-menu-container:hover {
-          right: 5px;
+          right: 10px;
         }
         #main-menu.left-handed ul.menu.first > li ul .mini-menu-container {
-          left: 8px;
+          left: 12px;
         }
         #main-menu.left-handed ul.menu.first > li ul .mini-menu-container:hover {
-          left: 5px;
+          left: 10px;
         }
           #main-menu ul.menu.first > li ul .mini-menu-container .miniMenu {
-            width        : 5px;
-            height       : 5px;
-            margin       : 0 0 3px 0;
-            border-radius: 2px;
-            overflow     : hidden;
+            width             : 5px;
+            height            : 5px;
+            margin            : 0 0 4px 0;
+            border-radius     : 2px;
+            overflow          : hidden;
             -webkit-transition: all 0.2s;
           }
           #main-menu ul.menu.first > li ul .mini-menu-container:hover .miniMenu {
@@ -206,8 +231,8 @@
           #main-menu ul.menu.first > li ul .mini-menu-container .miniMenu .innerShadow {
             width           : 100%;
             height          : 100%;
-            background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.3));
-            box-shadow      : inset 0 0 3px rgba(0, 0, 0, 0.4);
+            background-image: -webkit-linear-gradient(bottom, transparent 30%, rgba(0, 0, 0, 0.2));
+            box-shadow      : inset 0 0 2px rgba(0, 0, 0, 0.3);
           }
         
         #main-menu ul.menu.first > li ul .miniMenu:hover,
