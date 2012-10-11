@@ -11,13 +11,14 @@
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/prototype.js"></script>
+    <script type="text/javascript" src="js/main-menu.js"></script>
     <script type="text/javascript" src="js/jquery.svg.min.js"></script>
     <title>
     </title>
   </head>
   <body>
     <div id="ai-wheel">
-      <div id="main-menu">
+      <div id="main-menu" class="left-handed">
         <div class="button">
           <div class="inner-shadow">
             <div class="icon ai"></div>
@@ -27,14 +28,41 @@
           <li class="file center">
             File
             <ul>
-              <li>New...</li>
-              <li>New From Template...</li>
-              <li>Open...</li>
-              <li>Open Recent Files...</li>
-              <li>Browse In Bridge...</li>
-              <div class="break"></div>
-              <li>Close</li>
-              <li>Save</li>
+              <div class="container">
+                <li><span class="marker orange"></span>New...</li>
+                <li>New From Template...</li>
+                <li><span class="marker orange"></span>Open...</li>
+                <li>
+                  Open Recent Files...
+                  <ul>
+                    <li>1 ai-icons.ai</li>
+                    <li>2 ai-icons.ai</li>
+                  </ul>
+                </li>
+                <li>Browse In Bridge...</li>
+                <div class="break"></div>
+                <li>Close</li>
+                <li><span class="marker orange"></span>Save</li>
+                <li>Save As...</li>
+                <li>Save a Copy...</li>
+                <li>Save as Template...</li>
+                <li>Save for Web...</li>
+                <li>Save Selected Slices...</li>
+                <div class="break"></div>
+                <li>Save for Microsoft Office...</li>
+                <li><span class="marker orange"></span>Export...</li>
+                <div class="break"></div>
+                <li>Scripts</li>
+                <div class="break"></div>
+                <li>Document Setup...</li>
+                <li>Document Color Mode</li>
+                <li>File Info...</li>
+                <div class="break"></div>
+                <li>Print...</li>
+                <div class="break"></div>
+                <li>Exit</li>
+                <div class="mini-menu-container"></div>
+              </div>
             </ul>
           </li>
           <li class="edit right">Edit</li>

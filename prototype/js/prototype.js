@@ -2,16 +2,6 @@ $(function(){
 
   /* ----------------------- Functions ------------------ */
   
-  /* Main Menu */
-  
-  function positionMenu() {
-    var menu = $('#main-menu'),
-        menuW = menu.width(),
-        mainW = $('#ai-wheel').width(),
-        menuPos = (mainW/2) - (menuW/2);
-    menu.css('left',menuPos);
-  }
-
   /* Drawing Icons on a Circle */
 
   function putOnCircle(arr) {
@@ -131,39 +121,8 @@ $(function(){
     el.find('.value').text(val);
   }
 
-  function miniMenu() {
-    var i = 0;
-    $('#main-menu .menu.first ul li').each(function(){
-      i++;
-      var parent    = $(this).parent(),
-          miniMenu  = $('<div class="miniMenu" index="' + i + '" />').css('top',((i-1)*8) + 4);
-      $(this).attr('index',i);
-      parent.append(miniMenu);
-      $(this).bind('hover',function(){
-        var index = $(this).attr('index');
-        $('.miniMenu').removeClass('hover');
-        $(this).parent().find('li').removeClass('hover');
-        $('.miniMenu[index="' + index + '"]').addClass('hover');
-      });
-      $('.miniMenu').bind('hover',function(){
-        var index = $(this).attr('index');
-        $('.miniMenu').removeClass('hover');
-        $(this).parent().find('li').removeClass('hover');
-        $(this).parent().find('li[index="' + index + '"]').addClass('hover');
-      });
-    });
-  }
-
   /* --------------------- End Functions ---------------- */
 
-  /* Main Menu */
-  
-  positionMenu();
-  $('#main-menu .ai').click(function(){
-    $('#main-menu').addClass('visible');
-  });
-
-  miniMenu();
   /* Position Rings */
 
   $('.ring').each(function(){
