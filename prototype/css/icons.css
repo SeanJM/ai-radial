@@ -4,7 +4,10 @@
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 
 .icon {
-  background: url('../img/ai_tools_100dpi.png') no-repeat;
+  display        : inline-block;
+  width          : 22px;
+  height         : 22px;
+  background     : url('../img/ai_tools_100dpi.png') no-repeat;
   background-size: 266px 242px;
 }
 
@@ -148,3 +151,4 @@
 .icon.zoom                  { background-position: -154px -66px; }
 .icon.configure             { background-position: -154px -88px; }
 .icon.ai                    { background-position: -198px -88px; }
+.icon.color-mark            { background-position: -198px -132px; }

@@ -1,3 +1,49 @@
+
+.purple { background: #D90AFE; }
+.orange { background: #FE890A; }
+.green  { background: #46E000; }
+.red    { background: #CE0000; }
+.grey   { background: #BDBDBD; }
+.sky    { background: #64E2FF; }
+.yellow { background: #FFD900; }
+.poupre { background: #F500C0; }
+
+.menu ul {
+  list-style: none;
+}
+  .menu ul li {
+    position   : relative;
+    padding    : 0 12px;
+    text-align : left;
+    line-height: 26px;
+    font-size: 12px;
+    color: #A2A2A2;
+    clear: both;
+    -webkit-transition: line-height 0.3s;
+  }
+  .menu ul li.hover,
+  .menu ul li:hover,
+  .menu ul li.select,
+  .menu ul li:hover li:hover,
+  .menu ul li.hover li:hover{
+    background-image: -webkit-linear-gradient(bottom, rgba(0, 144, 240, 0.78), rgba(39, 169, 255, 0.91));
+    color: #fff;
+  }
+  .menu ul li:hover li,
+  .menu ul li.hover li{
+    color: #797979;
+  }
+  .menu ul li.hidden{
+    line-height: 1px;
+    background: rgba(0,0,0,0.07);
+    color: transparent;
+    margin:0;
+  }
+    .menu ul li.hidden .disclosure{
+      display: none;
+    }
+
+
 #main-menu {
   position: absolute;
   width   : 50px;
@@ -137,51 +183,22 @@
         #main-menu.right-handed ul.menu.first > li.file > ul { left: -140px; }
         #main-menu.left-handed ul.menu.first > li.file > ul { right: -140px; }
 
-        #main-menu ul.menu > li ul li {
-          position   : relative;
-          padding    : 0 12px;
-          border     : 1px solid transparent;
-          text-align : left;
-          line-height: 24px;
-        }
         
         #main-menu ul.menu > li ul li:first-child { margin: 6px 0 0 0; }
         #main-menu ul.menu > li ul li:last-child { margin: 0 0 6px 0; }
         
-        #main-menu ul.menu > li ul li:hover,
-        #main-menu ul.menu > li ul li.hover,
-        #main-menu ul.menu > li ul li:hover li:hover,
-        #main-menu ul.menu > li ul li.hover li.hover{
-          background-image: -webkit-linear-gradient(bottom, rgba(0, 144, 240, 0.78), rgba(39, 169, 255, 0.91));
-          color: #fff;
-        }
-        #main-menu ul.menu > li ul li:hover li,
-        #main-menu ul.menu > li ul li.hover li{
-          color: #797979;
-        }
         #main-menu ul.menu > li ul li .marker {
           position: absolute;
           top     : 4px;
           width   : 2px;
-          height  : 15px;
+          height  : 19px;
         }
-
-        #main-menu ul.menu > li ul li .purple { background: #D90AFE; }
-        #main-menu ul.menu > li ul li .orange { background: #FE890A; }
-        #main-menu ul.menu > li ul li .green  { background: #46E000; }
-        #main-menu ul.menu > li ul li .red    { background: #CE0000; }
-        #main-menu ul.menu > li ul li .grey   { background: #BDBDBD; }
-        #main-menu ul.menu > li ul li .sky    { background: #64E2FF; }
-        #main-menu ul.menu > li ul li .yellow { background: #FFD900; }
-        #main-menu ul.menu > li ul li .poupre { background: #F500C0; }
-        
-        #main-menu ul.menu > li ul li .marker { 
-          left: 2px;
-        }
+        #main-menu ul.menu > li ul li .marker { left: 2px; }
+        #main-menu .menu ul li.hidden .marker { display: none; }
         #main-menu ul.menu > li ul li .disclosure { 
           z-index            : 1;
           position           : absolute;
-          top                : 6px;
+          top                : 8px;
           right              : 7px;
           width              : 10px;
           height             : 10px;
@@ -208,13 +225,13 @@
           right: 12px;
         }
         #main-menu.right-handed ul.menu.first > li ul .mini-menu-container:hover {
-          right: 10px;
+          right: 9px;
         }
         #main-menu.left-handed ul.menu.first > li ul .mini-menu-container {
           left: 12px;
         }
         #main-menu.left-handed ul.menu.first > li ul .mini-menu-container:hover {
-          left: 10px;
+          left: 9px;
         }
           #main-menu ul.menu.first > li ul .mini-menu-container .miniMenu {
             width             : 5px;
@@ -222,11 +239,14 @@
             margin            : 0 0 4px 0;
             border-radius     : 2px;
             overflow          : hidden;
-            -webkit-transition: all 0.2s;
+            -webkit-transition: all 0.3s;
           }
           #main-menu ul.menu.first > li ul .mini-menu-container:hover .miniMenu {
-            width        : 10px;
-            height       : 5px;
+            width        : 12px;
+          }
+          #main-menu ul.menu.first > li ul .mini-menu-container .miniMenu.hidden {
+            height: 0;
+            margin: 0;
           }
           #main-menu ul.menu.first > li ul .mini-menu-container .miniMenu .innerShadow {
             width           : 100%;
@@ -247,3 +267,61 @@
         }
         #main-menu ul.menu > li ul li ul li {
         }
+/* Configure Menu */
+#configure-menu {
+  background-image: -webkit-linear-gradient(bottom, rgba(255,255,255,0.8),rgba(255,255,255,1));
+  width: 180px;
+  height: 120px;
+  position: absolute;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+  z-index: 3;
+}
+  #configure-menu p{
+    color: #A2A2A2;
+    font-size: 12px;
+    float: left;
+  }
+  #configure-menu p{
+    margin: 6px 10px;
+  }
+  #configure-menu li {
+  }
+  #configure-menu .color-container {
+    float        : left;
+    width        : 100%;
+    margin       : 0 0 6px;
+    padding      : 0 0 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  /* Color Box */
+  #configure-menu #color-box {
+    float : left;
+    width : 100%;
+    margin: 0 10px;
+  }
+    #configure-menu #color-box .container {
+      float        : left;
+      padding      : 3px;
+      border       : 1px solid transparent;
+      border-radius: 6px;
+      margin: 0 2px 0 0;
+    }
+    #configure-menu #color-box .container:hover,
+    #configure-menu #color-box .container.selected {
+      border: 1px solid rgba(0, 0, 0, 0.3); 
+    }
+      #configure-menu #color-box .container .mark {
+        float : left;
+        width : 8px;
+        height: 8px;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+        #configure-menu #color-box .container .mark .inner-shadow {
+          float           : left;
+          width           : 100%;
+          height          : 100%;
+          background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.0) 50%, rgba(0, 0, 0, 0.3));
+          box-shadow      : inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+  /* End Color Box */
