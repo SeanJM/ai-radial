@@ -12,13 +12,14 @@
   list-style: none;
 }
   .menu ul li {
-    position   : relative;
-    padding    : 0 12px;
-    text-align : left;
-    line-height: 26px;
-    font-size: 12px;
-    color: #A2A2A2;
-    clear: both;
+    clear             : both;
+    position          : relative;
+    padding           : 0 12px;
+   /* min-width         : 150px;*/
+    text-align        : left;
+    font-size         : 12px;
+    line-height       : 26px;
+    color             : #A2A2A2;
     -webkit-transition: line-height 0.3s;
   }
   .menu ul li.hover,
@@ -170,6 +171,10 @@
         #menu-hub.left-handed ul.menu.first > li > ul {
           padding: 0px 0px 0px 30px;
         }
+          #file-menu {}
+          #edit-menu {
+            width: 160px;
+          }
 
         #menu-hub.right-handed ul.menu.first > li ul .container {
           border-right: 1px solid rgba(0,0,0,0.1);

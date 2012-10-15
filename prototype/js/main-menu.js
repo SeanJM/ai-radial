@@ -85,17 +85,8 @@ $(function(){
     root.find('.container').append(quickContainer);
   };
 
-  menuRoot.quickMenu.liBind = function(li) {
-    li.on('hover',function(){
-      var index   = $(this).attr('index'),
-          parent  = $(this).parent();
-
-      parent.find('.miniMenu').removeClass('hover');
-      parent.find('li').removeClass('hover');
-      parent.find('.miniMenu[index="' + index + '"]').addClass('hover');
-      
-    });
-
+  menuRoot.quickMenu.liBind = function(root) {
+    var li = root.find('li');
     /* Activate Sub menu */
     li.on('mouseover',function(){
       if ($(this).children('ul').size()) { 
@@ -155,27 +146,37 @@ $(function(){
 
   };
 
-  menuRoot.quickMenu.bind = function(mini) {
-    mini.on('mouseover',function(){
-      var index   = $(this).attr('index'),
-          parent  = $(this).parents('ul');
+  menuRoot.quickMenu.hoverHighlight = function(root) {
+    var mini           = root.find('.miniMenu'),
+        li             = root.find('li'),
+        clearHighlight = function(element) { element.parent().find('.miniMenu').removeClass('hover'); element.parent().find('li').removeClass('hover'); };
+
+    li.on('hover',function(){
+      var index  = $(this).attr('index'),
+          parent = $(this).parent();
       
-      parent.find('.miniMenu').removeClass('hover');
-      parent.find('li').removeClass('hover');
-      parent.find('li[index="' + index + '"]').addClass('hover').trigger('miniover');
+      clearHighlight($(this));
+      parent.find('.miniMenu[index="' + index + '"]').addClass('hover');
+      
     });
+
+    mini.on('mouseover',function(){
+      var index  = $(this).attr('index'),
+          parent = $(this).parents('ul');
+      
+      clearHighlight($(this));
+      parent.find('li[index="' + index + '"]').addClass('hover').trigger('miniover');
+
+    });
+
   };
 
   menuRoot.quickMenu.manager = function(root) {
-    var ul        = $('#menu-hub .menu.first ul'),
-        li        = $('#menu-hub .menu.first ul li'),
-        rootChild = $('.menu-root-child'),
-        mini      = $('.miniMenu');
     
-    // Bind to UL's
     menuRoot.quickMenu.create(root);
-    menuRoot.quickMenu.liBind(li);
-    menuRoot.quickMenu.bind(mini);
+    menuRoot.quickMenu.liBind(root);
+    menuRoot.quickMenu.hoverHighlight(root);
+  
   };
 
 
