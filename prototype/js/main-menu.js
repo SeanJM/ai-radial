@@ -44,6 +44,7 @@ $(function(){
       },function() {
         menuRoot.quickMenu.manager($(menuChild));
         menuRoot.child.bind(parent);
+        menuRoot.child.levels(parent);
         menuRoot.configure.rightClick($(menuChild));
       });
     });
@@ -57,8 +58,15 @@ $(function(){
       childList.addClass('visible');
       childList.children('.mini-menu-container').height(childList.height());
       e.stopPropagation();
-    });  
+    });
     $('html').on('click',function(){ root.children('ul').removeClass('visible'); });
+  };
+
+  menuRoot.child.levels = function(root) {
+    root.find('ul').each(function(){
+      var level = $(this).parents('ul').length;
+      $(this).attr('level',level);
+    });
   };
 
   // Create Object for miniMenu Functions
@@ -92,11 +100,13 @@ $(function(){
     /* Activate Sub menu */
     li.on('mouseover',function(){
       if ($(this).children('ul').size()) { 
-        var offset          = parseInt($(this).parent().css('width')) - 4,
+        var offset          = parseInt($(this).parent().css('width'))-4,
+            level           = $(this).children('ul').attr('level');
             vertical_offset = $(this).outerHeight() * -1,
             subMenu         = $(this).children('ul'),
             width           = subMenu.find('li').width();
         
+        if (level > 1 && level%2 == 1) { offset = (parseInt($(this).parent().css('width'))*-1)+4; }
         if (!subMenu.hasClass('visible')) {
           subMenu
             .addClass('visible')
@@ -114,7 +124,7 @@ $(function(){
         var index             = $(this).attr('index'),
             subMenu           = $(this).children('ul'),
             miniMenu          = $(this).parent().find('.miniMenu[index="' + index + '"]');
-            vertical_offset   = miniMenu.outerHeight() + parseInt(miniMenu.css('margin-bottom')),
+            vertical_offset   = miniMenu.outerHeight() + parseInt(miniMenu.css('margin-bottom')) + parseInt(miniMenu.css('margin-top')),
             vertical_position = ($(this).position()['top'] * -1) + (miniMenu.position()['top'] - miniMenu.outerHeight()),
             horizontal_offset = '-8px';
         
