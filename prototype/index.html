@@ -18,17 +18,15 @@
   </head>
   <body>
     <div id="ai-wheel">
-      <div id="main-menu" class="left-handed">
+      <div id="menu-hub" class="left-handed">
         <div class="button">
           <div class="inner-shadow">
             <div class="icon ai"></div>
           </div>
         </div>
         <ul class="menu first">
-          <li class="file center">
-            File
-          </li>
-          <li class="edit right">Edit</li>
+          <li class="file center menu-root" menu="file-menu">File</li>
+          <li class="edit right menu-root" menu="edit-menu">Edit</li>
           <li class="object right">Object</li>
           <li class="type right">Type</li>
           <li class="select center">Select</li>
