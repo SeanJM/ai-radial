@@ -22,6 +22,7 @@ $(function(){
         menuPos = (mainW/2) - (menuW/2);
     menu.css('left',menuPos);
   };
+
   menuHub.bind = function() {
     $('#menu-hub *').on('contextmenu',function(event){ return false; });
     $('#menu-hub .ai').click(function(){ $('#menu-hub').addClass('visible'); });
@@ -47,7 +48,7 @@ $(function(){
       });
     });
   }
-
+  
   // Menu Root Children 
   menuRoot.child.bind = function(root) {
     root.on('click',function(e){
@@ -61,12 +62,12 @@ $(function(){
   // Create Object for miniMenu Functions
   menuRoot.quickMenu = {};
   menuRoot.quickMenu.create = function(root) {
-    var li = root.find('li'),
-        i  = 0;
+    var li        = root.find('li'),
+        i         = 0,
+        quickContainer = $('<div class="mini-menu-container">');
     li.each(function(){
       i++;
-      var container   = $(this).parent().find('.mini-menu-container'),
-          clss        = $(this).attr('class'),
+      var clss        = $(this).attr('class'),
           marker      = $(this).find('.marker'),
           miniMenu    = $('<div class="miniMenu" index="' + i + '"><div class="innerShadow"></div></div>').addClass(clss),
           disclosure  = $('<span class="disclosure" />');
@@ -77,11 +78,11 @@ $(function(){
       }
 
       $(this).attr('index',i);
-      if ($(this).find('ul').size()) {
-        $(this).append(disclosure);
-      }
-      container.append(miniMenu);
+      if ($(this).find('ul').size()) { $(this).append(disclosure); }
+      quickContainer.append(miniMenu);
     });
+
+    root.find('.container').append(quickContainer);
   };
 
   menuRoot.quickMenu.liBind = function(li) {
