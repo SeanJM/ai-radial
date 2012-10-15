@@ -53,7 +53,9 @@ $(function(){
   menuRoot.child.bind = function(root) {
     root.on('click',function(e){
       $('.menu-root-child.visible').removeClass('visible');
-      $(this).children('ul').addClass('visible');
+      var childList  = $(this).children('ul');
+      childList.addClass('visible');
+      childList.children('.mini-menu-container').height(childList.height());
       e.stopPropagation();
     });  
     $('html').on('click',function(){ root.children('ul').removeClass('visible'); });
@@ -82,7 +84,7 @@ $(function(){
       quickContainer.append(miniMenu);
     });
 
-    root.find('.container').append(quickContainer);
+    root.append(quickContainer);
   };
 
   menuRoot.quickMenu.liBind = function(root) {
@@ -106,8 +108,7 @@ $(function(){
     
     li.on('miniover',function(){
 
-      $(this)
-        .parent().find('ul.visible').removeClass('visible');
+      $(this).parent().find('ul.visible').removeClass('visible');
 
       if ($(this).children('ul').size()) { 
         var index             = $(this).attr('index'),
@@ -149,7 +150,7 @@ $(function(){
   menuRoot.quickMenu.hoverHighlight = function(root) {
     var mini           = root.find('.miniMenu'),
         li             = root.find('li'),
-        clearHighlight = function(element) { element.parent().find('.miniMenu').removeClass('hover'); element.parent().find('li').removeClass('hover'); };
+        clearHighlight = function(element) { element.parents('ul').find('.hover').removeClass('hover'); };
 
     li.on('hover',function(){
       var index  = $(this).attr('index'),

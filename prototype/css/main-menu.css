@@ -167,30 +167,24 @@
         }
         #menu-hub.right-handed ul.menu.first > li > ul {
           padding: 0px 30px 0px 0px;
+          border-left: 1px solid rgba(0, 0, 0, 0.1);
         }
         #menu-hub.left-handed ul.menu.first > li > ul {
           padding: 0px 0px 0px 30px;
+          border-right: 1px solid rgba(0,0,0,0.1);
         }
           #file-menu {}
           #edit-menu {
             width: 160px;
           }
 
-        #menu-hub.right-handed ul.menu.first > li ul .container {
-          border-right: 1px solid rgba(0,0,0,0.1);
-          float: left;
-        }
-        #menu-hub.left-handed ul.menu.first > li ul .container {
-          float      : left;
-          width      : 100%;
-          border-left: 1px solid rgba(0, 0, 0, 0.1);
-        }
         #menu-hub.right-handed ul.menu.first > li.file > ul { left: -140px; }
         #menu-hub.left-handed ul.menu.first > li.file > ul { right: -140px; }
 
         
-        #menu-hub ul.menu > li ul li:first-child { margin: 6px 0 0 0; }
-        #menu-hub ul.menu > li ul li:last-child { margin: 0 0 6px 0; }
+        #menu-hub ul.menu > li ul li:first-child { margin: 3px 0 0 0; }
+        #menu-hub ul.menu > li ul li:last-child { margin: 0 0 3px 0; }
+        #menu-hub ul.menu > li ul li:only-child { margin: 3px 0 3px 0; }
         
         #menu-hub ul.menu > li ul li .marker {
           position: absolute;
@@ -223,31 +217,35 @@
 
         #menu-hub ul.menu.first > li ul .mini-menu-container {
           position          : absolute;
-          top               : 12px;
+          top               : 0;
+          width             : 30px;
           -webkit-transition: all 0.2s;
         }
         #menu-hub.right-handed ul.menu.first > li ul .mini-menu-container {
-          right: 12px;
-        }
-        #menu-hub.right-handed ul.menu.first > li ul .mini-menu-container:hover {
-          right: 9px;
+          right: 0px;
+          border-left: 1px solid rgba(0,0,0,0.1);
         }
         #menu-hub.left-handed ul.menu.first > li ul .mini-menu-container {
-          left: 12px;
+          left: 0px;
+          border-right: 1px solid rgba(0,0,0,0.1);
         }
-        #menu-hub.left-handed ul.menu.first > li ul .mini-menu-container:hover {
-          left: 9px;
-        }
+          #menu-hub ul.menu.first > li ul .mini-menu-container .miniMenu:first-child {
+            margin-top: 12px;
+          }
           #menu-hub ul.menu.first > li ul .mini-menu-container .miniMenu {
             width             : 5px;
             height            : 5px;
-            margin            : 0 0 4px 0;
+            margin            : 0 12px 4px 12px;
             border-radius     : 2px;
             overflow          : hidden;
             -webkit-transition: all 0.3s;
           }
-          #menu-hub ul.menu.first > li ul .mini-menu-container:hover .miniMenu {
-            width        : 12px;
+          #menu-hub ul.menu.first > li ul .mini-menu-container:hover .miniMenu { width: 12px; }
+          #menu-hub.left-handed ul.menu.first > li ul .mini-menu-container:hover .miniMenu {
+            margin-left: 9px;
+          }
+          #menu-hub.right-handed ul.menu.first > li ul .mini-menu-container:hover .miniMenu {
+            margin-right: 9px;
           }
           #menu-hub ul.menu.first > li ul .mini-menu-container .miniMenu.hidden {
             height: 0;
