@@ -430,7 +430,7 @@
       line-height     : 30px;
       list-style      : none;
       color           : #A2A2A2;
-      background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8));
+      background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
       text-align: center;
     }
     #menu-quickpick .pick li ul {

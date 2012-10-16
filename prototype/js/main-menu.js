@@ -166,10 +166,8 @@ $(function(){
     element.find('li').each(function(e){
       var el = $(this);
       // Make element dragable when it's clicked
-      el.on('mousedown',function(){
-        console.log(el);
-        el.addClass('drag');
-        if (el.parents('li')) { el.parents('li').removeClass('drag'); }
+      el.on('mousedown',function(e){
+        $(e.target).addClass('drag');
       });
       // When the mouse is released undrag object
       $('html').on('mouseup',function(e){
