@@ -210,7 +210,8 @@
         }
         #menu-hub ul.menu > li ul li .marker { left: 2px; }
         #menu-hub .menu ul li.hidden .marker { display: none; }
-        #menu-hub ul.menu > li ul li .disclosure { 
+        .disclosure,
+        #menu-hub ul.menu > li ul li .disclosure {
           z-index            : 1;
           position           : absolute;
           top                : 8px;
@@ -379,11 +380,11 @@
     right: 0;
   }
     #menu-quickpick .pick {
-      width: 60px;
-      height: 30px;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+      position     : absolute;
+      width        : 60px;
+      height       : 30px;
       border-radius: 15px;
-      position: absolute;
+      box-shadow   : 0 1px 6px rgba(0, 0, 0, 0.3);
     }
     #menu-quickpick .pick.drag-into {
       background-image: -webkit-linear-gradient(bottom,rgba(115, 197, 243, 0.56),rgba(159, 230, 248, 0.56));
@@ -433,11 +434,31 @@
       background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
       text-align: center;
     }
+    #menu-quickpick .pick.more li {
+      text-align: left;
+      text-indent: 10px;
+      position: relative;
+    }
     #menu-quickpick .pick li ul {
       display: none;
+      width: 150px;
     }
+    #menu-quickpick .pick li.hover ul,
     #menu-quickpick .pick li:hover ul {
       display: block;
+      background: #fff;
+      position: absolute;
+      z-index: 1000;
+      left: 50px;
+      top: 20px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    }
+      #menu-quickpick .pick li:hover ul li {
+        border-radius: 0;
+      }
+    #menu-quickpick .pick .disclosure {
+      right: 10px;
+      top: 10px;
     }
 /* Drag n Drop */
 #drag-clone {

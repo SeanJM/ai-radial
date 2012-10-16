@@ -75,10 +75,6 @@ $(function(){
   // Drag and Drop Functionality
   menuRoot.dragndrop = {};
   menuRoot.dragndrop.drag = function (el,e) {
-    if (el.hasClass('drag') && el.find('drag').size() > 0) { 
-      el.removeClass('drag'); 
-      el = el.find('drag'); 
-    }
     if (el.hasClass('drag')) {
       var mouse   = {},
           offset  = e.pageX - el.offset().left;
@@ -90,8 +86,8 @@ $(function(){
         var dragClone = $('#drag-clone');
         if (dragClone.size() <= 0) {
           // Creating a temporary element to get the correct width
-          var text = $.trim(el.clone().children().remove().end().text()),
-              tempElem = $('<span>' + text + '</span>').hide().appendTo('body'),
+          var text = $.trim(el.clone().children().remove().end().text().replace('...','')),
+              tempElem = $('<span style="float: left;">' + text + '</span>').hide().appendTo('body'),
               width = tempElem.width();
           if (width < 60) { width = 60; }
           tempElem.remove();
@@ -120,6 +116,9 @@ $(function(){
                 pick.top    = pick.el.offset().top;
                 pick.bottom = pick.el.offset().top + pick.el.height();
                 pick.right  = pick.el.offset().left + pick.el.width();
+            if (!inrect({'mousex':mouse.x,'mousey':mouse.y,'left':pick.left,'top':pick.top,'right':pick.right,'bottom':pick.bottom})) {
+              pick.el.removeClass('drag-into');
+            }
             if (inrect({'mousex':mouse.x,'mousey':mouse.y,'left':pick.left,'top':pick.top,'right':pick.right,'bottom':pick.bottom})) {
               $('.drag-into').removeClass('drag-into');
               pick.el.addClass('drag-into'); 
@@ -131,35 +130,49 @@ $(function(){
     }
   }
   menuRoot.dragndrop.drop = function (el) {
-    if (el.hasClass('drag')) {
-      var dragClone = $('#drag-clone');
-      if (dragClone.size() > 0) { 
-        // Remove Clone if it hasn't been dragged into anything
-        if ($('.drag-into').size() < 1) {
-          var left = el.offset().left,
-              top = el.offset().top;
-          dragClone.animate({'left':left,'top':top},200,function() {
-            dragClone.fadeOut(100,function() { 
-              dragClone.remove(); 
-            });
-          }); 
-        }
-        if ($('.drag-into').size() > 0) {
-          dragInto = $('.drag-into');
-          var offset = dragInto.width() - dragClone.width(),
-              right   = offset + parseInt(dragInto.css('right'));
-              left   = offset + parseInt(dragInto.css('left'));
-          console.log(offset + ' ' + right);
-          dragClone
-            .appendTo(dragInto)
-            .css('position','relative')
-            .css('left','')
-            .css('top','')
-            .removeAttr('id');
-          dragInto.width(dragClone.width()).css('right',right).css('left',left);
+    var dragClone = $('#drag-clone');
+    if (dragClone.size() > 0) { 
+      // Remove Clone if it hasn't been dragged into anything
+      if ($('.drag-into').size() < 1) {
+        var left = el.offset().left,
+            top = el.offset().top;
+        dragClone.animate({'left':left,'top':top},200,function() {
+          dragClone.fadeOut(100,function() { 
+            dragClone.remove(); 
+          });
+        }); 
+      }
+      if ($('.drag-into').size() > 0) {
+        var disclosure = dragClone.find('.disclosure'),
+            dragInto   = $('.drag-into'),
+            offset     = function() {
+              var offsetPosition = dragInto.width() - dragClone.width(),
+                  right          = offsetPosition + parseInt(dragInto.css('right')),
+                  left           = offsetPosition + parseInt(dragInto.css('left'));
+              console.log(dragClone.width());
+              return { 'right':right,'left':left }
+            };
+        dragClone
+          .appendTo(dragInto)
+          .removeAttr('id')
+          .removeClass('drag')
+          .css('left','')
+          .css('top','')
+          .children().removeAttr('style');
+        dragInto
+          .css('right',offset().right)
+          .css('left',offset().left)
+          .width(dragClone.width());
+        if (disclosure.size() > 0) {
+          var disclosureW = disclosure.width()+5;
+              right = parseInt(dragInto.css('right'))-disclosureW,
+              left  = parseInt(dragInto.css('left'))+disclosureW,
+              width = dragInto.width()+disclosureW;
+          console.log(right);
+          dragInto.css('right',right).css('left',left).width(width).addClass('more');
+          dragClone.width(width); 
         }
       }
-      el.removeClass('drag');
     }
   }
   menuRoot.dragndrop.init = function(element) {
@@ -171,7 +184,10 @@ $(function(){
       });
       // When the mouse is released undrag object
       $('html').on('mouseup',function(e){
-        menuRoot.dragndrop.drop(el);
+        if (el.hasClass('drag')) {
+          el.removeClass('drag');
+          menuRoot.dragndrop.drop(el);
+        }
       });
       $('html').on('mousemove',function(e){
         menuRoot.dragndrop.drag(el,e)
@@ -307,7 +323,9 @@ $(function(){
   menuRoot.quickPick.create = function() {
     $('#menu-quickpick .container').each(function() {
       $(this).find('.pick').each(function(n) {
-        $(this).css('top',40*n);
+        $(this).css('top',40*n).on('hover',function(){
+          $(this).find('li').addClass('hover');
+        });
       });
     });
   };
