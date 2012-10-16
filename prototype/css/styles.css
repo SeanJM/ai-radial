@@ -5,6 +5,10 @@ body {
 * {
   margin : 0;
   padding: 0;
+  -webkit-user-select: none;
+  -moz-user-select   : none;
+  -ms-user-select    : none;
+  user-select        : none;
 }
 .sprite {
   background: url('../img/ai-sprite-01.png') no-repeat;
