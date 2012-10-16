@@ -48,7 +48,7 @@ $(function(){
         menuRoot.child.bind(parent);
         menuRoot.child.levels(parent);
         menuRoot.configure.rightClick($(menuChild));
-        menuRoot.dragndrop($(menuChild));
+        menuRoot.dragndrop.init($(menuChild));
       });
     });
   }
@@ -73,7 +73,96 @@ $(function(){
   };
 
   // Drag and Drop Functionality
-  menuRoot.dragndrop = function(element) {
+  menuRoot.dragndrop = {};
+  menuRoot.dragndrop.drag = function (el,e) {
+    if (el.hasClass('drag') && el.find('drag').size() > 0) { 
+      el.removeClass('drag'); 
+      el = el.find('drag'); 
+    }
+    if (el.hasClass('drag')) {
+      var mouse   = {},
+          offset  = e.pageX - el.offset().left;
+          mouse.x = e.pageX;
+          mouse.y = e.pageY;
+      // Check to see that the mouse has moved atleast 5px
+      // so that we know a drag was intentional
+      if (offset > 5 || offset < -5) {
+        var dragClone = $('#drag-clone');
+        if (dragClone.size() <= 0) {
+          // Creating a temporary element to get the correct width
+          var text = $.trim(el.clone().children().remove().end().text()),
+              tempElem = $('<span>' + text + '</span>').hide().appendTo('body'),
+              width = tempElem.width();
+          if (width < 60) { width = 60; }
+          tempElem.remove();
+          el
+            .clone()
+            .appendTo('body')
+            .attr('id','drag-clone')
+            .width(width);
+        }
+        if (dragClone.size() > 0) {
+          var picks = $('#menu-quickpick .pick');
+          var inrect = function(object) {
+            var mousex = object.mousex,
+                mousey = object.mousey,
+                left   = object.left,
+                top    = object.top,
+                bottom = object.bottom,
+                right  = object.right;
+            if (mousex > left && mousey > top && mousey < bottom && mousex < right) { return true }
+            return false;
+          };
+          for (var i = 0;i<picks.size();i++) {
+            var pick        = {};
+                pick.el     = picks.eq(i);
+                pick.left   = pick.el.offset().left;
+                pick.top    = pick.el.offset().top;
+                pick.bottom = pick.el.offset().top + pick.el.height();
+                pick.right  = pick.el.offset().left + pick.el.width();
+            if (inrect({'mousex':mouse.x,'mousey':mouse.y,'left':pick.left,'top':pick.top,'right':pick.right,'bottom':pick.bottom})) {
+              $('.drag-into').removeClass('drag-into');
+              pick.el.addClass('drag-into'); 
+            }
+          }
+          dragClone.css('left',mouse.x).css('top',mouse.y); 
+        }
+      }
+    }
+  }
+  menuRoot.dragndrop.drop = function (el) {
+    if (el.hasClass('drag')) {
+      var dragClone = $('#drag-clone');
+      if (dragClone.size() > 0) { 
+        // Remove Clone if it hasn't been dragged into anything
+        if ($('.drag-into').size() < 1) {
+          var left = el.offset().left,
+              top = el.offset().top;
+          dragClone.animate({'left':left,'top':top},200,function() {
+            dragClone.fadeOut(100,function() { 
+              dragClone.remove(); 
+            });
+          }); 
+        }
+        if ($('.drag-into').size() > 0) {
+          dragInto = $('.drag-into');
+          var offset = dragInto.width() - dragClone.width(),
+              right   = offset + parseInt(dragInto.css('right'));
+              left   = offset + parseInt(dragInto.css('left'));
+          console.log(offset + ' ' + right);
+          dragClone
+            .appendTo(dragInto)
+            .css('position','relative')
+            .css('left','')
+            .css('top','')
+            .removeAttr('id');
+          dragInto.width(dragClone.width()).css('right',right).css('left',left);
+        }
+      }
+      el.removeClass('drag');
+    }
+  }
+  menuRoot.dragndrop.init = function(element) {
     element.find('li').each(function(e){
       var el = $(this);
       // Make element dragable when it's clicked
@@ -84,71 +173,10 @@ $(function(){
       });
       // When the mouse is released undrag object
       $('html').on('mouseup',function(e){
-        if (el.hasClass('drag')) {
-          var dragClone = $('#drag-clone');
-          if (dragClone.size() > 0) { 
-            // Remove Clone if it hasn't been dragged into anything
-            if ($('.drag-into').size() < 1) {
-              var left = el.offset().left,
-                  top = el.offset().top;
-              dragClone.animate({'left':left,'top':top},200,function() {
-                dragClone.fadeOut(100,function() { 
-                  dragClone.remove(); 
-                })
-              }); 
-            }
-            if ($('.drag-into').size() > 0) {
-              dragClone.appendTo($('.drag-into')).css('position','relative').css('left','').css('top','').removeAttr('id');
-            }
-          }
-          el.removeClass('drag');
-        }
+        menuRoot.dragndrop.drop(el);
       });
       $('html').on('mousemove',function(e){
-        if (el.hasClass('drag') && el.find('drag').size() > 0) { 
-          el.removeClass('drag'); 
-          el = el.find('drag'); 
-        }
-        if (el.hasClass('drag')) {
-          var mouse   = {},
-              offset  = e.pageX - el.offset().left;
-              mouse.x = e.pageX;
-              mouse.y = e.pageY;
-          // Check to see that the mouse has moved atleast 5px
-          // so that we know a drag was intentional
-          if (offset > 5 || offset < -5) {
-            var dragClone = $('#drag-clone');
-            if (dragClone.size() <= 0) {
-              el.clone().appendTo('body').css('position','absolute').attr('id','drag-clone');
-            }
-            if (dragClone.size() > 0) {
-              var picks = $('#menu-quickpick .pick');
-              var inrect = function(object) {
-                var mousex = object.mousex,
-                    mousey = object.mousey,
-                    left   = object.left,
-                    top    = object.top,
-                    bottom = object.bottom,
-                    right  = object.right;
-                if (mousex > left && mousey > top && mousey < bottom && mousex < right) { return true }
-                return false;
-              };
-              for (var i = 0;i<picks.size();i++) {
-                var pick        = {};
-                    pick.el     = picks.eq(i);
-                    pick.left   = pick.el.offset().left;
-                    pick.top    = pick.el.offset().top;
-                    pick.bottom = pick.el.offset().top + pick.el.height();
-                    pick.right  = pick.el.offset().left + pick.el.width();
-                if (inrect({'mousex':mouse.x,'mousey':mouse.y,'left':pick.left,'top':pick.top,'right':pick.right,'bottom':pick.bottom})) {
-                  $('.drag-into').removeClass('drag-into');
-                  pick.el.addClass('drag-into'); 
-                }
-              }
-              dragClone.css('left',mouse.x).css('top',mouse.y); 
-            }
-          }
-        }
+        menuRoot.dragndrop.drag(el,e)
       });
     });
   };

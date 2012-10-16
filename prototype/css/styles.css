@@ -20,7 +20,7 @@ body {
 
 /* >>>>>>>>>>>>>>>>>>>>> Wheel <<<<<<<<<<<<<<<<<<<<<< */
 #ai-wheel {
-  position: relative;
+  position: absolute;
   top     : 200px;
   left    : 335px;
   width   : 380px;

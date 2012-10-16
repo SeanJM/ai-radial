@@ -425,15 +425,34 @@
     #menu-quickpick.active .right .pick:nth-child(8) { right: -11px; }
     #menu-quickpick .pick li {
       height          : 30px;
-      padding         : 0 10px;
       border-radius   : 15px;
       font-size       : 12px;
       line-height     : 30px;
       list-style      : none;
       color           : #A2A2A2;
       background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8));
+      text-align: center;
+    }
+    #menu-quickpick .pick li ul {
+      display: none;
+    }
+    #menu-quickpick .pick li:hover ul {
+      display: block;
     }
 /* Drag n Drop */
 #drag-clone {
+  position: absolute;
+  height          : 30px;
+  border-radius   : 15px;
+  font-size       : 12px;
+  line-height     : 30px;
+  list-style      : none;
+  color           : #A2A2A2;
+  background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8));
   z-index: 1000;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  text-align: center;
+}
+#drag-clone ul {
+  display: none;
 }
