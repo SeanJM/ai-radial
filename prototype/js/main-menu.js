@@ -23,12 +23,13 @@ $(function(){
   }
 
   menu.rightClick = function(root) {
-    console.log(root);
     root.find('li').each(function() {
       $(this).on('mousedown',function(event){
         /* Right Click Options */
         if (event.which == 3) {
           menuRoot.configure.create({'element': $(event.target),'mouse':event});
+          event.stopPropagation();
+          console.log('test');
         }
       });
     });
@@ -91,7 +92,7 @@ $(function(){
     });
   }
   
-  menu.visibility = function(root) {
+  menu.visibile = function(root) {
     root.on('click',function(e){
       $('.menu-root-child.visible').removeClass('visible');
       var target = $(e.target);
@@ -200,6 +201,11 @@ $(function(){
     });
   };
 
+  menu.inrect = function (object) {
+    if (object.mouseX > object.left && object.mouseY > object.top && object.mouseY < object.bottom && object.mouseX < object.right) { return true }
+    return false;
+  }
+
   menuhub.init = function () {
     menuhub.bind();
     menu.position($('#menu-hub'),$('#ai-wheel'));
@@ -219,76 +225,78 @@ $(function(){
         'template':menuChild,
         'parent':parent
       },function() {
-        menu.visibility(parent);
+        menu.visibile(parent);
         menu.levels(parent);
         menu.quickMenu.init(parent);
         menu.popOut(parent);
 
         menu.disclosure($(menuChild));
         menu.rightClick($(menuChild));
-        menuRoot.dragDrop.init($(menuChild));
+        menu.dragDrop.init($(menuChild));
       });
     });
   }
   
   // Drag and Drop Functionality
-  menuRoot.dragDrop = {};
-  menuRoot.dragDrop.drag = function (el,e) {
+  menu.dragDrop = {};
+  menu.dragDrop.ghost = function (element) {
+    // Creating a temporary element to get the correct width
+    var text = $.trim(element.clone().children().remove().end().text().replace('...','')),
+        tempElem = $('<span style="float: left;">' + text + '</span>').hide().appendTo('body'),
+        width = tempElem.width();
+
+    if (width < 60) { width = 60; }
+    
+    tempElem.remove();
+    
+    // Create Ghost
+    element
+      .clone()
+      .appendTo('body')
+      .attr('id','drag-clone')
+      .width(width);
+  }
+  menu.dragDrop.test = function (object) {
+    var targetGroup = $('#menu-quickpick .pick');
+    for (var i = 0;i<targetGroup.size();i++) {
+      var target        = {};
+          target.el     = targetGroup.eq(i);
+          target.left   = target.el.offset().left;
+          target.top    = target.el.offset().top;
+          target.bottom = target.el.offset().top + target.el.height();
+          target.right  = target.el.offset().left + target.el.width();
+      if (!menu.inrect({'mouseX':object.mouseX,'mouseY':object.mouseY,'left':target.left,'top':target.top,'right':target.right,'bottom':target.bottom})) {
+        target.el.removeClass('drag-into');
+      }
+      if (menu.inrect({'mouseX':object.mouseX,'mouseY':object.mouseY,'left':target.left,'top':target.top,'right':target.right,'bottom':target.bottom})) {
+        $('.drag-into').removeClass('drag-into');
+        target.el.addClass('drag-into'); 
+      }
+    }
+  }
+
+  menu.dragDrop.drag = function (el,object) {
     if (el.hasClass('drag')) {
-      var mouse   = {},
-          offset  = e.pageX - el.offset().left;
-          mouse.x = e.pageX;
-          mouse.y = e.pageY;
-      // Check to see that the mouse has moved atleast 5px
-      // so that we know a drag was intentional
-      if (offset > 5 || offset < -5) {
+      var 
+        dragOffset = 10,
+        offsetX    = object.initMouseX - object.mouseX,
+        offsetY    = object.initMouseY - object.mouseY;
+
+      if (offsetX > dragOffset || offsetX < dragOffset*-1 || offsetY > dragOffset || offsetY < dragOffset*-1) {
         var dragClone = $('#drag-clone');
-        if (dragClone.size() <= 0) {
-          // Creating a temporary element to get the correct width
-          var text = $.trim(el.clone().children().remove().end().text().replace('...','')),
-              tempElem = $('<span style="float: left;">' + text + '</span>').hide().appendTo('body'),
-              width = tempElem.width();
-          if (width < 60) { width = 60; }
-          tempElem.remove();
-          el
-            .clone()
-            .appendTo('body')
-            .attr('id','drag-clone')
-            .width(width);
+        
+        if (dragClone.size() < 1) {
+          menu.dragDrop.ghost(el);
         }
+
         if (dragClone.size() > 0) {
-          var picks = $('#menu-quickpick .pick');
-          var inrect = function(object) {
-            var mousex = object.mousex,
-                mousey = object.mousey,
-                left   = object.left,
-                top    = object.top,
-                bottom = object.bottom,
-                right  = object.right;
-            if (mousex > left && mousey > top && mousey < bottom && mousex < right) { return true }
-            return false;
-          };
-          for (var i = 0;i<picks.size();i++) {
-            var pick        = {};
-                pick.el     = picks.eq(i);
-                pick.left   = pick.el.offset().left;
-                pick.top    = pick.el.offset().top;
-                pick.bottom = pick.el.offset().top + pick.el.height();
-                pick.right  = pick.el.offset().left + pick.el.width();
-            if (!inrect({'mousex':mouse.x,'mousey':mouse.y,'left':pick.left,'top':pick.top,'right':pick.right,'bottom':pick.bottom})) {
-              pick.el.removeClass('drag-into');
-            }
-            if (inrect({'mousex':mouse.x,'mousey':mouse.y,'left':pick.left,'top':pick.top,'right':pick.right,'bottom':pick.bottom})) {
-              $('.drag-into').removeClass('drag-into');
-              pick.el.addClass('drag-into'); 
-            }
-          }
-          dragClone.css('left',mouse.x).css('top',mouse.y); 
+          menu.dragDrop.test({'mouseX':object.mouseX,'mouseY':object.mouseY});
+          dragClone.css('left',object.mouseX-(dragClone.width()/2)).css('top',object.mouseY-(dragClone.height()/2)); 
         }
       }
     }
   }
-  menuRoot.dragDrop.drop = function (el) {
+  menu.dragDrop.drop = function (el) {
     var dragClone = $('#drag-clone');
     if (dragClone.size() > 0) { 
       // Remove Clone if it hasn't been dragged into anything
@@ -334,22 +342,26 @@ $(function(){
       }
     }
   }
-  menuRoot.dragDrop.init = function(element) {
+  menu.dragDrop.init = function(element) {
     element.find('li').each(function(e){
-      var el = $(this);
+      var 
+        el    = $(this),
+        mouse = {};
       // Make element dragable when it's clicked
       el.on('mousedown',function(e){
         $(e.target).addClass('drag');
+        mouse.X = e.pageX;
+        mouse.Y = e.pageY;
       });
       // When the mouse is released undrag object
       $('html').on('mouseup',function(e){
         if (el.hasClass('drag')) {
           el.removeClass('drag');
-          menuRoot.dragDrop.drop(el);
+          menu.dragDrop.drop(el);
         }
       });
       $('html').on('mousemove',function(e){
-        menuRoot.dragDrop.drag(el,e)
+        menu.dragDrop.drag(el,{'initMouseX':mouse.X,'initMouseY':mouse.Y,'mouseX':e.pageX,'mouseY':e.pageY});
       });
     });
   };
@@ -377,7 +389,7 @@ $(function(){
     var el      = data['element'],
         cache   = $('<div />'),
         menu    = '#configure-menu';
-    console.log(el);
+    /*console.log(el);*/
     /* Check to see if it exists */
     if ($(menu).size() < 1) { 
       template.load({'template-file':'menu','template':menu,'parent':'body'},function() { menuRoot.configure.bind(data); }); 
@@ -388,34 +400,37 @@ $(function(){
   menuRoot.configure.bind = function(data) {
     var el    = data['element'],
         index = el.attr('index'),
-        mini  = el.closest('ul').children('.miniMenu[index="' + index + '"]'),
+        mini  = el.closest('ul').children('.mini-menu-container').find('[index="' + index + '"]'),
         menu  = $('#configure-menu');
 
-    el.addClass('select');
-
-    menu.on('contextmenu',function(){ return false; });
-    menu.css('top',data['mouse'].pageY-10).css('left',data['mouse'].pageX-10);
-    menu.find('.mark').off('click');
-    menu.find('.mark').on('click',function(event){
-      var color = $(this).attr('class').replace('mark','').replace('color','').trim();
-      el.find('.marker').attr('class','marker ' + color);
-      mini.attr('class','miniMenu ' + color);
-      // Stops the root menu child from closing
-      event.stopPropagation();
-    });
-    
     function hideMenu() {
       if (menu.is(':visible')) { menu.hide(); }
       el.removeClass('select');
-    } 
-    menu.on('click',function(event) { 
-      hideMenu(); 
-      // Stops the root menu child from closing
-      event.stopPropagation();
-    });
-    menu.on('mouseleave',function(){ hideMenu(); });
+    }
 
     if (menu.is(':hidden')) { menu.show(); }
+    
+    el.addClass('select');
+   
+    menu.on('click',function(event) {
+      hideMenu();
+      event.stopPropagation();
+    });
+
+    menu.on('contextmenu',function(){ return false; });
+    menu.on('mouseleave',function(){ hideMenu(); });
+    
+    menu.find('.mark').off('click');
+    
+    menu.find('.mark').on('click',function(){
+      var color = $(this).attr('class').replace('mark','').replace('color','').trim();
+      console.log(mini);
+      el.find('.marker').attr('class','marker ' + color);
+      mini.attr('class','miniMenu ' + color);
+    });
+    
+    menu.css('top',data['mouse'].pageY-10).css('left',data['mouse'].pageX-10);
+
 
     $('#hide-entry').off('click');
     $('#hide-entry').on('click',function(event){
@@ -429,8 +444,6 @@ $(function(){
     $('#show-hidden').on('click',function(event){
       el.parent().find('.hidden').removeClass('hidden');
       mini.parent().find('.hidden').removeClass('hidden');
-      // Stops the root menu child from closing
-      event.stopPropagation();
     });
 
   };
