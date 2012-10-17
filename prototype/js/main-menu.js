@@ -14,21 +14,196 @@ $(function(){
   };
 
   // Main Menu
-  var menuHub = {};
-  menuHub.position = function(child,parent) {
+  var menu = {};
+  menu.position = function(child,parent) {
     var childW   = child.width(),
         mainW   = parent.width(),
         menuPos = (mainW/2) - (childW/2);
     child.css('left',menuPos);
+  }
+
+  menu.rightClick = function(root) {
+    console.log(root);
+    root.find('li').each(function() {
+      $(this).on('mousedown',function(event){
+        /* Right Click Options */
+        if (event.which == 3) {
+          menuRoot.configure.create({'element': $(event.target),'mouse':event});
+        }
+      });
+    });
+  }
+
+  menu.levels = function (root) {
+    root.find('ul').each(function(){
+      var level = $(this).parents('ul').length;
+      $(this).attr('level',level);
+    });
+  }
+
+  menu.disclosure = function (root) {
+    root.find('li > ul').each(function(){ 
+      var disclosure  = $('<span class="disclosure" />');
+      $(this).parent().append(disclosure); 
+    });
+  }
+
+  menu.minihover = function (element) {
+
+    element.parent().find('ul.visible').removeClass('visible');
+    if (element.children('ul').size()) { 
+      var index             = element.attr('index'),
+          subMenu           = element.children('ul'),
+          miniMenu          = element.parent().find('.miniMenu[index="' + index + '"]');
+          vertical_offset   = miniMenu.outerHeight() + parseInt(miniMenu.css('margin-bottom')) + parseInt(miniMenu.css('margin-top')),
+          horizontal_offset = '-8px';
+      if (element.position()['top']) { var vertical_position = (element.position()['top'] * -1) + (miniMenu.position()['top'] - miniMenu.outerHeight()); }
+      
+      if ($('#menu-hub').hasClass('right-handed')) {
+        horizontal_offset = parseInt(element.parents('.menu-root-child').css('padding-right')) * -1;
+      }
+      if ($('#menu-hub').hasClass('left-handed')) {
+        horizontal_offset = parseInt(element.parents('.menu-root-child').css('padding-right')) - 5;
+      }
+      subMenu
+        .addClass('visible')
+        .css('left',horizontal_offset)
+        .css('top',vertical_position);
+    }
+  }
+  menu.popOut = function (root) {
+    var li = root.find('li');
+    li.each(function(){
+      $(this).on('mouseover',function(){
+        if ($(this).children('ul').size()) { 
+          var offset          = parseInt($(this).parent().css('width'))-4,
+              level           = $(this).children('ul').attr('level');
+              vertical_offset = $(this).outerHeight() * -1,
+              subMenu         = $(this).children('ul'),
+              width           = subMenu.find('li').width();
+          
+          if (level > 1 && level%2 == 1) { offset = (parseInt($(this).parent().css('width'))*-1)+4; }
+          if (!subMenu.hasClass('visible')) {
+            subMenu.addClass('visible').css('left',offset).css('top',vertical_offset);
+          } 
+        }
+      });
+    });
+  }
+  
+  menu.visibility = function(root) {
+    root.on('click',function(e){
+      $('.menu-root-child.visible').removeClass('visible');
+      var target = $(e.target);
+
+      target.children('ul').each(function() { $(this).addClass('visible'); });
+      // Scale all the quick menus
+      target.find('ul').each(function() { $(this).children('.mini-menu-container').height($(this).height()); });
+
+      e.stopPropagation();
+    });
+    $('html').on('click',function(){ root.children('ul').removeClass('visible'); });
   };
 
-  menuHub.bind = function() {
+  // Quick Menu
+  menu.quickMenu = {};
+  menu.quickMenu.init = function (root) {
+    menu.quickMenu.create(root);
+    menu.quickMenu.bind(root);
+    menu.quickMenu.hover(root);
+  }
+
+  menu.quickMenu.create = function (root) {
+    root.find('ul').each(function(){
+      var 
+        li             = $(this).children('li'),
+        quickContainer = $('<div class="mini-menu-container">'),
+        markerTmplt    = '<span class="marker"></span>';
+      
+      li.each(function(){
+        var 
+          clss     = $(this).attr('class'),
+          miniMenu = $('<div class="miniMenu" index="' + $(this).index() + '"><div class="innerShadow"></div></div>').addClass(clss),
+          marker   = $(this).find('.marker'),
+          markerColor;
+        
+        $(this).attr('index',$(this).index());
+        
+        if (marker.size() < 1) { 
+          marker = $(markerTmplt); 
+          $(this).prepend(marker); 
+        }
+        
+        markerColor = marker.attr('class').replace('marker','').trim();
+        miniMenu.attr('class','miniMenu ' + markerColor);
+        
+        quickContainer.append(miniMenu);
+      });
+
+      $(this).append(quickContainer);
+    
+    });
+  }
+
+  menu.quickMenu.bind = function(root) {
+    var li = root.find('li');
+    /* Activate Sub menu */
+
+    li.on('mouseleave',function(){
+      var index     = $(this).attr('index'),
+          miniMenu  = $(this).parent().find('.miniMenu[index="' + index + '"]');
+
+      miniMenu.removeClass('hover');
+      if ($(this).children('ul').size()) { 
+        $(this)
+          .children('ul')
+          .removeClass('visible')
+          .trigger('minileave');
+      }
+    });
+  }
+
+  menu.quickMenu.hover = function(root) {
+    var mini           = root.find('.miniMenu'),
+        li             = root.find('li'),
+        clearHighlight = function(element,index) { 
+          element.closest('ul')
+            .find('.hover').removeClass('hover').end()
+            .find('[index="' + index + '"]').addClass('hover');
+        };
+
+    li.on('hover',function(){
+      var index  = $(this).attr('index');
+      clearHighlight($(this),index);
+    });
+
+    mini.each(function() {
+      $(this).on('mouseover',function(){
+        var index  = $(this).attr('index');
+        clearHighlight($(this),index);
+        menu.minihover($(this).closest('ul').children('li[index="' + index + '"]'));
+      });
+    });
+  }
+  
+  // Menu Hub
+  var menuhub = {};
+  menuhub.bind = function() {
     $('#menu-hub *').on('contextmenu',function(event){ return false; });
-    $('#menu-hub .ai').click(function(){ 
+    $('#menu-hub .ai').click(function(e){ 
       $('#menu-hub').addClass('visible'); 
       $('#menu-quickpick').addClass('active');
+      e.stopPropagation();
+    });
+    $('html').on('click',function() {
+      $('#menu-hub').removeClass('visible');
     });
   };
+
+  menuhub.init = function () {
+    menuhub.bind();
+    menu.position($('#menu-hub'),$('#ai-wheel'));
+  }
 
   // Menu Root (Secondary Menu)
   var menuRoot = {};
@@ -44,37 +219,21 @@ $(function(){
         'template':menuChild,
         'parent':parent
       },function() {
-        menuRoot.quickMenu.manager($(menuChild));
-        menuRoot.child.bind(parent);
-        menuRoot.child.levels(parent);
-        menuRoot.configure.rightClick($(menuChild));
-        menuRoot.dragndrop.init($(menuChild));
+        menu.visibility(parent);
+        menu.levels(parent);
+        menu.quickMenu.init(parent);
+        menu.popOut(parent);
+
+        menu.disclosure($(menuChild));
+        menu.rightClick($(menuChild));
+        menuRoot.dragDrop.init($(menuChild));
       });
     });
   }
   
-  // Menu Root Children 
-  menuRoot.child.bind = function(root) {
-    root.on('click',function(e){
-      $('.menu-root-child.visible').removeClass('visible');
-      var childList  = $(this).children('ul');
-      childList.addClass('visible');
-      childList.children('.mini-menu-container').height(childList.height());
-      e.stopPropagation();
-    });
-    $('html').on('click',function(){ root.children('ul').removeClass('visible'); });
-  };
-
-  menuRoot.child.levels = function(root) {
-    root.find('ul').each(function(){
-      var level = $(this).parents('ul').length;
-      $(this).attr('level',level);
-    });
-  };
-
   // Drag and Drop Functionality
-  menuRoot.dragndrop = {};
-  menuRoot.dragndrop.drag = function (el,e) {
+  menuRoot.dragDrop = {};
+  menuRoot.dragDrop.drag = function (el,e) {
     if (el.hasClass('drag')) {
       var mouse   = {},
           offset  = e.pageX - el.offset().left;
@@ -129,7 +288,7 @@ $(function(){
       }
     }
   }
-  menuRoot.dragndrop.drop = function (el) {
+  menuRoot.dragDrop.drop = function (el) {
     var dragClone = $('#drag-clone');
     if (dragClone.size() > 0) { 
       // Remove Clone if it hasn't been dragged into anything
@@ -175,7 +334,7 @@ $(function(){
       }
     }
   }
-  menuRoot.dragndrop.init = function(element) {
+  menuRoot.dragDrop.init = function(element) {
     element.find('li').each(function(e){
       var el = $(this);
       // Make element dragable when it's clicked
@@ -186,136 +345,17 @@ $(function(){
       $('html').on('mouseup',function(e){
         if (el.hasClass('drag')) {
           el.removeClass('drag');
-          menuRoot.dragndrop.drop(el);
+          menuRoot.dragDrop.drop(el);
         }
       });
       $('html').on('mousemove',function(e){
-        menuRoot.dragndrop.drag(el,e)
+        menuRoot.dragDrop.drag(el,e)
       });
     });
   };
 
   // Create Object for miniMenu Functions
   menuRoot.quickMenu = {};
-  menuRoot.quickMenu.create = function(root) {
-    var li        = root.find('li'),
-        i         = 0,
-        quickContainer = $('<div class="mini-menu-container">');
-    li.each(function(){
-      i++;
-      var clss        = $(this).attr('class'),
-          marker      = $(this).find('.marker'),
-          miniMenu    = $('<div class="miniMenu" index="' + i + '"><div class="innerShadow"></div></div>').addClass(clss),
-          disclosure  = $('<span class="disclosure" />');
-      
-      if (marker.size()) { 
-        var markerColor = marker.attr('class').replace('marker','').trim();
-        miniMenu.attr('class','miniMenu ' + markerColor); 
-      }
-
-      $(this).attr('index',i);
-      if ($(this).find('ul').size()) { $(this).append(disclosure); }
-      quickContainer.append(miniMenu);
-    });
-
-    root.append(quickContainer);
-  };
-
-  menuRoot.quickMenu.liBind = function(root) {
-    var li = root.find('li');
-    /* Activate Sub menu */
-    li.on('mouseover',function(){
-      if ($(this).children('ul').size()) { 
-        var offset          = parseInt($(this).parent().css('width'))-4,
-            level           = $(this).children('ul').attr('level');
-            vertical_offset = $(this).outerHeight() * -1,
-            subMenu         = $(this).children('ul'),
-            width           = subMenu.find('li').width();
-        
-        if (level > 1 && level%2 == 1) { offset = (parseInt($(this).parent().css('width'))*-1)+4; }
-        if (!subMenu.hasClass('visible')) {
-          subMenu
-            .addClass('visible')
-            .css('left',offset)
-            .css('top',vertical_offset);
-        } 
-      }
-    });
-    
-    li.on('miniover',function(){
-
-      $(this).parent().find('ul.visible').removeClass('visible');
-
-      if ($(this).children('ul').size()) { 
-        var index             = $(this).attr('index'),
-            subMenu           = $(this).children('ul'),
-            miniMenu          = $(this).parent().find('.miniMenu[index="' + index + '"]');
-            vertical_offset   = miniMenu.outerHeight() + parseInt(miniMenu.css('margin-bottom')) + parseInt(miniMenu.css('margin-top')),
-            vertical_position = ($(this).position()['top'] * -1) + (miniMenu.position()['top'] - miniMenu.outerHeight()),
-            horizontal_offset = '-8px';
-        
-        if ($('#menu-hub').hasClass('right-handed')) {
-          horizontal_offset = parseInt($(this).parents('.menu-root-child').css('padding-right')) * -1;
-        }
-        if ($('#menu-hub').hasClass('left-handed')) {
-          horizontal_offset = parseInt($(this).parents('.menu-root-child').css('padding-right')) - 5;
-        }
-        subMenu
-          .addClass('visible')
-          .css('left',horizontal_offset)
-          .css('top',vertical_position);
-      }
-
-    });
-
-    li.on('mouseleave',function(){
-      var index     = $(this).attr('index'),
-          miniMenu  = $(this).parent().find('.miniMenu[index="' + index + '"]');
-
-      miniMenu.removeClass('hover');
-      if ($(this).children('ul').size()) { 
-        $(this)
-          .children('ul')
-          .removeClass('visible')
-          .trigger('minileave');
-      }
-    });
-
-  };
-
-  menuRoot.quickMenu.hoverHighlight = function(root) {
-    var mini           = root.find('.miniMenu'),
-        li             = root.find('li'),
-        clearHighlight = function(element) { element.parents('ul').find('.hover').removeClass('hover'); };
-
-    li.on('hover',function(){
-      var index  = $(this).attr('index'),
-          parent = $(this).parent();
-      
-      clearHighlight($(this));
-      parent.find('.miniMenu[index="' + index + '"]').addClass('hover');
-      
-    });
-
-    mini.on('mouseover',function(){
-      var index  = $(this).attr('index'),
-          parent = $(this).parents('ul');
-      
-      clearHighlight($(this));
-      parent.find('li[index="' + index + '"]').addClass('hover').trigger('miniover');
-
-    });
-
-  };
-
-  menuRoot.quickMenu.manager = function(root) {
-    
-    menuRoot.quickMenu.create(root);
-    menuRoot.quickMenu.liBind(root);
-    menuRoot.quickMenu.hoverHighlight(root);
-    menuRoot.quickPick.create();
-  
-  };
 
   // Quick Pick Menu
 
@@ -332,21 +372,12 @@ $(function(){
 
   // Right Click Configuration Menu
   menuRoot.configure = {};
-  menuRoot.configure.rightClick = function(menuRootChild) {
-    menuRootChild.find('li').on('mousedown',function(event){
-      /* Right Click Options */
-      var selectedItem = $(this);
-      if (event.which == 3) {
-        menuRoot.configure.create({'element': selectedItem,'mouse':event});
-      }
-    });
-  };
 
   menuRoot.configure.create = function(data) {
     var el      = data['element'],
         cache   = $('<div />'),
         menu    = '#configure-menu';
-    
+    console.log(el);
     /* Check to see if it exists */
     if ($(menu).size() < 1) { 
       template.load({'template-file':'menu','template':menu,'parent':'body'},function() { menuRoot.configure.bind(data); }); 
@@ -357,7 +388,7 @@ $(function(){
   menuRoot.configure.bind = function(data) {
     var el    = data['element'],
         index = el.attr('index'),
-        mini  = el.parents('#menu-hub').find('.miniMenu[index="' + index + '"]'),
+        mini  = el.closest('ul').children('.miniMenu[index="' + index + '"]'),
         menu  = $('#configure-menu');
 
     el.addClass('select');
@@ -404,8 +435,8 @@ $(function(){
 
   };
 
-  menuHub.bind()
-  menuHub.position($('#menu-hub'),$('#ai-wheel'));
-  menuHub.position($('#menu-quickpick'),$('#main-wheel'));
+  menuhub.init()
+  menu.position($('#menu-quickpick'),$('#main-wheel'));
   menuRoot.loadDropdown();
+  menuRoot.quickPick.create();
 }); 
