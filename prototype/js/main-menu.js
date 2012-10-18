@@ -254,22 +254,22 @@ $(function(){
   // Drag and Drop Functionality
   menu.dragDrop = {};
   menu.dragDrop.ghost = function (element) {
-    // Creating a temporary element to get the correct width
-    var text = $.trim(element.clone().children().remove().end().text().replace('...','')),
-        tempElem = $('<span style="float: left;">' + text + '</span>').hide().appendTo('body'),
-        width = tempElem.width();
+    var 
+      disclosure = element.children('.disclosure'),
+      text       = $.trim(element.clone().children().remove().end().text()),
+      tempElem   = $('<span style="float: left; position: absolute; font-size:' + element.css('font-size') + ';">' + text + '</span>').hide().appendTo('body'),
+      width      = tempElem.width()+20,
+      ghost      = element.clone().appendTo('body').attr('id','drag-clone');
 
-    if (width < 60) { width = 60; }
-    
+    if (disclosure.size() > 0) { 
+      ghost.addClass('more');
+      width+=disclosure.width()+8;
+    }
+
     tempElem.remove();
-    
-    // Create Ghost
-    element
-      .clone()
-      .appendTo('body')
-      .attr('id','drag-clone')
-      .width(width);
+    ghost.width(width);
   }
+
   menu.dragDrop.test = function (object) {
     var targetGroup = $('#menu-quickpick .pick');
     for (var i = 0;i<targetGroup.size();i++) {
@@ -280,10 +280,10 @@ $(function(){
           target.bottom = target.el.offset().top + target.el.height();
           target.right  = target.el.offset().left + target.el.width();
       // Check to see if the dragged element is inside the target
-      if (!menu.inrect({'active':object.active,'passive':target.el,'mouseX':object.mouseX,'mouseY':object.mouseY,'left':target.left,'top':target.top,'right':target.right,'bottom':target.bottom})) {
+      if (!menu.inrect({'active':object.active,'passive':target.el})) {
         target.el.removeClass('drag-into');
       }
-      if (menu.inrect({'active':object.active,'passive':target.el,'mouseX':object.mouseX,'mouseY':object.mouseY,'left':target.left,'top':target.top,'right':target.right,'bottom':target.bottom})) {
+      if (menu.inrect({'active':object.active,'passive':target.el})) {
         $('.drag-into').removeClass('drag-into');
         target.el.addClass('drag-into'); 
       }
@@ -329,7 +329,6 @@ $(function(){
       if ($('.drag-into').size() > 0) {
         var 
           disclosure     = dragClone.find('.disclosure'),
-          discWidth      = disclosure.width()+5,
           dragInto       = $('.drag-into'),
           dragIntoRight  = dragInto.css('right').replace('px',''),
           dragIntoLeft   = dragInto.css('left').replace('px',''),
@@ -349,17 +348,13 @@ $(function(){
           .css('top','')
           .children().removeAttr('style');
         
-        if (disclosure.size() > 0) {
-          width = dragClone.width()+discWidth;
-          if (right != 0) { right = right-discWidth; }
-          if (left != 0) { left  = left+discWidth; }
-          dragInto.addClass('more');
-          dragClone.width(width); 
-        }
-
         dragInto.width(dragClone.width());
         if (right != 0) { dragInto.css('right',right); }
         if (left != 0) { dragInto.css('left',left); }
+
+        // Bind the dropped element
+
+        menu.quickPick.bind(dragInto);
       }
     }
     el.closest('.menu-root-child').css('opacity','1');
@@ -390,20 +385,50 @@ $(function(){
 
   // Create Object for miniMenu Functions
   menuRoot.quickMenu = {};
-
   // Quick Pick Menu
-
-  menuRoot.quickPick = {};
-  menuRoot.quickPick.create = function() {
+  menu.quickPick = {};
+  
+  menu.quickPick.create = function() {
     $('#menu-quickpick .container').each(function() {
       $(this).find('.pick').each(function(n) {
-        $(this).css('top',40*n).on('hover',function(){
-          $(this).find('li').addClass('hover');
-        });
+        $(this).css('top',40*n);
       });
     });
-  };
+  }
 
+  menu.quickPick.bind = function(element) {
+    // Clean its classes
+    element.find('.visible').removeClass('visible');
+
+    element.on('mouseover',function() {
+      $(this).children('ul').addClass('visible')
+    });
+    element.on('mouseleave',function(){
+      $(this).children('ul').removeClass('visible');
+    });
+
+    element.find('li').each(function(){
+      $(this).on('mouseover',function(e){ 
+        var ul = $(e.target).children('ul');
+        $(this).addClass('hover');
+        if (ul.size() > 0) {
+          ul.addClass('visible');
+          var ulOffset = u.parseInt(($('#main-wheel').offset().left+$('#main-wheel').width())-ul.offset().left);
+          ul.css('left',ulOffset);
+          console.log(e.target);
+        }
+      });
+      $(this).on('mouseleave',function(){ 
+        var ul = $(this).children('ul');
+        $(this).removeClass('hover');
+        if (ul.size() > 0) {
+          ul.removeClass('visible');
+        }
+      });
+    });
+
+  }
+  
   // Right Click Configuration Menu
   menuRoot.configure = {};
 
@@ -473,5 +498,5 @@ $(function(){
   menuhub.init()
   menu.position($('#menu-quickpick'),$('#main-wheel'));
   menuRoot.loadDropdown();
-  menuRoot.quickPick.create();
+  menu.quickPick.create();
 }); 

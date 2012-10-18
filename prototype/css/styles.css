@@ -3,19 +3,29 @@ body {
   background: url('../illustrator-background.png') no-repeat;
 }
 * {
-  margin : 0;
-  padding: 0;
+  margin             : 0;
+  padding            : 0;
   -webkit-user-select: none;
   -moz-user-select   : none;
-  -ms-user-select    : none;
   user-select        : none;
+  -ms-user-select    : none;
 }
 .sprite {
   background: url('../img/ai-sprite-01.png') no-repeat;
 }
 .wheel-sprite,
-.icon-container .more-tools .arrow {
+.icon-container .more-tools .arrow,
+.disclosure {
   background: url('../img/ai_wheel.png') no-repeat;
+}
+.disclosure {
+  display            : inline-block;
+  position           : absolute;
+  top                : 10px;
+  right              : 10px;
+  width              : 10px;
+  height             : 10px;
+  background-position: -189px -86px;
 }
 
 /* >>>>>>>>>>>>>>>>>>>>> Wheel <<<<<<<<<<<<<<<<<<<<<< */
@@ -115,37 +125,21 @@ body {
   }
   /* WEBKIT */
   @-webkit-keyframes pop {
-    0% {
-      -webkit-transform: scale(0.2);
-    }
-    100% {
-      -webkit-transform: scale(1);
-    }
+    0%   { -webkit-transform: scale(0.2); }
+    100% { -webkit-transform: scale(1); }
   }
   @-webkit-keyframes pop-out {
-    0% {
-      -webkit-transform: scale(1);
-    }
-    100% {
-      -webkit-transform: scale(0);
-    }
+    0%   { -webkit-transform: scale(1); }
+    100% { -webkit-transform: scale(0); }
   }
   /* MOZ */
   @-moz-keyframes pop {
-    0% {
-      -moz-transform: scale(0.2);
-    }
-    100% {
-      -moz-transform: scale(1);
-    }
+    0%   { -moz-transform: scale(0.2); }
+    100% { -moz-transform: scale(1); }
   }
   @-moz-keyframes pop-out {
-    0% {
-      -moz-transform: scale(1);
-    }
-    100% {
-      -moz-transform: scale(0);
-    }
+    0%   { -moz-transform: scale(1); }
+    100% { -moz-transform: scale(0); }
   }
   .icon-container .more-tools .more-ring {
     display         : none;

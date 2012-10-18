@@ -216,6 +216,8 @@
     #ai-wheel.left-handed ul .break { background-image: -webkit-linear-gradient(right,rgba(0,0,0,0.1) 82%,rgba(0,0,0,0.0) 100%); }
     #ai-wheel.right-handed ul .break { background-image: -webkit-linear-gradient(left,rgba(0,0,0,0.1) 82%,rgba(0,0,0,0.0) 100%); }
 
+    #ai-wheel ul.menu-parent li { text-align: left; }
+    #ai-wheel.right-handed ul.menu-parent li { padding-left:14px; }
     #ai-wheel ul.menu-parent li:first-child { margin: 3px 0 0 0; }
     #ai-wheel ul.menu-parent li:last-child { margin: 0 0 3px 0; }
     #ai-wheel ul.menu-parent li:only-child { margin: 3px 0 3px 0; }
@@ -227,6 +229,7 @@
         height  : 19px;
       }
 
+      #ai-wheel.right-handed li ul li .marker { left: 4px; }
       #ai-wheel li ul li .marker { left: 2px; }
       #ai-wheel ul li.hidden .marker { display: none; }
     
@@ -435,18 +438,17 @@
       background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
       text-align: center;
     }
-    #menu-quickpick .pick.more li {
-      text-align: left;
-      text-indent: 10px;
-      position: relative;
-    }
     #menu-quickpick .menu-parent {
       width: 190px;
+      position: absolute;
     }
-    #menu-quickpick .pick .disclosure {
-      right: 10px;
-      top: 10px;
+    #drag-clone.more,
+    #menu-quickpick li.more {
+      text-align: left;
+      position: absolute;
+      text-indent: 10px;
     }
+    #menu-quickpick li.more li { text-indent: 0; }
 /* Drag n Drop */
 #drag-clone {
   position: absolute;
@@ -461,6 +463,4 @@
   box-shadow: 0 1px 6px rgba(0,0,0,0.4);
   text-align: center;
 }
-#drag-clone ul {
-  display: none;
-}
+#drag-clone ul { display: none; }
