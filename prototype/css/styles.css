@@ -41,8 +41,6 @@ body {
     width           :380px;
     height          :380px;
     border-radius   : 190px;
-    background-image: -webkit-radial-gradient(center, transparent 69%, rgba(0, 0, 0, 0.11) 71% );
-    background-image: -moz-radial-gradient(center, transparent 69%, rgba(0, 0, 0, 0.11) 71% );
     position        : relative;
   }
 
@@ -181,8 +179,8 @@ body {
   height          :171px;
   position        : absolute;
   border-radius   : 136px;
-  background-image: -webkit-radial-gradient(center, rgba(0, 0, 0, 0.0) 67%, rgba(0, 0, 0, 0.1) 71% );
-  background-image: -moz-radial-gradient(center, rgba(0, 0, 0, 0.0) 67%, rgba(0, 0, 0, 0.1) 71% );
+  background-image: -webkit-radial-gradient(center, rgba(0, 0, 0, 0.0) 69%, rgba(0, 0, 0, 0.1) 71% );
+  background-image: -moz-radial-gradient(center, rgba(0, 0, 0, 0.0) 69%, rgba(0, 0, 0, 0.1) 71% );
 }
 
 #secondRing:hover {

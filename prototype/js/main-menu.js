@@ -37,6 +37,7 @@ $(function(){
 
   menu.levels = function (root) {
     root.find('ul').each(function(){
+      if ($(this).children('li').size() > 0) { $(this).addClass('menu-parent'); }
       var level = $(this).parents('ul').length;
       $(this).attr('level',level);
     });
@@ -170,7 +171,7 @@ $(function(){
         clearHighlight = function(element,index) { 
           element.closest('ul')
             .find('.hover').removeClass('hover').end()
-            .find('[index="' + index + '"]').addClass('hover');
+            .children('[index="' + index + '"]').addClass('hover');
         };
 
     li.on('hover',function(){
@@ -297,6 +298,7 @@ $(function(){
       }
     }
   }
+
   menu.dragDrop.drop = function (el) {
     var dragClone = $('#drag-clone');
     if (dragClone.size() > 0) { 
@@ -313,12 +315,15 @@ $(function(){
       if ($('.drag-into').size() > 0) {
         var 
           disclosure     = dragClone.find('.disclosure'),
+          discWidth      = disclosure.width()+5,
           dragInto       = $('.drag-into'),
           dragIntoRight  = dragInto.css('right').replace('px',''),
           dragIntoLeft   = dragInto.css('left').replace('px',''),
           right          = 0,
           left           = 0,
+          width          = 0,
           offsetPosition = dragInto.width() - dragClone.width();
+          
           if (u.isNum(dragIntoRight)) { right = offsetPosition + u.parseInt(dragIntoRight); }
           if (u.isNum(dragIntoLeft))  { left  = offsetPosition + u.parseInt(dragIntoLeft); }
 
@@ -330,21 +335,17 @@ $(function(){
           .css('top','')
           .children().removeAttr('style');
         
-        dragInto.width(dragClone.width());
-        if (right != 0) { 
-          dragInto.css('right',right); 
-          console.log(right);
-        }
-        if (left != 0) { dragInto.css('left',left); }
-        
         if (disclosure.size() > 0) {
-          var disclosureW = disclosure.width()+5;
-              right = parseInt(dragIntoRight)-disclosureW,
-              left  = parseInt(dragIntoLeft)+disclosureW,
-              width = dragInto.width()+disclosureW;
-          dragInto.css('right',right).css('left',left).width(width).addClass('more');
+          width = dragClone.width()+discWidth;
+          if (right != 0) { right = right-discWidth; }
+          if (left != 0) { left  = left+discWidth; }
+          dragInto.addClass('more');
           dragClone.width(width); 
         }
+
+        dragInto.width(dragClone.width());
+        if (right != 0) { dragInto.css('right',right); }
+        if (left != 0) { dragInto.css('left',left); }
       }
     }
     el.closest('.menu-root-child').css('opacity','1');
