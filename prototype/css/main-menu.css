@@ -191,6 +191,9 @@
         #menu-hub.left-handed ul.menu.first > li ul {
           padding: 0px 0px 0px 30px;
         }
+        .menu-root-child {
+          -webkit-transition:all 0.3s;
+        }
           #file-menu {}
           #edit-menu { width: 170px; }
           #object-menu { width: 170px; }

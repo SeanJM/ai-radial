@@ -290,6 +290,7 @@ $(function(){
         }
 
         if (dragClone.size() > 0) {
+          el.closest('.menu-root-child').css('opacity','0.3');
           menu.dragDrop.test({'mouseX':object.mouseX,'mouseY':object.mouseY});
           dragClone.css('left',object.mouseX-(dragClone.width()/2)).css('top',object.mouseY-(dragClone.height()/2)); 
         }
@@ -310,15 +311,17 @@ $(function(){
         }); 
       }
       if ($('.drag-into').size() > 0) {
-        var disclosure = dragClone.find('.disclosure'),
-            dragInto   = $('.drag-into'),
-            offset     = function() {
-              var offsetPosition = dragInto.width() - dragClone.width(),
-                  right          = offsetPosition + parseInt(dragInto.css('right')),
-                  left           = offsetPosition + parseInt(dragInto.css('left'));
-              console.log(dragClone.width());
-              return { 'right':right,'left':left }
-            };
+        var 
+          disclosure     = dragClone.find('.disclosure'),
+          dragInto       = $('.drag-into'),
+          dragIntoRight  = dragInto.css('right').replace('px',''),
+          dragIntoLeft   = dragInto.css('left').replace('px',''),
+          right          = 0,
+          left           = 0,
+          offsetPosition = dragInto.width() - dragClone.width();
+          if (u.isNum(dragIntoRight)) { right = offsetPosition + u.parseInt(dragIntoRight); }
+          if (u.isNum(dragIntoLeft))  { left  = offsetPosition + u.parseInt(dragIntoLeft); }
+
         dragClone
           .appendTo(dragInto)
           .removeAttr('id')
@@ -326,21 +329,25 @@ $(function(){
           .css('left','')
           .css('top','')
           .children().removeAttr('style');
-        dragInto
-          .css('right',offset().right)
-          .css('left',offset().left)
-          .width(dragClone.width());
+        
+        dragInto.width(dragClone.width());
+        if (right != 0) { 
+          dragInto.css('right',right); 
+          console.log(right);
+        }
+        if (left != 0) { dragInto.css('left',left); }
+        
         if (disclosure.size() > 0) {
           var disclosureW = disclosure.width()+5;
-              right = parseInt(dragInto.css('right'))-disclosureW,
-              left  = parseInt(dragInto.css('left'))+disclosureW,
+              right = parseInt(dragIntoRight)-disclosureW,
+              left  = parseInt(dragIntoLeft)+disclosureW,
               width = dragInto.width()+disclosureW;
-          console.log(right);
           dragInto.css('right',right).css('left',left).width(width).addClass('more');
           dragClone.width(width); 
         }
       }
     }
+    el.closest('.menu-root-child').css('opacity','1');
   }
   menu.dragDrop.init = function(element) {
     element.find('li').each(function(e){
