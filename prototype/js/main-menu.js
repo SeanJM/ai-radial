@@ -37,9 +37,9 @@ $(function(){
 
   menu.levels = function (root) {
     root.find('ul').each(function(){
-      if ($(this).children('li').size() > 0) { $(this).addClass('menu-parent'); }
       var level = $(this).parents('ul').length;
       $(this).attr('level',level);
+      if ($(this).children('li').size() > 0) { $(this).addClass('menu-parent'); }
     });
   }
 
@@ -51,8 +51,8 @@ $(function(){
   }
 
   menu.minihover = function (element) {
-
     element.parent().find('ul.visible').removeClass('visible');
+    
     if (element.children('ul').size()) { 
       var index             = element.attr('index'),
           subMenu           = element.children('ul'),
@@ -61,18 +61,20 @@ $(function(){
           horizontal_offset = '-8px';
       if (element.position()['top']) { var vertical_position = (element.position()['top'] * -1) + (miniMenu.position()['top'] - miniMenu.outerHeight()); }
       
-      if ($('#menu-hub').hasClass('right-handed')) {
-        horizontal_offset = parseInt(element.parents('.menu-root-child').css('padding-right')) * -1;
+      if ($('#ai-wheel').hasClass('right-handed')) {
+        horizontal_offset = (parseInt(element.closest('.menu-root-child').css('padding-right')) * -1) - (u.parseInt(element.closest('ul').css('padding-right')) / 1.8);
       }
-      if ($('#menu-hub').hasClass('left-handed')) {
-        horizontal_offset = parseInt(element.parents('.menu-root-child').css('padding-right')) - 5;
+      if ($('#ai-wheel').hasClass('left-handed')) {
+        horizontal_offset = parseInt(element.closest('.menu-root-child').css('padding-right')) - 5;
       }
       subMenu
         .addClass('visible')
         .css('left',horizontal_offset)
         .css('top',vertical_position);
     }
+
   }
+
   menu.popOut = function (root) {
     var li = root.find('li');
     li.each(function(){
@@ -203,7 +205,18 @@ $(function(){
   };
 
   menu.inrect = function (object) {
-    if (object.mouseX > object.left && object.mouseY > object.top && object.mouseY < object.bottom && object.mouseX < object.right) { return true }
+    var 
+      activeLeft   = object.active.offset().left,
+      activeRight  = activeLeft + object.active.width(),
+      activeTop    = object.active.offset().top,
+      activeBottom = activeTop + object.active.height(),
+
+      passiveLeft   = object.passive.offset().left,
+      passiveRight  = passiveLeft + object.passive.width(),
+      passiveTop    = object.passive.offset().top,
+      passiveBottom = passiveTop + object.passive.height();
+
+    if (activeRight > passiveLeft && activeBottom > passiveTop && activeTop < passiveBottom && activeLeft < passiveRight) { return true }
     return false;
   }
 
@@ -266,10 +279,11 @@ $(function(){
           target.top    = target.el.offset().top;
           target.bottom = target.el.offset().top + target.el.height();
           target.right  = target.el.offset().left + target.el.width();
-      if (!menu.inrect({'mouseX':object.mouseX,'mouseY':object.mouseY,'left':target.left,'top':target.top,'right':target.right,'bottom':target.bottom})) {
+      // Check to see if the dragged element is inside the target
+      if (!menu.inrect({'active':object.active,'passive':target.el,'mouseX':object.mouseX,'mouseY':object.mouseY,'left':target.left,'top':target.top,'right':target.right,'bottom':target.bottom})) {
         target.el.removeClass('drag-into');
       }
-      if (menu.inrect({'mouseX':object.mouseX,'mouseY':object.mouseY,'left':target.left,'top':target.top,'right':target.right,'bottom':target.bottom})) {
+      if (menu.inrect({'active':object.active,'passive':target.el,'mouseX':object.mouseX,'mouseY':object.mouseY,'left':target.left,'top':target.top,'right':target.right,'bottom':target.bottom})) {
         $('.drag-into').removeClass('drag-into');
         target.el.addClass('drag-into'); 
       }
@@ -292,7 +306,7 @@ $(function(){
 
         if (dragClone.size() > 0) {
           el.closest('.menu-root-child').css('opacity','0.3');
-          menu.dragDrop.test({'mouseX':object.mouseX,'mouseY':object.mouseY});
+          menu.dragDrop.test({'active':dragClone,'mouseX':object.mouseX,'mouseY':object.mouseY});
           dragClone.css('left',object.mouseX-(dragClone.width()/2)).css('top',object.mouseY-(dragClone.height()/2)); 
         }
       }

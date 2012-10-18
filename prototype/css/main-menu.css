@@ -22,26 +22,26 @@
     color             : #A2A2A2;
     -webkit-transition: line-height 0.3s;
   }
-  .menu ul li.hover,
-  .menu ul li:hover,
-  .menu ul li.select,
-  .menu ul li:hover li:hover,
-  .menu ul li.hover li:hover,
-  .menu ul li.hover li.hover{
+  .menu-parent li.hover,
+  .menu-parent li:hover,
+  .menu-parent li.select,
+  .menu-parent li:hover li:hover,
+  .menu-parent li.hover li:hover,
+  .menu-parent li.hover li.hover{
     background-image: -webkit-linear-gradient(bottom, rgba(0, 144, 240, 0.78), rgba(39, 169, 255, 0.91));
     color: #fff;
   }
-  .menu ul li:hover li,
-  .menu ul li.hover li{
+  .menu-parent li:hover li,
+  .menu-parent li.hover li{
     color: #797979;
   }
-  .menu ul li.hidden{
+  .menu-parent li.hidden{
     line-height: 1px;
     background: rgba(0,0,0,0.07);
     color: transparent;
     margin:0;
   }
-    .menu ul li.hidden .disclosure{
+    .menu-parent li.hidden .disclosure{
       display: none;
     }
 
@@ -440,23 +440,9 @@
       text-indent: 10px;
       position: relative;
     }
-    #menu-quickpick .pick li ul {
-      display: none;
-      width: 150px;
+    #menu-quickpick .menu-parent {
+      width: 190px;
     }
-    #menu-quickpick .pick li.hover ul,
-    #menu-quickpick .pick li:hover ul {
-      display: block;
-      background: #fff;
-      position: absolute;
-      z-index: 1000;
-      left: 50px;
-      top: 20px;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.5);
-    }
-      #menu-quickpick .pick li:hover ul li {
-        border-radius: 0;
-      }
     #menu-quickpick .pick .disclosure {
       right: 10px;
       top: 10px;
