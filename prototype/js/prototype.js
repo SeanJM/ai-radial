@@ -1,7 +1,15 @@
+// Global Functions
+
+function leftRight () {
+  if ($('#ai-wheel').hasClass('right-handed')) { return 'right'; }
+  return 'left';
+}
+
 $(function(){
 
   /* ----------------------- Functions ------------------ */
   
+
   /* Drawing Icons on a Circle */
 
   function putOnCircle(arr) {
