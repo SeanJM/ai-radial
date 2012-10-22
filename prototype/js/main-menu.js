@@ -15,38 +15,27 @@ $(function(){
 
   // Main Menu
   var menu = {};
-  menu.position = function(child,parent) {
-    var childW   = child.width(),
-        mainW   = parent.width(),
-        menuPos = (mainW/2) - (childW/2);
-    child.css('left',menuPos);
-  }
+  menu.position = function(child,parent) { child.css('left',(parent.width()/2) - (child.width()/2)); }
 
   menu.rightClick = function(root) {
-    root.find('li').each(function() {
-      $(this).on('mousedown',function(event){
-        /* Right Click Options */
-        if (event.which == 3) {
-          menuRoot.configure.create({'element': $(event.target),'mouse':event});
-          event.stopPropagation();
-        }
-      });
+    root.find('li').on('mousedown',function(event) {
+      /* Right Click Options */
+      if (event.which == 3) {
+        menu.config.create(event);
+      }
+      event.stopPropagation();
     });
   }
 
   menu.levels = function (root) {
     root.find('ul').each(function(){
-      var level = $(this).parents('ul').length;
-      $(this).attr('level',level);
+      $(this).attr('level',$(this).parents('ul').length);
       if ($(this).children('li').size() > 0) { $(this).addClass('menu-parent'); }
     });
   }
 
   menu.disclosure = function (root) {
-    root.find('li > ul').each(function(){ 
-      var disclosure  = $('<span class="disclosure" />');
-      $(this).parent().append(disclosure); 
-    });
+    root.find('li > ul').each(function(){ $(this).parent().append($('<span class="disclosure" />')); });
   }
 
   menu.popOut = function (root) {
@@ -77,14 +66,14 @@ $(function(){
     });
   }
   
-  menu.visibile = function(root) {
+  // When clicking on the menu bar options
+  menu.visible = function(root) {
     root.on('click',function(e){
-      var target    = $(e.target);
-      var targetID  = target.closest('.menu-root-child').attr('id');
+      var target    = $(e.target),
+          targetID  = target.closest('.menu-root-child').attr('id');
       if ($('.menu-root-child.visible').size() > 0) {
         $('.menu-root-child.visible').each(function(){
-          var thisId = $(this).attr('id');
-          if (targetID != thisId) { $(this).removeClass('visible'); }
+          if (targetID != $(this).attr('id')) { $(this).removeClass('visible'); }
         });
       }
       target.children('ul').each(function() { $(this).addClass('visible'); });
@@ -93,7 +82,7 @@ $(function(){
 
       e.stopPropagation();
     });
-    $('html').on('click',function(){ root.children('ul').removeClass('visible'); });
+    $('html').on('click',function(e){ if (e.which != 3) { root.children('ul').removeClass('visible'); } });
   };
 
   menu.checkBox = function(root) {
@@ -111,33 +100,32 @@ $(function(){
   menu.quickMenu.create = function (root) {
     root.find('ul').each(function(){
       var 
-        li             = $(this).children('li'),
-        quickContainer = $('<div class="mini-menu-container">'),
-        markerTmplt    = '<span class="marker"></span>';
+        li            = $(this).children('li'),
+        miniContainer = $('<div class="mini-menu-container">'),
+        markerTmplt   = '<span class="marker"></span>';
       
       li.each(function(n){
         var 
           clss     = $(this).attr('class'),
-          miniMenu = $('<div class="miniMenu" index="' + n + '"><div class="innerShadow"></div></div>').addClass(clss),
           marker   = $(this).find('.marker'),
+          miniMenu = $('<div class="miniMenu ' + clss + '" index="' + n + '"><div class="innerShadow"></div></div>'),
           markerColor;
         
         if (n == 0) { $(this).addClass('first'); }
         if (n == li.length-1) { $(this).addClass('last'); }
+        
         $(this).attr('index',n);
         
-        if (marker.size() < 1) { 
-          marker = $(markerTmplt); 
-          $(this).prepend(marker); 
-        }
+        if (marker.size() < 1) { marker = $(markerTmplt); $(this).prepend(marker); }
+
+        if ($(this).children('.checkbox').size() > 0) { $(this).addClass('checkbox-container'); }
         
         markerColor = marker.attr('class').replace('marker','').trim();
         miniMenu.attr('class','miniMenu ' + markerColor);
-        
-        quickContainer.append(miniMenu);
+        miniContainer.append(miniMenu);
       });
 
-      $(this).append(quickContainer);
+      $(this).append(miniContainer);
     
     });
   }
@@ -187,10 +175,11 @@ $(function(){
       el.on('mouseover',function(){
         clear(el,index);
       });
-      
+
+      // Sub list elements
       el.on('mouseleave',function(){
         miniMenu.removeClass('hover');
-        if (el.children('ul').size()) { 
+        if (el.children('ul').size() && $('#configure-menu').is(':hidden') || $('#configure-menu').size() < 1) { 
           el.children('ul').removeClass('visible').trigger('minileave'); 
         }
       });
@@ -255,7 +244,7 @@ $(function(){
         'template':menuChild,
         'parent':parent
       },function() {
-        menu.visibile(parent);
+        menu.visible(parent);
         menu.levels(parent);
         menu.quickMenu.init(parent);
         menu.popOut(parent);
@@ -370,9 +359,9 @@ $(function(){
         if (left != 0) { dragInto.css('left',left); }
 
         // Bind the dropped element
-        menu.quickPick.bind(dragInto);
+        dragInto.find('.visible').removeClass('visible');
         menu.quickMenu.bind(dragInto);
-        menu.popOut(dragInto);
+        /*menu.rightClick(dragInto);*/
       }
     }
     el.closest('.menu-root-child').css('opacity','1');
@@ -443,10 +432,6 @@ $(function(){
     });
   }
 
-  menu.quickPick.bind = function (element) {
-    // Clean its classes
-    element.find('.visible').removeClass('visible');
-  }
   // Fonts Menu
   menu.fonts = function (element) {
     var 
@@ -501,52 +486,45 @@ $(function(){
         prev();   
       },interval);
     });
-  }  
+  }
+
   // Right Click Configuration Menu
-  menuRoot.configure = {};
-
-  menuRoot.configure.create = function(data) {
-    var el      = data['element'],
-        cache   = $('<div />'),
-        menu    = '#configure-menu';
-    if ($(menu).size() < 1) { 
-      template.load({'template-file':'menu','template':menu,'parent':'body'},function() { menuRoot.configure.bind(data); }); 
-    }
-    menuRoot.configure.bind(data);
-  };
-
-  menuRoot.configure.bind = function(data) {
-    var el    = data['element'],
-        index = el.attr('index'),
-        mini  = el.closest('ul').children('.mini-menu-container').find('[index="' + index + '"]'),
-        menu  = $('#configure-menu');
+  
+  menu.config = {};
+  
+  menu.config.bind = function(data) {
+    var 
+        el      = $(data.target),
+        index   = el.attr('index'),
+        mini    = el.closest('ul').children('.mini-menu-container').find('[index="' + index + '"]'),
+        config  = $('#configure-menu');
 
     function hideMenu() {
-      if (menu.is(':visible')) { menu.hide(); }
+      if (config.is(':visible')) { config.hide(); }
       el.removeClass('select');
     }
+    function showMenu() {
+      if (config.is(':hidden')) { config.show(); }
+      el.addClass('select');
+    }
 
-    if (menu.is(':hidden')) { menu.show(); }
-    
-    el.addClass('select');
-   
-    menu.on('click',function(event) {
+    showMenu();
+
+    config.on('contextmenu',function(){ return false; });
+    config.on('click',function(event) {
       hideMenu();
       event.stopPropagation();
     });
-
-    menu.on('contextmenu',function(){ return false; });
-    menu.on('mouseleave',function(){ hideMenu(); });
+    config.on('mouseleave',function(){ hideMenu(); });
     
-    menu.find('.mark').off('click');
-    
-    menu.find('.mark').on('click',function(){
+    config.find('.mark').off('click');
+    config.find('.mark').on('click',function(){
       var color = $(this).attr('class').replace('mark','').replace('color','').trim();
-      el.find('.marker').attr('class','marker ' + color);
+      el.children('.marker').attr('class','marker ' + color);
       mini.attr('class','miniMenu ' + color);
     });
     
-    menu.css('top',data['mouse'].pageY-10).css('left',data['mouse'].pageX-10);
+    config.css('top',data.pageY-10).css('left',data.pageX-10);
 
     $('#hide-entry').off('click');
     $('#hide-entry').on('click',function(event){
@@ -561,6 +539,16 @@ $(function(){
       mini.parent().find('.hidden').removeClass('hidden');
     });
 
+  }
+
+  menu.config.create = function(data) {
+    var element = '#configure-menu';
+    if ($(element).size() < 1) { 
+      template.load({'template-file':'menu','template':element,'parent':'body'},function() { 
+        menu.config.bind(data); 
+      }); 
+    }
+    menu.config.bind(data);
   };
 
   menuhub.init()
