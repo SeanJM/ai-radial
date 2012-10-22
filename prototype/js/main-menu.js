@@ -52,18 +52,26 @@ $(function(){
   menu.popOut = function (root) {
     var li = root.find('li');
     li.each(function(){
-      $(this).on('mouseover',function(){
+      $(this).on('mouseover',function(e){
         if ($(this).children('ul').size()) { 
-          var offset          = parseInt($(this).parent().css('width'))-4,
-              level           = $(this).children('ul').attr('level');
-              vertical_offset = $(this).outerHeight() * -1,
-              subMenu         = $(this).children('ul'),
-              width           = subMenu.find('li').width();
+          var 
+              target          = $(e.target),
+              offset          = parseInt(target.parent().css('width'))-4,
+              subMenu         = target.children('ul'),
+              level           = subMenu.attr('level'),
+              vertical_offset = target.outerHeight() * -1,
+              width           = subMenu.children('li').width();
           
-          if (level > 1 && level%2 == 1) { offset = (parseInt($(this).parent().css('width'))*-1)+4; }
-          if (!subMenu.hasClass('visible')) {
-            subMenu.addClass('visible').css('left',offset).css('top',vertical_offset);
-          } 
+          if (level > 1 && level%2 == 1) { 
+            if (subMenu.closest('#menu-quickpick').size() > 0) { 
+              $('#menu-quickpick').css('z-index','1000'); 
+              subMenu.on('mouseleave',function(){ $('#menu-quickpick').css('z-index','-1'); });
+            }
+            offset = (parseInt(target.parent().css('width'))*-1)+4; 
+          }
+          if (subMenu.is(':hidden'))     { 
+            subMenu.addClass('visible').css('left',offset).css('top',vertical_offset); 
+          }
         }
       });
     });
@@ -71,9 +79,14 @@ $(function(){
   
   menu.visibile = function(root) {
     root.on('click',function(e){
-      $('.menu-root-child.visible').removeClass('visible');
-      var target = $(e.target);
-
+      var target    = $(e.target);
+      var targetID  = target.closest('.menu-root-child').attr('id');
+      if ($('.menu-root-child.visible').size() > 0) {
+        $('.menu-root-child.visible').each(function(){
+          var thisId = $(this).attr('id');
+          if (targetID != thisId) { $(this).removeClass('visible'); }
+        });
+      }
       target.children('ul').each(function() { $(this).addClass('visible'); });
       // Scale all the quick menus
       target.find('ul').each(function() { $(this).children('.mini-menu-container').height($(this).height()); });
@@ -83,6 +96,11 @@ $(function(){
     $('html').on('click',function(){ root.children('ul').removeClass('visible'); });
   };
 
+  menu.checkBox = function(root) {
+    root.find('.checkbox').on('click',function(){
+      $(this).toggleClass('checked');
+    });
+  }
   // Quick Menu
   menu.quickMenu = {};
   menu.quickMenu.init = function (root) {
@@ -241,33 +259,18 @@ $(function(){
         menu.levels(parent);
         menu.quickMenu.init(parent);
         menu.popOut(parent);
-
+        menu.checkBox(parent);
         menu.disclosure($(menuChild));
         menu.rightClick($(menuChild));
         menu.dragDrop.init($(menuChild));
+        if (menuChild == '#type-menu') { menu.fonts(parent); }
       });
     });
   }
   
   // Drag and Drop Functionality
   menu.dragDrop = {};
-  menu.dragDrop.ghost = function (element) {
-    var 
-      disclosure = element.children('.disclosure'),
-      text       = $.trim(element.clone().children().remove().end().text()),
-      tempElem   = $('<span style="float: left; position: absolute; font-size:' + element.css('font-size') + ';">' + text + '</span>').hide().appendTo('body'),
-      width      = tempElem.width()+20,
-      ghost      = element.clone().appendTo('body').attr('id','drag-clone').hide();
-
-    if (disclosure.size() > 0) { 
-      ghost.addClass('more');
-      width+=disclosure.width()+8;
-    }
-
-    tempElem.remove();
-    ghost.width(width);
-  }
-
+  
   menu.dragDrop.test = function (object) {
     var targetGroup = $('#menu-quickpick .pick');
     for (var i = 0;i<targetGroup.size();i++) {
@@ -286,6 +289,23 @@ $(function(){
         target.el.addClass('drag-into'); 
       }
     }
+  }
+
+  menu.dragDrop.ghost = function (element) {
+    var 
+      disclosure = element.children('.disclosure'),
+      text       = $.trim(element.clone().children().remove().end().text()),
+      tempElem   = $('<span style="float: left; position: absolute; font-size:' + element.css('font-size') + ';">' + text + '</span>').hide().appendTo('body'),
+      width      = tempElem.width()+20,
+      ghost      = element.clone().appendTo('body').attr('id','drag-clone').hide();
+
+    if (disclosure.size() > 0) { 
+      ghost.addClass('more');
+      width+=disclosure.width()+8;
+    }
+
+    tempElem.remove();
+    ghost.width(width);
   }
 
   menu.dragDrop.drag = function (el,object) {
@@ -352,6 +372,7 @@ $(function(){
         // Bind the dropped element
         menu.quickPick.bind(dragInto);
         menu.quickMenu.bind(dragInto);
+        menu.popOut(dragInto);
       }
     }
     el.closest('.menu-root-child').css('opacity','1');
@@ -404,57 +425,83 @@ $(function(){
     });
 
     $('html').on('mousemove',function(event){
-      for (var i=0;i<pick.size();i++) {
-        var mouseX = event.pageX,
-            mouseY = event.pageY,
-            curPick = pick.eq(i);
-            pickX  = curPick.offset().left,
-            pickY  = curPick.offset().top,
-            pickW  = curPick.outerWidth(),
-            pickH  = curPick.outerHeight(),
-            inrect = 0;
-        if (mouseX > pickX && mouseX < pickX+pickW && mouseY > pickY && mouseY < pickY+pickH) { inrect = 1; }
-        if (inrect == 1 && !curPick.hasClass('hover')) { curPick.addClass('hover'); }
-        if (inrect == 0 && curPick.hasClass('hover') && !curPick.children('li').hasClass('hover')) { curPick.removeClass('hover'); }
+      if ($('#drag-clone').size() < 1 || quickPick.find('.pick .hover').size() < 1) {
+        for (var i=0;i<pick.size();i++) {
+          var mouseX = event.pageX,
+              mouseY = event.pageY,
+              curPick = pick.eq(i);
+              pickX  = curPick.offset().left,
+              pickY  = curPick.offset().top,
+              pickW  = curPick.outerWidth(),
+              pickH  = curPick.outerHeight(),
+              inrect = 0;
+          if (mouseX > pickX && mouseX < pickX+pickW && mouseY > pickY && mouseY < pickY+pickH) { inrect = 1; }
+          if (inrect == 1 && !curPick.hasClass('hover')) { curPick.addClass('hover'); }
+          if (inrect == 0 && curPick.hasClass('hover') && !curPick.children('li').hasClass('hover')) { curPick.removeClass('hover'); }
+        }
       }
     });
   }
 
-  menu.quickPick.bind = function(element) {
+  menu.quickPick.bind = function (element) {
     // Clean its classes
     element.find('.visible').removeClass('visible');
-
-    element.on('mouseover',function() {
-      $(this).children('ul').addClass('visible')
-    });
-    element.on('mouseleave',function(){
-      $(this).children('ul').removeClass('visible');
-    });
-
-    element.find('li').each(function(){
-      $(this).on('mouseover',function(e){ 
-        var ul = $(e.target).children('ul'),
-            ulOffset;
-        $(this).addClass('hover');
-        if (ul.size() > 0) {
-          if (ul.is(':hidden')) {
-            if (ul.closest('.container').hasClass('right')) { ulOffset = u.parseInt(($('#main-wheel').offset().left+$('#main-wheel').width())-$(e.target).offset().left)+10; }
-            if (ul.closest('.container').hasClass('left')) { ulOffset = u.parseInt($('#main-wheel').offset().left-$(e.target).offset().left-ul.outerWidth()-10); }
-            ul.css('left',ulOffset).addClass('visible');
-          }
-        }
-      });
-      $(this).on('mouseleave',function(){ 
-        var ul = $(this).children('ul');
-        $(this).removeClass('hover');
-        if (ul.size() > 0) {
-          ul.removeClass('visible');
-        }
-      });
-    });
-
   }
-  
+  // Fonts Menu
+  menu.fonts = function (element) {
+    var 
+      fonts = $('#font-list'),
+      li = fonts.find('li'),
+      fontListMax = 20,
+      interval = 100,
+      timer;
+    li.each(function(e){
+      var ff = '"' + $(this).text() + '"';
+      $(this).css('font-family',ff);
+      if (e > fontListMax) { $(this).hide(); }
+    });
+    function next () {
+      var visibleIndex = parseInt(fonts.find('li').filter(':visible').eq('0').attr('index')),
+          hiddenIndex = visibleIndex + fontListMax + 1;
+      if (fonts.find('li[index="' + hiddenIndex + '"]').size() < 1) { 
+        fonts.find('.nav-list.up').addClass('disabled');
+      }
+      if (fonts.find('li[index="' + hiddenIndex + '"]').size() > 0) {
+        fonts.find('.nav-list.down').removeClass('disabled');
+        fonts.find('li[index="' + visibleIndex + '"]').hide();
+        fonts.find('li[index="' + hiddenIndex + '"]').show();
+      }
+    }
+    function prev () {
+      var visibleIndex = parseInt(fonts.find('li').filter(':visible').eq('0').attr('index')),
+          hiddenIndex = visibleIndex + fontListMax;
+      if (fonts.find('li[index="' + (visibleIndex - 1) + '"]').size() < 1) { 
+        fonts.find('.nav-list.down').addClass('disabled');
+      }
+      if (fonts.find('li[index="' + (visibleIndex - 1) + '"]').size() > 0) {
+        fonts.find('.nav-list.up').removeClass('disabled');
+        fonts.find('li[index="' + hiddenIndex + '"]').hide();
+        fonts.find('li[index="' + (visibleIndex - 1) + '"]').show();
+      }
+    }
+    fonts.find('.nav-list.up').on('mousedown',function(e){
+      next();
+      e.stopPropagation();
+      timer = setInterval(function(){
+        next();   
+      },interval);
+    });
+    fonts.find('.nav-list').on('mouseup',function(e){
+      clearInterval(timer);
+    });
+    fonts.find('.nav-list.down').on('mousedown',function(e){
+      prev();
+      e.stopPropagation();
+      timer = setInterval(function(){
+        prev();   
+      },interval);
+    });
+  }  
   // Right Click Configuration Menu
   menuRoot.configure = {};
 
@@ -462,8 +509,6 @@ $(function(){
     var el      = data['element'],
         cache   = $('<div />'),
         menu    = '#configure-menu';
-    /*console.log(el);*/
-    /* Check to see if it exists */
     if ($(menu).size() < 1) { 
       template.load({'template-file':'menu','template':menu,'parent':'body'},function() { menuRoot.configure.bind(data); }); 
     }
@@ -497,19 +542,16 @@ $(function(){
     
     menu.find('.mark').on('click',function(){
       var color = $(this).attr('class').replace('mark','').replace('color','').trim();
-      console.log(mini);
       el.find('.marker').attr('class','marker ' + color);
       mini.attr('class','miniMenu ' + color);
     });
     
     menu.css('top',data['mouse'].pageY-10).css('left',data['mouse'].pageX-10);
 
-
     $('#hide-entry').off('click');
     $('#hide-entry').on('click',function(event){
       el.addClass('hidden');
       mini.addClass('hidden');
-
       event.stopPropagation();
     });
 

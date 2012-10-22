@@ -15,7 +15,9 @@ body {
 }
 .wheel-sprite,
 .icon-container .more-tools .arrow,
-.disclosure {
+.disclosure,
+.nav-list .icon,
+#menu-hub .checkbox.checked .check {
   background: url('../img/ai_wheel.png') no-repeat;
 }
 .disclosure {
