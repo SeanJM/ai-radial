@@ -102,7 +102,7 @@ dragDrop.drop = function (el) {
       // Bind the dropped element
       dragInto.find('.visible').removeClass('visible');
       menu.quickMenu.bind(dragInto);
-      /*menu.rightClick(dragInto);*/
+      menu.setup(dragInto);
     }
   }
   el.closest('.menu-root-child').css('opacity','1');
