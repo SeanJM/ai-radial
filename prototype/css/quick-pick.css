@@ -1,0 +1,77 @@
+#menu-quickpick {
+  position: absolute;
+  width: 495px;
+  height: 314px;
+  z-index: -1;
+  top: 160px;
+  border-radius: 50%;
+  top: 95px;
+}
+  #menu-quickpick .left {
+    left: 50px;
+  }
+  #menu-quickpick .right {
+    right: -50px;
+  }
+  #menu-quickpick .container {
+    position: absolute;
+  }
+  #menu-quickpick .left {
+    left: 0px;
+  }
+  #menu-quickpick .right {
+    right: 0;
+  }
+    #menu-quickpick .pick {
+      position     : absolute;
+      width        : 60px;
+      height       : 30px;
+      border-radius: 15px;
+      box-shadow   : 0 1px 6px rgba(0, 0, 0, 0.3);
+      opacity: 0.9;
+      -webkit-transition: all 0.2s;
+    }
+    #menu-quickpick .pick:hover {
+      z-index: 100;
+      opacity: 1;
+    }
+    #menu-quickpick .pick.drag-into {
+      background-image: -webkit-linear-gradient(bottom,rgba(115, 197, 243, 0.56),rgba(159, 230, 248, 0.56));
+    }
+    #menu-quickpick .left .pick                     { left: 0; }
+    #menu-quickpick .right .pick                    { right: 0; }
+    #menu-quickpick .left .pick:nth-child(1)        { left: 44px; }
+    #menu-quickpick .left .pick:nth-child(2)        { left: 18px; }
+    #menu-quickpick .left .pick:nth-child(3)        { left: 3px; }
+    #menu-quickpick .left .pick:nth-child(4)        { left: -3px; }
+    #menu-quickpick .left .pick:nth-child(5)        { left: -3px; }
+    #menu-quickpick .left .pick:nth-child(6)        { left: 6px; }
+    #menu-quickpick .left .pick:nth-child(7)        { left: 22px; }
+    #menu-quickpick .left .pick:nth-child(8)        { left: 50px; }
+    #menu-quickpick .right .pick:nth-child(1)       { right: 44px; }
+    #menu-quickpick .right .pick:nth-child(2)       { right: 18px; }
+    #menu-quickpick .right .pick:nth-child(3)       { right: 3px; }
+    #menu-quickpick .right .pick:nth-child(4)       { right: -3px; }
+    #menu-quickpick .right .pick:nth-child(5)       { right: -3px; }
+    #menu-quickpick .right .pick:nth-child(6)       { right: 6px; }
+    #menu-quickpick .right .pick:nth-child(7)       { right: 22px; }
+    #menu-quickpick .right .pick:nth-child(8)       { right: 50px; }
+    .pick li {
+      border-radius   : 15px;
+      font-size       : 12px;
+      line-height     : 30px;
+      list-style      : none;
+      color           : #A2A2A2;
+      background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
+      text-align: center;
+    }
+    #menu-quickpick .menu-parent {
+      width: 190px;
+      position: absolute;
+    }
+    #drag-clone.more,
+    #menu-quickpick li.more {
+      text-align: left;
+      position: absolute;
+      text-indent: 10px;
+    }

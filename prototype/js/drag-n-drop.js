@@ -38,7 +38,8 @@ dragDrop.ghost = function (element) {
   ghost.width(width);
 }
 
-dragDrop.drag = function (el,object) {
+dragDrop.drag = function (object,callback) {
+  var el = object.drag;
   if (el.hasClass('drag')) {
     var 
       dragOffset = 10,
@@ -48,9 +49,9 @@ dragDrop.drag = function (el,object) {
     if (offsetX > dragOffset || offsetX < dragOffset*-1 || offsetY > dragOffset || offsetY < dragOffset*-1) {
       var dragClone = $('#drag-clone');
       
+      if (dragClone.size() < 1 || dragClone.is(':hidden')) { if (callback) { callback.start(); } }
       if (dragClone.size() < 1) { dragDrop.ghost(el); }
       if (dragClone.size() > 0) {
-        el.closest('.menu-root-child').css('opacity','0.3');
         dragDrop.test({'active':dragClone,'mouseX':object.mouseX,'mouseY':object.mouseY});
         dragClone.css('left',object.mouseX-(dragClone.width()/2)).css('top',object.mouseY-(dragClone.height()/2)); 
         
@@ -60,7 +61,7 @@ dragDrop.drag = function (el,object) {
   }
 }
 
-dragDrop.drop = function (el) {
+dragDrop.drop = function (el,callback) {
   var dragClone = $('#drag-clone');
   if (dragClone.size() > 0) { 
     // Remove Clone if it hasn't been dragged into anything
@@ -103,30 +104,32 @@ dragDrop.drop = function (el) {
       dragInto.find('.visible').removeClass('visible');
       menu.quickMenu.bind(dragInto);
       menu.setup(dragInto);
+      if (callback) { callback.complete(); }
     }
   }
   el.closest('.menu-root-child').css('opacity','1');
 }
-dragDrop.init = function(element) {
-  element.find('li').each(function(e){
-    var 
-      el    = $(this),
-      mouse = {};
-    // Make element dragable when it's clicked
-    el.on('mousedown',function(e){
-      $(e.target).addClass('drag');
-      mouse.X = e.pageX;
-      mouse.Y = e.pageY;
-    });
-    // When the mouse is released undrag object
-    $('html').on('mouseup',function(e){
-      if (el.hasClass('drag')) {
-        el.removeClass('drag');
-        dragDrop.drop(el);
-      }
-    });
-    $('html').on('mousemove',function(e){
-      dragDrop.drag(el,{'initMouseX':mouse.X,'initMouseY':mouse.Y,'mouseX':e.pageX,'mouseY':e.pageY});
-    });
+// dragDrop.init(object,callback)
+// The callback should be initiated when the object is dragged
+// To be complete: Target object being the only thing that can be
+// dragged into
+dragDrop.init = function(object,callback) {
+  var drag = object.drag, 
+      mouse   = {};
+  // Make element dragable when it's clicked
+  drag.on('mousedown',function(e){
+    $(e.target).addClass('drag');
+    mouse.X = e.pageX;
+    mouse.Y = e.pageY;
+  });
+  // When the mouse is released undrag object
+  $('html').on('mouseup',function(e){
+    if (drag.hasClass('drag')) {
+      drag.removeClass('drag');
+      dragDrop.drop(drag,callback);
+    }
+  });
+  $('html').on('mousemove',function(e){
+    dragDrop.drag({'drag':drag,'target':object.target,'initMouseX':mouse.X,'initMouseY':mouse.Y,'mouseX':e.pageX,'mouseY':e.pageY},callback);
   });
 }

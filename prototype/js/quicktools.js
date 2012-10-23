@@ -32,7 +32,7 @@ quicktools.init = function () {
   });
   $('html').on('click',function(){
     $('.top').removeClass('top');
-    $('.htmlToggle').each(function() {
+    $('.visible').each(function() {
       $(this).removeClass('visible');
     });
   });
