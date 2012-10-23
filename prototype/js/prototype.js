@@ -5,37 +5,37 @@ function leftRight () {
   return 'left';
 }
 
-$(function(){
 
   /* ----------------------- Functions ------------------ */
   
 
   /* Drawing Icons on a Circle */
 
-  function putOnCircle(arr) {
-    var parent     = arr['parent'],
-        child      = parent.find(arr['child']),
-        ringWidth  = $(parent).outerWidth(),
-        ringHeight = $(parent).outerHeight(),
-        h          = parseInt((ringWidth/2) - (child.outerWidth() / 2)),
-        k          = parseInt((ringHeight/2) - (child.outerHeight() / 2)),
-        step       = 2*Math.PI/child.size(),
-        theta      = 0,
-        r          = (ringWidth / 2) - (child.width());
-      if (arr.hasOwnProperty('radius') == true) { 
-        r          = arr['radius']; 
-        h          = parseInt((ringWidth /2) - (child.outerWidth() / 2));
-        k          = parseInt((ringWidth / 2) - (child.outerHeight() / 2));
-      }
+function putOnCircle(object) {
+  var parent     = object['parent'],
+      child      = parent.find(object['child']),
+      ringWidth  = $(parent).outerWidth(),
+      ringHeight = $(parent).outerHeight(),
+      h          = parseInt((ringWidth/2) - (child.outerWidth() / 2)),
+      k          = parseInt((ringHeight/2) - (child.outerHeight() / 2)),
+      step       = 2*Math.PI/child.size(),
+      theta      = 0,
+      r          = (ringWidth / 2) - (child.width());
+    if (object.hasOwnProperty('radius')) { 
+      r          = object['radius']; 
+      h          = parseInt((ringWidth /2) - (child.outerWidth() / 2));
+      k          = parseInt((ringWidth / 2) - (child.outerHeight() / 2));
+    }
 
-    child.each(function(){
-      var x        = h + parseInt(r * Math.cos(theta)),
-          y        = k - parseInt(r * Math.sin(theta));
-      theta += step;
-      $(this).css('top',y).css('left',x);
-    });
-  }
+  child.each(function(){
+    var x        = h + parseInt(r * Math.cos(theta)),
+        y        = k - parseInt(r * Math.sin(theta));
+    theta += step;
+    $(this).css('top',y).css('left',x);
+  });
+}
   
+$(function(){
   /* More tools */
 
   function moreRad(n) {

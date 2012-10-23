@@ -13,142 +13,170 @@
 
 /* Column 1 */
 
-.icon.selection             { background-position: 0 0; }
+.icon.selection                    { background-position: 0 0; }
       /* group start */
-.icon.direct-selection      { background-position: 0 -22px; }
-.icon.group-selection       { background-position: 0 -44px; }
+.icon.direct-selection             { background-position: 0 -22px; }
+.icon.group-selection              { background-position: 0 -44px; }
       /* group end */
-.icon.magic-wand            { background-position: 0 -66px; }
-.icon.lasso                 { background-position: 0 -88px; }
+.icon.magic-wand                   { background-position: 0 -66px; }
+.icon.lasso                        { background-position: 0 -88px; }
       /* group start */
-.icon.pen                   { background-position: 0 -110px; }
-.icon.add-anchor-point      { background-position: 0 -132px; }
-.icon.remove-anchor-point   { background-position: 0 -154px; }
-.icon.convert-anchor-point  { background-position: 0 -176px; }
+.icon.pen                          { background-position: 0 -110px; }
+.icon.add-anchor-point             { background-position: 0 -132px; }
+.icon.remove-anchor-point          { background-position: 0 -154px; }
+.icon.convert-anchor-point         { background-position: 0 -176px; }
       /* group end */
       /* group start */
-.icon.type                  { background-position: 0 -198px; }
-.icon.area-type             { background-position: 0 -220px; }
+.icon.type                         { background-position: 0 -198px; }
+.icon.area-type                    { background-position: 0 -220px; }
 
 /* Column 2 */
 
-.icon.type-on-path          { background-position: -22px 0; }
-.icon.vertical-type         { background-position: -22px -22px; }
-.icon.vertical-area-type    { background-position: -22px -44px; }
-.icon.vertical-type-on-path { background-position: -22px -66px; }
+.icon.type-on-path                 { background-position: -22px 0; }
+.icon.vertical-type                { background-position: -22px -22px; }
+.icon.vertical-area-type           { background-position: -22px -44px; }
+.icon.vertical-type-on-path        { background-position: -22px -66px; }
       /* group end */
       /* group start */
-.icon.line-segment          { background-position: -22px -88px; }
-.icon.arc                   { background-position: -22px -110px; }
-.icon.spiral                { background-position: -22px -132px; }
-.icon.rectangular-grid      { background-position: -22px -154px; }
-.icon.polar-grid            { background-position: -22px -176px; }
+.icon.line-segment                 { background-position: -22px -88px; }
+.icon.arc                          { background-position: -22px -110px; }
+.icon.spiral                       { background-position: -22px -132px; }
+.icon.rectangular-grid             { background-position: -22px -154px; }
+.icon.polar-grid                   { background-position: -22px -176px; }
       /* group end */
       /* group start */
-.icon.rectangle             { background-position: -22px -198px; }
-.icon.rounded-rectangle     { background-position: -22px -220px; }
+.icon.rectangle                    { background-position: -22px -198px; }
+.icon.rounded-rectangle            { background-position: -22px -220px; }
 
 /* Column 3 */
 
-.icon.ellipse               { background-position: -44px 0; }
-.icon.polygon               { background-position: -44px -22px; }
-.icon.star                  { background-position: -44px -44px; }
-.icon.flare                 { background-position: -44px -66px; }
+.icon.ellipse                      { background-position: -44px 0; }
+.icon.polygon                      { background-position: -44px -22px; }
+.icon.star                         { background-position: -44px -44px; }
+.icon.flare                        { background-position: -44px -66px; }
       /* group end */
-.icon.paintbrush            { background-position: -44px -88px; }
+.icon.paintbrush                   { background-position: -44px -88px; }
       /* group start */
-.icon.pencil                { background-position: -44px -110px; }
-.icon.smooth                { background-position: -44px -132px; }
-.icon.path-eraser           { background-position: -44px -154px; }
+.icon.pencil                       { background-position: -44px -110px; }
+.icon.smooth                       { background-position: -44px -132px; }
+.icon.path-eraser                  { background-position: -44px -154px; }
       /* group end */
-.icon.blob-brush            { background-position: -44px -176px; }
-.icon.eraser                { background-position: -44px -198px; }
+.icon.blob-brush                   { background-position: -44px -176px; }
+.icon.eraser                       { background-position: -44px -198px; }
       /* group start */
-.icon.scissors              { background-position: -44px -220px; }
+.icon.scissors                     { background-position: -44px -220px; }
 
 /* Column 4 */
 
-.icon.knife                 { background-position: -66px 0; }
+.icon.knife                        { background-position: -66px 0; }
       /* group end */
       /* group start */
-.icon.rotate                { background-position: -66px -22px; }
-.icon.reflect               { background-position: -66px -44px; }
+.icon.rotate                       { background-position: -66px -22px; }
+.icon.reflect                      { background-position: -66px -44px; }
       /* group end */
       /* group start */
-.icon.scale                 { background-position: -66px -66px; }
-.icon.shear                 { background-position: -66px -88px; }
-.icon.reshape               { background-position: -66px -110px; }
+.icon.scale                        { background-position: -66px -66px; }
+.icon.shear                        { background-position: -66px -88px; }
+.icon.reshape                      { background-position: -66px -110px; }
       /* group end */
       /* group start */
-.icon.width                 { background-position: -66px -132px; }
-.icon.warp                  { background-position: -66px -154px; }
-.icon.twirl                 { background-position: -66px -176px; }
-.icon.pucker                { background-position: -66px -198px; }
-.icon.bloat                 { background-position: -66px -220px; }
+.icon.width                        { background-position: -66px -132px; }
+.icon.warp                         { background-position: -66px -154px; }
+.icon.twirl                        { background-position: -66px -176px; }
+.icon.pucker                       { background-position: -66px -198px; }
+.icon.bloat                        { background-position: -66px -220px; }
 
 /* Column 5 */
 
-.icon.scallop               { background-position: -88px 0; }
-.icon.crystalize            { background-position: -88px -22px; }
-.icon.wrinkle               { background-position: -88px -44px; }
+.icon.scallop                      { background-position: -88px 0; }
+.icon.crystalize                   { background-position: -88px -22px; }
+.icon.wrinkle                      { background-position: -88px -44px; }
       /* group end */
-.icon.free-transform        { background-position: -88px -66px; }
+.icon.free-transform               { background-position: -88px -66px; }
       /* group start */
-.icon.shape-builder         { background-position: -88px -88px; }
-.icon.live-paint-bucket     { background-position: -88px -110px; }
-.icon.live-paint-selection  { background-position: -88px -132px; }
+.icon.shape-builder                { background-position: -88px -88px; }
+.icon.live-paint-bucket            { background-position: -88px -110px; }
+.icon.live-paint-selection         { background-position: -88px -132px; }
       /* group end */
       /* group start */
-.icon.perspective-grid      { background-position: -88px -154px; }
-.icon.perspective-selection { background-position: -88px -176px; }
+.icon.perspective-grid             { background-position: -88px -154px; }
+.icon.perspective-selection        { background-position: -88px -176px; }
       /* group end */
-.icon.mesh                  { background-position: -88px -198px; }
-.icon.gradient              { background-position: -88px -220px; }
+.icon.mesh                         { background-position: -88px -198px; }
+.icon.gradient                     { background-position: -88px -220px; }
 
 /* Column 5 */
 
       /* group start */
-.icon.eyedropper            { background-position: -110px 0; }
-.icon.measure               { background-position: -110px -22px; }
+.icon.eyedropper                   { background-position: -110px 0; }
+.icon.measure                      { background-position: -110px -22px; }
       /* group end */
-.icon.blend                 { background-position: -110px -44px; }
+.icon.blend                        { background-position: -110px -44px; }
       /* group start */
-.icon.symbol-sprayer        { background-position: -110px -66px; }
-.icon.symbol-shifter        { background-position: -110px -88px; }
-.icon.symbol-scruncher      { background-position: -110px -110px; }
-.icon.symbol-sizer          { background-position: -110px -132px; }
-.icon.symbol-spinner        { background-position: -110px -154px; }
-.icon.symbol-stainer        { background-position: -110px -176px; }
-.icon.symbol-screener       { background-position: -110px -198px; }
-.icon.symbol-styler         { background-position: -110px -220px; }
+.icon.symbol-sprayer               { background-position: -110px -66px; }
+.icon.symbol-shifter               { background-position: -110px -88px; }
+.icon.symbol-scruncher             { background-position: -110px -110px; }
+.icon.symbol-sizer                 { background-position: -110px -132px; }
+.icon.symbol-spinner               { background-position: -110px -154px; }
+.icon.symbol-stainer               { background-position: -110px -176px; }
+.icon.symbol-screener              { background-position: -110px -198px; }
+.icon.symbol-styler                { background-position: -110px -220px; }
       /* group end */
 
 /* Column 6 */
 
       /* group start */
-.icon.column-graph          { background-position: -132px 0; }
-.icon.stacked-column-graph  { background-position: -132px -22px; }
-.icon.bar-graph             { background-position: -132px -44px; }
-.icon.stacked-bar-graph     { background-position: -132px -66px; }
-.icon.line-graph            { background-position: -132px -88px; }
-.icon.area-graph            { background-position: -132px -110px; }
-.icon.scatter-graph         { background-position: -132px -132px; }
-.icon.pie-graph             { background-position: -132px -154px; }
-.icon.radar-graph           { background-position: -132px -176px; }
+.icon.column-graph                 { background-position: -132px 0; }
+.icon.stacked-column-graph         { background-position: -132px -22px; }
+.icon.bar-graph                    { background-position: -132px -44px; }
+.icon.stacked-bar-graph            { background-position: -132px -66px; }
+.icon.line-graph                   { background-position: -132px -88px; }
+.icon.area-graph                   { background-position: -132px -110px; }
+.icon.scatter-graph                { background-position: -132px -132px; }
+.icon.pie-graph                    { background-position: -132px -154px; }
+.icon.radar-graph                  { background-position: -132px -176px; }
       /* group end */
-.icon.art-board             { background-position: -132px -198px; }
+.icon.art-board                    { background-position: -132px -198px; }
       /* group start */
-.icon.slice                 { background-position: -132px -220px; }
+.icon.slice                        { background-position: -132px -220px; }
 
 /* Column 7 */
 
-.icon.slice-selection       { background-position: -154px 0; }
+.icon.slice-selection              { background-position: -154px 0; }
       /* group end */
       /* group start */
-.icon.hand                  { background-position: -154px -22px; }
-.icon.print-tiling          { background-position: -154px -44px; }
+.icon.hand                         { background-position: -154px -22px; }
+.icon.print-tiling                 { background-position: -154px -44px; }
       /* group end */
-.icon.zoom                  { background-position: -154px -66px; }
-.icon.configure             { background-position: -154px -88px; }
-.icon.ai                    { background-position: -198px -88px; }
-.icon.color-mark            { background-position: -198px -132px; }
+.icon.zoom                         { background-position: -154px -66px; }
+.icon.configure                    { background-position: -154px -88px; }
+.icon.ai                           { background-position: -198px -88px; }
+.icon.color-mark                   { background-position: -198px -132px; }
+
+/* Pathfinder */
+
+.icon.unite                        { background-position: -154px -88px; }
+.icon.minus-front                  { background-position: -154px -110px; }
+.icon.intersect                    { background-position: -154px -132px; }
+.icon.exclude                      { background-position: -154px -154px; }
+.icon.divide                       { background-position: -154px -176px; }
+.icon.trim                         { background-position: -154px -198px; }
+.icon.merge                        { background-position: -154px -220px; }
+.icon.crop                         { background-position: -176px 0px; }
+.icon.outline                      { background-position: -176px -22px; }
+.icon.minus-back                   { background-position: -176px -44px; }
+
+/* Align */
+
+.icon.align-horizontal-left        { background-position: -176px -66px; }
+.icon.align-horizontal-center      { background-position: -176px -88px; }
+.icon.align-horizontal-right       { background-position: -176px -110px; }
+.icon.align-vertical-top           { background-position: -176px -132px; }
+.icon.align-vertical-center        { background-position: -176px -154px; }
+.icon.align-vertical-bottom        { background-position: -176px -176px; }
+.icon.distribute-vertical-top      { background-position: -176px -198px; }
+.icon.distribute-vertical-center   { background-position: -176px -220px; }
+.icon.distribute-vertical-bottom   { background-position: -198px 0px; }
+.icon.distribute-horizontal-left   { background-position: -198px -22px; }
+.icon.distribute-horizontal-center { background-position: -198px -44px; }
+.icon.distribute-horizontal-right  { background-position: -198px -66px; }

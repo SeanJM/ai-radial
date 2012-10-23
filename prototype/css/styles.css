@@ -10,15 +10,26 @@ body {
   user-select        : none;
   -ms-user-select    : none;
 }
+.top { z-index: 1000; }
 .sprite {
   background: url('../img/ai-sprite-01.png') no-repeat;
 }
 .wheel-sprite,
-.icon-container .more-tools .arrow,
+.arrow,
 .disclosure,
 .nav-list .icon,
-#menu-hub .checkbox.checked .check {
+#menu-hub .checked .checkbox .check {
   background: url('../img/ai_wheel.png') no-repeat;
+}
+.arrow {
+  width              : 14px;
+  height             : 12px;
+  background-position: -135px -60px;
+  opacity            : 0.4;
+  -webkit-transition : all 0.2s;
+}
+.arrow:hover {
+  opacity            : 0.8;
 }
 .disclosure {
   display            : inline-block;
@@ -79,26 +90,18 @@ body {
   width        : 22px;
   height       : 22px;
   padding      : 1px 4px;
-  border       : 1px solid transparent;
-  border-radius: 2px;
   float        : left;
-}
-.icon-container:hover,
-.icon-container.selected {
-  border          :1px solid rgba(0,0,0,0.3);
-  background-image: -webkit-radial-gradient(center,rgba(255,255,255,0),rgba(255,255,255,0.5));
-  background-image: -moz-radial-gradient(center,rgba(255,255,255,0),rgba(255,255,255,0.5));
 }
   .icon-container .icon {
     width             : 22px;
     height            : 22px;
-    -webkit-transition:all 0.08s;
-    -moz-transition   :all 0.08s;
+    -webkit-transition:all 0.15s;
+    -moz-transition   :all 0.15s;
   }
   .icon-container:hover > .icon,
   .more-tools .icon:hover{
-    -webkit-transform: scale(1.38);
-    -moz-transform   : scale(1.38);
+    -webkit-transform: scale(1.4);
+    -moz-transform   : scale(1.4);
   }
   .icon-container.selected > .icon {
     opacity: 0.6;
@@ -117,13 +120,10 @@ body {
 }
   
   .icon-container .more-tools .arrow {
-    float              : right;
-    position           : relative;
-    top                : 1px;
-    right              : -1px;
-    width              : 10px;
-    height             : 10px;
-    background-position: -189px -76px;
+    float   : right;
+    position: relative;
+    top     : -1px;
+    right   : 7px;
   }
   /* WEBKIT */
   @-webkit-keyframes pop {
