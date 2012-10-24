@@ -16,64 +16,30 @@ function putOnCircle(object) {
       child      = parent.find(object['child']),
       ringWidth  = $(parent).outerWidth(),
       ringHeight = $(parent).outerHeight(),
-      h          = parseInt((ringWidth/2) - (child.outerWidth() / 2)),
-      k          = parseInt((ringHeight/2) - (child.outerHeight() / 2)),
       step       = 2*Math.PI/child.size(),
       theta      = 0,
-      r          = (ringWidth / 2) - (child.width());
-    if (object.hasOwnProperty('radius')) { 
-      r          = object['radius']; 
-      h          = parseInt((ringWidth /2) - (child.outerWidth() / 2));
-      k          = parseInt((ringWidth / 2) - (child.outerHeight() / 2));
-    }
+      r          = (ringWidth / 2) - (child.width()),
+      h,k,x,y;
+
+    console.log(child.size());
+    if (object.hasOwnProperty('radius')) { r = object['radius']; }
+    
+    h = parseInt((ringWidth /2) - (child.outerWidth() / 2));
+    k = parseInt((ringWidth / 2) - (child.outerHeight() / 2));
 
   child.each(function(){
-    var x        = h + parseInt(r * Math.cos(theta)),
-        y        = k - parseInt(r * Math.sin(theta));
+    x = h + parseInt(r * Math.cos(theta));
+    y = k - parseInt(r * Math.sin(theta));
     theta += step;
     $(this).css('top',y).css('left',x);
   });
 }
   
-$(function(){
   /* More tools */
 
   function moreRad(n) {
     var value = { 1:10, 2:40, 3:45, 4:45, 5:55, 6:60, 7:70, 8:75, 9:80 };
     return value[n];
-  }
-
-  /* Icon Container More Tools Menu */
-  
-  function moretools(data) {
-    var el        = data['target'],
-        event     = data['event'],
-        morering  = el.find('.more-ring'),
-        timer;
-    
-    if (event == 'init') {
-      setTimeout(function(){
-        /* Check to make sure the mouse is down */
-        if (el.hasClass('mousedown')) {
-          el.addClass('show-tools');
-        }
-      },200);
-    }
-    
-    if (event == 'leave') {
-      if (morering.is(':visible')) {
-        
-        el.addClass('hide-tools');
-        
-        setTimeout(function(){
-        /* Check to make sure the mouse is down */
-          el.removeClass('hide-tools');
-          el.removeClass('show-tools');
-        },200);
-
-      }
-    }
-  
   }
 
   /* Keyboard */
@@ -92,21 +58,9 @@ $(function(){
         el  = data['el'];
 
     /* Arrow Down */
-    if (key == '40') {
-      spinnerVal({
-        'el': el,
-        'inc': -1
-      });
-    }
-    
+    if (key == '40') { spinnerVal({'el': el, 'inc': -1 }); }
     /* Arrow Up */
-    if (key == '38') {
-      spinnerVal({
-        'el': el,
-        'inc': 1
-      });
-    }
-    
+    if (key == '38') { spinnerVal({'el': el, 'inc': 1 }); }
     /* Spacebar */
     if (key == '13') { 
       el
@@ -129,112 +83,145 @@ $(function(){
     el.find('.value').text(val);
   }
 
-  /* --------------------- End Functions ---------------- */
-
-  /* Position Rings */
-
-  $('.ring').each(function(){
-    var outterRingW   = $('#outter-ring').width()/2,
-        innerRingW    = $(this).width()/2,
-        innerRingPos  = outterRingW-innerRingW;
-    
-    $(this)
-      .css('left',innerRingPos)
-      .css('top',innerRingPos);
-  });
-  
-  $('#fillStroke').click(function(){
-    $(this).toggleClass('stroke');
-    $('#microFillControl').toggleClass('stroke');
-  });
-  
-  $('#swapFillStroke').click(function(){
-    $('#fillStroke').toggleClass('swap');
-  });
-  
-  $('#dFillStroke').click(function(){
-    $('#fillStroke').addClass('default');
-  });
-  
-  $('#drawModes').click(function(){
-    if ($(this).hasClass('front')) {
-      $(this).removeClass('front').addClass('behind');
-      return false;
-    }
-    if ($(this).hasClass('behind')) {
-      $(this).removeClass('behind').addClass('clip');
-      return false;
-    }
-    if ($(this).hasClass('clip')) {
-      $(this).removeClass('clip').addClass('front');
-      return false;
-    }
-  });
-
-  /* Second Ring */
-
-  putOnCircle({'parent':$('#secondRing'),'child':$('.icon-container')});
-  
-  $('.more-tools').each(function(){
-    var icon            = $(this).find('.icon'),
-        totalIcons      = icon.size(),
-        rad             = moreRad(totalIcons);
+  function centerRings() {
+    $('.ring').each(function(){
+      var outterRingW   = $('#outter-ring').width()/2,
+          innerRingW    = $(this).width()/2,
+          innerRingPos  = outterRingW-innerRingW;
       
-      $(this).find('.more-ring')
-        .css('width'        ,(rad * 2))
-        .css('height'       ,(rad * 2))
-        .css('top'          ,(rad * -1))
-        .css('left'         ,(rad * -1))
+      $(this)
+        .css('left',innerRingPos)
+        .css('top',innerRingPos);
+    });
+  }
+
+  function protonBind() {
+    
+    $('#fillStroke').click(function(){
+      $(this).toggleClass('stroke');
+      $('#microFillControl').toggleClass('stroke');
+    });
+    
+    $('#swapFillStroke').click(function(){
+      $('#fillStroke').toggleClass('swap');
+    });
+    
+    $('#dFillStroke').click(function(){
+      $('#fillStroke').addClass('default');
+    });
+    
+    $('#drawModes').click(function(){
+      if ($(this).hasClass('front')) {
+        $(this).removeClass('front').addClass('behind');
+        return false;
+      }
+      if ($(this).hasClass('behind')) {
+        $(this).removeClass('behind').addClass('clip');
+        return false;
+      }
+      if ($(this).hasClass('clip')) {
+        $(this).removeClass('clip').addClass('front');
+        return false;
+      }
+    });
+  }
+
+  function moreToolCircle(element) {
+    console.log(element);
+    var 
+        icon       = element.find('.icon'),
+        totalIcons = icon.size(),
+        rad        = moreRad(totalIcons),
+        moreRing   = element.find('.more-ring'),
+        timer;
+      
+      moreRing
+        .css('width'        ,(rad*2))
+        .css('height'       ,(rad*2))
+        .css('top'          ,(rad*-1))
+        .css('left'         ,(rad*-1))
         .css('border-radius',(rad));
     
-    putOnCircle({
-      'parent':$(this).find('.more-ring'),
-      'child':$(this).find('.more-ring .icon')});
-  });
-  
-  /* Icon Container More Tools Menu */
+    timer = setInterval(function() {
+      if (moreRing.width() == rad*2) {
+        clearInterval(timer);
+        putOnCircle({'parent':moreRing, 'child':moreRing.find('.icon')});
+        moreRing.addClass('visible');
+        moreRing.on('mouseleave',function() { moreRing.removeClass('visible'); });
+      }
+    },10);
+  }
 
-  $('.icon-container').on('mousedown',function(){
-    $(this).addClass('mousedown');
-    moretools({
-      'target'  : $(this),
-      'event'   : 'init'
+  function iconContainerBind () {
+    var element   = $('.icon-container'),
+        morering  = element.find('.more-ring');
+
+    element.on('click',function(event){
+      $('.icon-container.selected').removeClass('selected');
+      $(this).addClass('selected');
     });
-  });
-
-  $('.icon-container').on('mouseup',function(){
-    $(this).removeClass('mousedown');
-  });
-
-  $('.icon-container').on('mouseleave',function(){
-    $(this).removeClass('mousedown');
-    moretools({
-      'target'  : $(this),
-      'event'   : 'leave'
+    element.find('.arrow').on('click',function(event){
+      if (element.find('.more-ring.visible').size() > 0) { $('html').trigger('click'); }
+      moreToolCircle($(this).parent());
+      event.stopPropagation();
     });
-  });
+    morering.find('.icon').on('click',function(){
+      var selectedIcon  = $(this),
+          replaceIcon   = $(this).parents('.icon-container').find('.icon:first');
+      replaceIcon.replaceWith(selectedIcon.clone());
+    });
+    element.each(function(){
+      var 
+        element = $(this);
+        parent  = element.parent(),
+      dragDrop.init(
+      { 'drag':element,'target':$('.tool-container') },{
+        'start': (function(){ console.log('starting icon drag'); }),
+        'complete': (function(){
+          element.remove();
+          putOnCircle({'parent':$('#secondRing'),'child':'.icon-container'});
+          putOnCircle({'parent':$('#outter-ring'),'child':'.icon-container'});
+        }) }); 
+    });
+  }
 
-  $('.icon-container').click(function(){
-    $('.icon-container.selected').removeClass('selected');
-    $(this).addClass('selected');
-  });
+  function spinnerBind() {
+    $('html').on('keydown',function(event){
+      $('.spinner').each(function(){
+        if ($(this).is(':visible') && !$(this).hasClass('edit') && $(this).hasClass('visible')) {
+          spinnerInput({'key':event.which,'el': $(this)});
+        }
+      });
+    }); 
 
-  $('.icon-container .more-ring .icon').on('click',function(){
-    var selectedIcon  = $(this),
-        replaceIcon   = $(this).parents('.icon-container').find('.icon:first');
-    replaceIcon.replaceWith(selectedIcon.clone());
+    $('.spinner').on('click',function(event){ event.stopPropagation(); });
     
-    moretools({
-      'target'  : $(this).parents('.icon-container'),
-      'event'   : 'leave'
-    });
-  });
+    $('.spinner .value').on('click',function(event){
+      var input   = $(this).parents('.spinner').find('input'),
+          spinner = $(this).parents('.spinner'),
+          value   = $(this).parents('.spinner').find('.value').text();
 
-  /* Keyboard */
-  
-  /* Position the arrow keys */
-  
+      spinner.toggleClass('edit');
+      input.focus().val(value);
+      
+    });
+
+    $('.spinner').on('keydown',function(event){
+      spinnerInput({'key': event.which, 'el': $(this)});
+    });
+
+  }
+
+  /* --------------------- End Functions ---------------- */
+
+$(function(){
+  iconContainerBind();
+  centerRings();
+  protonBind();  
   arrowKeyPos();
+  spinnerBind();
+
+  putOnCircle({'parent':$('#secondRing'),'child':$('.icon-container')});
   
   $('.key-container').hover(function(){
     $(this).addClass('hover');
@@ -249,51 +236,6 @@ $(function(){
   });
 
   /* Spinner */
-
-  $('html').click(function(){
-    $('.spinner').each(function() {
-      var spinner = $(this);
-      if (spinner.hasClass('visible')) {
-        spinner.toggleClass('visible').removeClass('edit');
-      }
-    });
-  });
-
-  $('html').on('keydown',function(event){
-    $('.spinner').each(function(){
-      if ($(this).is(':visible') && !$(this).hasClass('edit') && $(this).hasClass('visible')) {
-        spinnerInput({'key':event.which,'el': $(this)});
-      }
-    });
-  }); 
-  $('.spinner').click(function(event){
-    event.stopPropagation();
-  });
-
-  
-  $('.spinner .value').click(function(event){
-    var input   = $(this).parents('.spinner').find('input'),
-        spinner = $(this).parents('.spinner'),
-        value   = $(this).parents('.spinner').find('.value').text();
-
-    spinner.toggleClass('edit');
-    input.focus().val(value);
-    
-    event.stopPropagation();
-  });
-
-  $('.spinner input').click(function(event){
-    event.stopPropagation();
-  });
-
-
-  $('.spinner').on('keydown',function(event){
-    spinnerInput({'key': event.which, 'el': $(this)});
-  });
-
-  $('.spinner .handle').click(function(event){
-    event.stopPropagation();
-  });
 
   /* Buttons and Icons that Spawn the Spinner */
   $('#keyboard .undo.key-container').click(function(event){

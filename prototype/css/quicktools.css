@@ -48,7 +48,6 @@
     box-shadow   : 0 1px 6px rgba(0, 0, 0, 0.5);
     left: -55px;
     top: -56px;
-    z-index: -1;
     -webkit-transform: scale(0) rotate(120deg);
     -webkit-transition: all 0.25s;
   }

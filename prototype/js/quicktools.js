@@ -15,9 +15,7 @@ quicktools.init = function () {
       selectedTool = root.find('.selected-tool .icon'),
       target;
     
-    if (toolSelect.hasClass('visible')) {
-      $('html').trigger('click');
-    }
+    if (toolSelect.hasClass('visible')) { toolSelect.removeClass('visible'); }
     else {
       root.addClass('top');
       toolSelect.addClass('visible').on('click',function(e){
@@ -26,6 +24,9 @@ quicktools.init = function () {
         toolSelect.removeClass('visible');
         root.removeClass('top');
         selectedTool.replaceWith(target.clone().removeAttr('style'));
+      });
+      toolSelect.on('mouseleave',function(){
+        $(this).removeClass('visible');
       });
       e.stopPropagation();
     }

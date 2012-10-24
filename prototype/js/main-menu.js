@@ -221,7 +221,33 @@ menuRoot.loadDropdown = function() {
         dragDrop.init(
           { 'drag':el,'target':$('#menu-quickpick .pick') },{
             'start': (function(){ el.closest('.menu-root-child').css('opacity','0.3'); }),
-            'complete': (function(){ el.closest('.menu-root-child').css('opacity','1'); }) }); 
+            'complete': (function(){ 
+              el.closest('.menu-root-child').css('opacity','1'); 
+              var
+                dragInto       = $('.drag-into'),
+                dragClone      = dragInto.children('li'),
+                disclosure     = dragClone.find('.disclosure'),
+                dragIntoRight  = u.parseInt(dragInto.css('right')),
+                dragIntoLeft   = u.parseInt(dragInto.css('left')),
+                offsetPosition = dragInto.width() - dragClone.width(),
+                right          = 0,
+                left           = 0,
+                width          = 0;
+                
+                if (u.isNum(dragIntoRight)) { right = offsetPosition + u.parseInt(dragIntoRight); }
+                if (u.isNum(dragIntoLeft))  { left  = offsetPosition + u.parseInt(dragIntoLeft); }
+
+                dragInto.width(dragClone.width());
+      
+                if (right != 0) { dragInto.css('right',right); }
+                if (left != 0) { dragInto.css('left',left); }
+
+                // Bind the dropped element
+                dragInto.find('.visible').removeClass('visible');
+                menu.quickMenu.bind(dragInto);
+                menu.setup(dragInto);
+
+            }) }); 
       });
       if (menuChild == '#type-menu') { menu.fonts(parent); }
     });

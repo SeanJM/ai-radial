@@ -92,6 +92,10 @@ body {
   padding      : 1px 4px;
   float        : left;
 }
+#secondRing .icon-container,
+#outter-ring .icon-container {
+  -webkit-transition: all 0.3s;
+}
   .icon-container .icon {
     width             : 22px;
     height            : 22px;
@@ -125,41 +129,18 @@ body {
     top     : -1px;
     right   : 7px;
   }
-  /* WEBKIT */
-  @-webkit-keyframes pop {
-    0%   { -webkit-transform: scale(0.2); }
-    100% { -webkit-transform: scale(1); }
-  }
-  @-webkit-keyframes pop-out {
-    0%   { -webkit-transform: scale(1); }
-    100% { -webkit-transform: scale(0); }
-  }
-  /* MOZ */
-  @-moz-keyframes pop {
-    0%   { -moz-transform: scale(0.2); }
-    100% { -moz-transform: scale(1); }
-  }
-  @-moz-keyframes pop-out {
-    0%   { -moz-transform: scale(1); }
-    100% { -moz-transform: scale(0); }
-  }
+
   .icon-container .more-tools .more-ring {
-    display         : none;
-    position        : relative;
-    background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.88) 60%,rgba(220,220,220,0.9) 68%,rgba(255,255,255,0.9) 72%);
-    background-image: -moz-radial-gradient(center,rgba(255,255,255,0.88) 60%,rgba(220,220,220,0.9) 68%,rgba(255,255,255,0.9) 72%);
-    box-shadow      : 0 1px 4px rgba(0,0,0,0.5);
+    position          : relative;
+    background-image  : -webkit-radial-gradient(center, rgba(255,255,255,0.88) 60%, rgba(220,220,220,0.9) 68%, rgba(255,255,255,0.9) 72%);
+    background-image  : -moz-radial-gradient(center, rgba(255,255,255,0.88) 60%, rgba(220,220,220,0.9) 68%, rgba(255,255,255,0.9) 72%);
+    box-shadow        : 0 1px 4px rgba(0,0,0,0.5);
+    -webkit-transition: all 0.18s;
+    -webkit-transform : scale(0) rotate(90deg);
   }
-  .icon-container.show-tools .more-tools .more-ring {
-    display          : block;
-    -webkit-animation:pop 0.15s;
-    -moz-animation   :pop 0.15s;
-  }
-  .icon-container.hide-tools .more-tools .more-ring {
-    -webkit-animation:pop-out 0.15s;
-    -moz-animation   :pop-out 0.15s;
-    -webkit-transform:scale(0);
-    -moz-transform   :scale(0);
+
+  .icon-container .more-tools .more-ring.visible {
+    -webkit-transform: scale(1) rotate(0deg);
   }
 
     .icon-container .more-tools .more-ring .icon {

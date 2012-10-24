@@ -1,11 +1,10 @@
 #menu-quickpick {
-  position: absolute;
-  width: 495px;
-  height: 314px;
-  z-index: -1;
-  top: 160px;
+  z-index      : -1;
+  position     : absolute;
+  top          : 93px;
+  width        : 495px;
+  height       : 314px;
   border-radius: 50%;
-  top: 95px;
 }
   #menu-quickpick .left {
     left: 50px;
@@ -17,18 +16,18 @@
     position: absolute;
   }
   #menu-quickpick .left {
-    left: 0px;
+    left: -4px;
   }
   #menu-quickpick .right {
-    right: 0;
+    right: -4px;
   }
     #menu-quickpick .pick {
-      position     : absolute;
-      width        : 60px;
-      height       : 30px;
-      border-radius: 15px;
-      box-shadow   : 0 1px 6px rgba(0, 0, 0, 0.3);
-      opacity: 0.9;
+      position          : absolute;
+      width             : 60px;
+      height            : 30px;
+      border-radius     : 15px;
+      opacity           : 0.9;
+      box-shadow        : 0 1px 6px rgba(0,0,0,0.3);
       -webkit-transition: all 0.2s;
     }
     #menu-quickpick .pick:hover {
@@ -58,12 +57,12 @@
     #menu-quickpick .right .pick:nth-child(8)       { right: 50px; }
     .pick li {
       border-radius   : 15px;
+      text-align      : center;
       font-size       : 12px;
       line-height     : 30px;
       list-style      : none;
       color           : #A2A2A2;
-      background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
-      text-align: center;
+      background-image: -webkit-linear-gradient(bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.95) );
     }
     #menu-quickpick .menu-parent {
       width: 190px;

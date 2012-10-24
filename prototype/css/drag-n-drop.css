@@ -13,3 +13,7 @@
   text-align: center;
 }
 #drag-clone ul { display: none; }
+.icon-container#drag-clone {
+  background:none;
+  box-shadow: none;
+}

@@ -2,7 +2,7 @@
 dragDrop = {};
 
 dragDrop.test = function (object) {
-  var targetGroup = $('#menu-quickpick .pick');
+  var targetGroup = object.target;
   for (var i = 0;i<targetGroup.size();i++) {
     var target        = {};
         target.el     = targetGroup.eq(i);
@@ -39,24 +39,20 @@ dragDrop.ghost = function (element) {
 }
 
 dragDrop.drag = function (object,callback) {
-  var el = object.drag;
-  if (el.hasClass('drag')) {
-    var 
-      dragOffset = 10,
-      offsetX    = object.initMouseX - object.mouseX,
-      offsetY    = object.initMouseY - object.mouseY;
+  var 
+    el         = object.drag,
+    dragOffset = 10,
+    offsetX    = object.initMouseX - object.mouseX,
+    offsetY    = object.initMouseY - object.mouseY,
+    dragClone = $('#drag-clone');
 
-    if (offsetX > dragOffset || offsetX < dragOffset*-1 || offsetY > dragOffset || offsetY < dragOffset*-1) {
-      var dragClone = $('#drag-clone');
-      
-      if (dragClone.size() < 1 || dragClone.is(':hidden')) { if (callback) { callback.start(); } }
-      if (dragClone.size() < 1) { dragDrop.ghost(el); }
-      if (dragClone.size() > 0) {
-        dragDrop.test({'active':dragClone,'mouseX':object.mouseX,'mouseY':object.mouseY});
-        dragClone.css('left',object.mouseX-(dragClone.width()/2)).css('top',object.mouseY-(dragClone.height()/2)); 
-        
-        if (dragClone.is(':hidden')) { dragClone.show(); }
-      }
+  if (offsetX > dragOffset || offsetX < dragOffset*-1 || offsetY > dragOffset || offsetY < dragOffset*-1) {
+    if (dragClone.size() < 1 || dragClone.is(':hidden')) { if (callback) { callback.start(); } }
+    if (dragClone.size() < 1) { dragDrop.ghost(el); }
+    if (dragClone.size() > 0) {
+      dragDrop.test({'active':dragClone,'target':object.target,'mouseX':object.mouseX,'mouseY':object.mouseY});
+      dragClone.css('left',object.mouseX-(dragClone.width()/2)).css('top',object.mouseY-(dragClone.height()/2)); 
+      if (dragClone.is(':hidden')) { dragClone.show(); }
     }
   }
 }
@@ -73,37 +69,19 @@ dragDrop.drop = function (el,callback) {
           dragClone.remove(); 
         });
       }); 
+      if (callback.cancel) { callback.cancel(); }
     }
-    if ($('.drag-into').size() > 0) {
-      var 
-        disclosure     = dragClone.find('.disclosure'),
-        dragInto       = $('.drag-into'),
-        dragIntoRight  = dragInto.css('right').replace('px',''),
-        dragIntoLeft   = dragInto.css('left').replace('px',''),
-        right          = 0,
-        left           = 0,
-        width          = 0,
-        offsetPosition = dragInto.width() - dragClone.width();
-        
-        if (u.isNum(dragIntoRight)) { right = offsetPosition + u.parseInt(dragIntoRight); }
-        if (u.isNum(dragIntoLeft))  { left  = offsetPosition + u.parseInt(dragIntoLeft); }
 
+    if ($('.drag-into').size() > 0) {
+      
       dragClone
-        .appendTo(dragInto)
+        .appendTo($('.drag-into'))
         .removeAttr('id')
         .removeClass('drag')
         .css('left','')
         .css('top','')
         .children().removeAttr('style');
-      
-      dragInto.width(dragClone.width());
-      if (right != 0) { dragInto.css('right',right); }
-      if (left != 0) { dragInto.css('left',left); }
 
-      // Bind the dropped element
-      dragInto.find('.visible').removeClass('visible');
-      menu.quickMenu.bind(dragInto);
-      menu.setup(dragInto);
       if (callback) { callback.complete(); }
     }
   }
@@ -118,7 +96,7 @@ dragDrop.init = function(object,callback) {
       mouse   = {};
   // Make element dragable when it's clicked
   drag.on('mousedown',function(e){
-    $(e.target).addClass('drag');
+    $(this).addClass('drag');
     mouse.X = e.pageX;
     mouse.Y = e.pageY;
   });
@@ -130,6 +108,8 @@ dragDrop.init = function(object,callback) {
     }
   });
   $('html').on('mousemove',function(e){
-    dragDrop.drag({'drag':drag,'target':object.target,'initMouseX':mouse.X,'initMouseY':mouse.Y,'mouseX':e.pageX,'mouseY':e.pageY},callback);
+    if (drag.hasClass('drag')) {
+      dragDrop.drag({'drag':drag,'target':object.target,'initMouseX':mouse.X,'initMouseY':mouse.Y,'mouseX':e.pageX,'mouseY':e.pageY},callback);
+    }
   });
 }
