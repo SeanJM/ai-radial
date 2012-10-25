@@ -209,7 +209,7 @@ function putOnCircle(object) {
               if ((i-1) == -1) { targetPrev = iconTarget.eq(iconTargetSize-1); }
               if ((i+1) >= iconTargetSize) { targetNext = iconTarget.eq(1); }
 
-            var
+            var targetPos = function() {
               targetPrevLeft     = parseInt(targetPrev.offset().left),
               targetPrevTop      = parseInt(targetPrev.offset().top),
               targetPrevRight    = parseInt(targetPrevLeft + targetPrev.outerWidth()),
@@ -223,13 +223,23 @@ function putOnCircle(object) {
               targetLeft    = parseInt((targetPrevLeft+targetMidLeft)/2),
               targetRight   = parseInt((targetPrevRight+targetMidRight)/2),
               targetTop     = parseInt((targetPrevTop+targetMidTop)/2),
-              targetBottom  = parseInt((targetPrevBottom+targetMidBottom)/2);
-              
-            if (cloneLeft >= targetLeft && cloneRight <= targetRight && cloneBottom >= targetTop && cloneTop <= targetBottom) {
+              targetBottom  = parseInt((targetPrevBottom+targetMidBottom)/2),
+              emptyTarget = {'left':targetLeft,'right':targetRight,'top':targetTop,'bottom':targetBottom};
+
+              return emptyTarget;
+            }
+
+            var tmpTargetPos = targetPos();
+
+            if (cloneLeft >= tmpTargetPos.left && cloneRight <= tmpTargetPos.right && cloneBottom >= tmpTargetPos.top && cloneTop <= tmpTargetPos.bottom) {
               var targetEmpty = $('<div class="icon-container" id="emptyIcon"></div>');
+              targetEmpty
+                .css('left',tmpTargetPos.left)
+                .css('top',tmpTargetPos.top);
               if (!$('#emptyIcon').size()) {
                 targetEmpty.insertBefore(targetMid);
-                updateCircle(mouseEmptyRemoval());
+                updateCircle();
+                setTimeout(mouseEmptyRemoval(targetPos()),1000);
               }
             }
           }
@@ -246,7 +256,7 @@ function putOnCircle(object) {
         }) }); 
     });
     // Drag and Drop Continued
-    function mouseEmptyRemoval () {
+    function mouseEmptyRemoval (object) {
       setInterval(function() {
         if ($('#emptyIcon').css('position')) {
           htmlBind();
@@ -255,13 +265,7 @@ function putOnCircle(object) {
       var htmlBind = function () {
         $('body').on('mousemove',function() {
           if ($('#emptyIcon').size() > 0 && $('#drag-clone').size() > 0) {
-            var
-              empty       = $('#emptyIcon'),
-              emptyTop    = empty.offset().top,
-              emptyRight  = empty.offset().left + empty.outerWidth(),
-              emptyBottom = empty.offset().top + empty.outerHeight(),
-              emptyLeft   = empty.offset().left,
-              
+
               clone       = $('#drag-clone'),
               cloneTop    = clone.offset().top,
               cloneRight  = clone.offset().left + clone.outerWidth(),
@@ -274,10 +278,15 @@ function putOnCircle(object) {
               updateCircle();
             }
 
-            if (cloneLeft >= emptyRight) { removeEmpty(); }
-            if (cloneRight <= emptyLeft) { removeEmpty(); }
-            if (cloneTop >= emptyBottom) { removeEmpty(); }
-            if (cloneBottom <= emptyTop) { removeEmpty(); }
+            if (cloneLeft <= object.right && cloneLeft >= object.left && cloneTop <= object.bottom && cloneTop >= object.top && cloneRight <= object.right && cloneRight >= object.left) { 
+              $('#emptyIcon').addClass('touched'); 
+            }
+
+            else {
+              if ($('#emptyIcon').hasClass('touched')) {
+                removeEmpty();
+              } 
+            }
           }
         });
       }
