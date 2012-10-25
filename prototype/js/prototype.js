@@ -21,7 +21,6 @@ function putOnCircle(object) {
       r          = (ringWidth / 2) - (child.width()),
       h,k,x,y;
 
-    console.log(child.size());
     if (object.hasOwnProperty('radius')) { r = object['radius']; }
     
     h = parseInt((ringWidth /2) - (child.outerWidth() / 2));
@@ -153,6 +152,11 @@ function putOnCircle(object) {
   }
 
   function iconContainerBind () {
+    function updateCircle(callback) {
+      putOnCircle({'parent':$('#secondRing'),'child':'.icon-container'});
+      putOnCircle({'parent':$('#outter-ring'),'child':'.icon-container'});
+      if (typeof callback == 'function') { callback(); }
+    }
     var element   = $('.icon-container'),
         morering  = element.find('.more-ring');
 
@@ -172,17 +176,112 @@ function putOnCircle(object) {
     });
     element.each(function(){
       var 
-        element = $(this);
+        element = $(this),
         parent  = element.parent(),
+        target  = $('#secondRing'),
+        dropTarget;
+      if (parent.attr('id') == 'secondRing') { target = $('#outter-ring'); }
+
+
       dragDrop.init(
-      { 'drag':element,'target':$('.tool-container') },{
-        'start': (function(){ console.log('starting icon drag'); }),
+      { 'drag':element,'target':target },{
+        'start': (function(){ 
+          element.css('opacity','0.2'); 
+          $('#drag-clone').css('opacity','0.8'); 
+        }),
+        'dragging': (function(){
+          var iconTarget = target.find('.icon-container'),
+              clone      = $('#drag-clone'),
+              iconTargetSize = iconTarget.size();
+
+              if (clone.size() > 0) {
+                var
+                cloneLeft   = clone.offset().left,
+                cloneTop    = clone.offset().top,
+                cloneRight  = cloneLeft + clone.outerWidth(),
+                cloneBottom = cloneTop + clone.outerHeight();
+              }
+          for (var i=0;i<iconTargetSize;i++) {
+            var
+              targetPrev = iconTarget.eq(i-1),
+              targetMid  = iconTarget.eq(i);
+
+              if ((i-1) == -1) { targetPrev = iconTarget.eq(iconTargetSize-1); }
+              if ((i+1) >= iconTargetSize) { targetNext = iconTarget.eq(1); }
+
+            var
+              targetPrevLeft     = parseInt(targetPrev.offset().left),
+              targetPrevTop      = parseInt(targetPrev.offset().top),
+              targetPrevRight    = parseInt(targetPrevLeft + targetPrev.outerWidth()),
+              targetPrevBottom   = parseInt(targetPrevTop + targetPrev.outerHeight()),
+              
+              targetMidLeft      = parseInt(targetMid.offset().left),
+              targetMidTop       = parseInt(targetMid.offset().top),
+              targetMidRight     = parseInt(targetMidLeft + targetMid.outerWidth()),
+              targetMidBottom    = parseInt(targetMidTop + targetMid.outerHeight()),
+              
+              targetLeft    = parseInt((targetPrevLeft+targetMidLeft)/2),
+              targetRight   = parseInt((targetPrevRight+targetMidRight)/2),
+              targetTop     = parseInt((targetPrevTop+targetMidTop)/2),
+              targetBottom  = parseInt((targetPrevBottom+targetMidBottom)/2);
+              
+            if (cloneLeft >= targetLeft && cloneRight <= targetRight && cloneBottom >= targetTop && cloneTop <= targetBottom) {
+              var targetEmpty = $('<div class="icon-container" id="emptyIcon"></div>');
+              if (!$('#emptyIcon').size()) {
+                targetEmpty.insertBefore(targetMid);
+                updateCircle(mouseEmptyRemoval());
+              }
+            }
+          }
+        }),
         'complete': (function(){
           element.remove();
-          putOnCircle({'parent':$('#secondRing'),'child':'.icon-container'});
-          putOnCircle({'parent':$('#outter-ring'),'child':'.icon-container'});
+          var dropped = target.find('.dropped').removeClass('dropped');
+          dropped.hide().insertAfter($('#emptyIcon'));
+          $('#emptyIcon').remove();
+          updateCircle(function(){ dropped.show(); });
+        }),
+        'cancel':(function(){
+          element.css('opacity','1');
         }) }); 
     });
+    // Drag and Drop Continued
+    function mouseEmptyRemoval () {
+      setInterval(function() {
+        if ($('#emptyIcon').css('position')) {
+          htmlBind();
+        }
+      },300);
+      var htmlBind = function () {
+        $('body').on('mousemove',function() {
+          if ($('#emptyIcon').size() > 0 && $('#drag-clone').size() > 0) {
+            var
+              empty       = $('#emptyIcon'),
+              emptyTop    = empty.offset().top,
+              emptyRight  = empty.offset().left + empty.outerWidth(),
+              emptyBottom = empty.offset().top + empty.outerHeight(),
+              emptyLeft   = empty.offset().left,
+              
+              clone       = $('#drag-clone'),
+              cloneTop    = clone.offset().top,
+              cloneRight  = clone.offset().left + clone.outerWidth(),
+              cloneBottom = clone.offset().top + clone.outerHeight(),
+              cloneLeft   = clone.offset().left;
+
+            function removeEmpty() {
+              $('#emptyIcon').remove();
+              $('body').off('mousemove');
+              updateCircle();
+            }
+
+            if (cloneLeft >= emptyRight) { removeEmpty(); }
+            if (cloneRight <= emptyLeft) { removeEmpty(); }
+            if (cloneTop >= emptyBottom) { removeEmpty(); }
+            if (cloneBottom <= emptyTop) { removeEmpty(); }
+          }
+        });
+      }
+    }
   }
 
   function spinnerBind() {

@@ -55,6 +55,7 @@ dragDrop.drag = function (object,callback) {
       if (dragClone.is(':hidden')) { dragClone.show(); }
     }
   }
+  if (typeof callback.dragging == 'function') { callback.dragging(); }
 }
 
 dragDrop.drop = function (el,callback) {
@@ -66,7 +67,7 @@ dragDrop.drop = function (el,callback) {
           top = el.offset().top;
       dragClone.animate({'left':left,'top':top},200,function() {
         dragClone.fadeOut(100,function() { 
-          dragClone.remove(); 
+          dragClone.remove();
         });
       }); 
       if (callback.cancel) { callback.cancel(); }
@@ -74,12 +75,15 @@ dragDrop.drop = function (el,callback) {
 
     if ($('.drag-into').size() > 0) {
       
+      $('.dropped').removeClass('.dropped');
+      
       dragClone
         .appendTo($('.drag-into'))
         .removeAttr('id')
         .removeClass('drag')
         .css('left','')
         .css('top','')
+        .addClass('dropped')
         .children().removeAttr('style');
 
       if (callback) { callback.complete(); }
