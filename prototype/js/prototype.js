@@ -155,7 +155,7 @@ function putOnCircle(object) {
     function updateCircle(callback) {
       putOnCircle({'parent':$('#secondRing'),'child':'.icon-container'});
       putOnCircle({'parent':$('#outter-ring'),'child':'.icon-container'});
-      if (typeof callback == 'function') { callback(); }
+      if (typeof callback == 'function') { setTimeout(callback(),1000); }
     }
     var element   = $('.icon-container'),
         morering  = element.find('.more-ring');
@@ -194,22 +194,21 @@ function putOnCircle(object) {
               clone      = $('#drag-clone'),
               iconTargetSize = iconTarget.size();
 
-              if (clone.size() > 0) {
-                var
-                cloneLeft   = clone.offset().left,
-                cloneTop    = clone.offset().top,
-                cloneRight  = cloneLeft + clone.outerWidth(),
-                cloneBottom = cloneTop + clone.outerHeight();
-              }
-          for (var i=0;i<iconTargetSize;i++) {
+          if (clone.size() > 0) {
             var
-              targetPrev = iconTarget.eq(i-1),
-              targetMid  = iconTarget.eq(i);
+            cloneLeft   = clone.offset().left,
+            cloneTop    = clone.offset().top,
+            cloneRight  = cloneLeft + clone.outerWidth(),
+            cloneBottom = cloneTop + clone.outerHeight();
+          }
+
+          var targetPos = function(i) {
+              var
+                targetMid  = iconTarget.eq(i),
+                targetPrev = iconTarget.eq(i-1);
 
               if ((i-1) == -1) { targetPrev = iconTarget.eq(iconTargetSize-1); }
-              if ((i+1) >= iconTargetSize) { targetNext = iconTarget.eq(1); }
-
-            var targetPos = function() {
+              
               targetPrevLeft     = parseInt(targetPrev.offset().left),
               targetPrevTop      = parseInt(targetPrev.offset().top),
               targetPrevRight    = parseInt(targetPrevLeft + targetPrev.outerWidth()),
@@ -224,22 +223,27 @@ function putOnCircle(object) {
               targetRight   = parseInt((targetPrevRight+targetMidRight)/2),
               targetTop     = parseInt((targetPrevTop+targetMidTop)/2),
               targetBottom  = parseInt((targetPrevBottom+targetMidBottom)/2),
+              
               emptyTarget = {'left':targetLeft,'right':targetRight,'top':targetTop,'bottom':targetBottom};
 
               return emptyTarget;
             }
+          
+          for (var i=0;i<iconTargetSize;i++) {
 
-            var tmpTargetPos = targetPos();
+            var tmpTargetPos = targetPos(i);
 
             if (cloneLeft >= tmpTargetPos.left && cloneRight <= tmpTargetPos.right && cloneBottom >= tmpTargetPos.top && cloneTop <= tmpTargetPos.bottom) {
               var targetEmpty = $('<div class="icon-container" id="emptyIcon"></div>');
-              targetEmpty
-                .css('left',tmpTargetPos.left)
-                .css('top',tmpTargetPos.top);
               if (!$('#emptyIcon').size()) {
-                targetEmpty.insertBefore(targetMid);
+                targetEmpty.insertBefore(iconTarget.eq(i));
                 updateCircle();
-                setTimeout(mouseEmptyRemoval(targetPos()),1000);
+                // Wait for the circle to be updated, then
+                // recreate the hot zone based for the hover
+                // then based on the new hotzone set up
+                // the removal of the empty based on the mouse
+                // leaving the new hotzone.
+              /*  setTimeout(mouseEmptyRemoval(targetPos()),1000);*/
               }
             }
           }
