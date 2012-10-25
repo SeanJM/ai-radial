@@ -20,5 +20,10 @@
 #emptyIcon {
   /*border: 1px solid red;*/
   position: absolute;
-  -webkit-transition: none;
+  -webkit-transition: none !important;
+}
+.green-test {
+  background:green;
+  opacity: 0.1;
+  position: absolute;
 }

@@ -207,8 +207,7 @@ function putOnCircle(object) {
                 targetMid  = iconTarget.eq(i),
                 targetPrev = iconTarget.eq(i-1);
 
-              if ((i-1) == -1) { targetPrev = iconTarget.eq(iconTargetSize-1); }
-              
+              if ((i-1) == -1) { targetPrev = iconTarget.eq((iconTarget.size()-1)); }
               targetPrevLeft     = parseInt(targetPrev.offset().left),
               targetPrevTop      = parseInt(targetPrev.offset().top),
               targetPrevRight    = parseInt(targetPrevLeft + targetPrev.outerWidth()),
@@ -225,7 +224,6 @@ function putOnCircle(object) {
               targetBottom  = parseInt((targetPrevBottom+targetMidBottom)/2),
               
               emptyTarget = {'left':targetLeft,'right':targetRight,'top':targetTop,'bottom':targetBottom};
-
               return emptyTarget;
             }
           
@@ -233,16 +231,11 @@ function putOnCircle(object) {
 
             var tmpTargetPos = targetPos(i);
 
-            if (cloneLeft >= tmpTargetPos.left && cloneRight <= tmpTargetPos.right && cloneBottom >= tmpTargetPos.top && cloneTop <= tmpTargetPos.bottom) {
+            if (cloneRight >= tmpTargetPos.left && cloneBottom >= tmpTargetPos.top && cloneLeft <= tmpTargetPos.right && cloneTop <= tmpTargetPos.bottom) {
               var targetEmpty = $('<div class="icon-container" id="emptyIcon"></div>');
               if (!$('#emptyIcon').size()) {
                 targetEmpty.insertBefore(iconTarget.eq(i));
-                updateCircle();
-                // Wait for the circle to be updated, then
-                // recreate the hot zone based for the hover
-                // then based on the new hotzone set up
-                // the removal of the empty based on the mouse
-                // leaving the new hotzone.
+                updateCircle(function() { mouseEmptyRemoval(targetPos(i)) });
               /*  setTimeout(mouseEmptyRemoval(targetPos()),1000);*/
               }
             }
@@ -267,32 +260,34 @@ function putOnCircle(object) {
         }
       },300);
       var htmlBind = function () {
-        $('body').on('mousemove',function() {
-          if ($('#emptyIcon').size() > 0 && $('#drag-clone').size() > 0) {
+        if (!$('body').hasClass('bound')) {
+          console.log('binding html');
+          $('body').addClass('bound').on('mousemove',function() {
+            if ($('#emptyIcon').size() > 0 && $('#drag-clone').size() > 0) {
 
-              clone       = $('#drag-clone'),
-              cloneTop    = clone.offset().top,
-              cloneRight  = clone.offset().left + clone.outerWidth(),
-              cloneBottom = clone.offset().top + clone.outerHeight(),
-              cloneLeft   = clone.offset().left;
+                clone       = $('#drag-clone'),
+                cloneTop    = clone.offset().top,
+                cloneRight  = clone.offset().left + clone.outerWidth(),
+                cloneBottom = clone.offset().top + clone.outerHeight(),
+                cloneLeft   = clone.offset().left;
 
-            function removeEmpty() {
-              $('#emptyIcon').remove();
-              $('body').off('mousemove');
-              updateCircle();
-            }
-
-            if (cloneLeft <= object.right && cloneLeft >= object.left && cloneTop <= object.bottom && cloneTop >= object.top && cloneRight <= object.right && cloneRight >= object.left) { 
-              $('#emptyIcon').addClass('touched'); 
-            }
-
-            else {
-              if ($('#emptyIcon').hasClass('touched')) {
+              function removeEmpty() {
+                $('#emptyIcon').remove();
+                updateCircle();
+              }
+              // Inside
+              if (cloneBottom > object.top && cloneRight > object.left && cloneLeft < object.right && cloneTop < object.bottom) { 
+                $('#emptyIcon').addClass('inside');
+                console.log('inside');
+              }
+              // Outside
+              if (cloneBottom < object.top || cloneRight < object.left || cloneLeft > object.right || cloneTop > object.bottom) {
+                console.log('outside');
                 removeEmpty();
-              } 
+              }
             }
-          }
-        });
+          });
+        }
       }
     }
   }
