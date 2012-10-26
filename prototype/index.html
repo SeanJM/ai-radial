@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/quick-pick.css">
     <!-- JavaScript -->
     <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/body-bind.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/prototype.js"></script>
     <script type="text/javascript" src="js/main-menu.js"></script>
@@ -21,6 +22,7 @@
     <script type="text/javascript" src="js/drag-n-drop.js"></script>
     <script type="text/javascript" src="js/quicktools.js"></script>
     <script type="text/javascript" src="js/icon-container.js"></script>
+    <script type="text/javascript" src="js/spinner-control.js"></script>
     <title>
     </title>
   </head>
@@ -28,13 +30,13 @@
     <div id="ai-wheel" class="right-handed">
       <div id="quicktools">
         <div class="quicktool" id="quicktool-pathfinder">
-          <div class="selected-tool">
+          <div class="selected-tool background">
             <div class="inner-shadow">
               <div class="icon unite"></div>
               <div class="arrow"></div>
             </div>
           </div>
-          <div class="tool-select">
+          <div class="tool-select background">
             <div class="inner-shadow">
               <div class="icon unite"></div>
               <div class="icon minus-front"></div>
@@ -50,13 +52,13 @@
           </div>
         </div>
         <div class="quicktool" id="quicktool-align">
-          <div class="selected-tool">
+          <div class="selected-tool background">
             <div class="inner-shadow">
               <div class="icon align-horizontal-left"></div>
               <div class="arrow"></div>
             </div>
           </div>
-          <div class="tool-select htmlToggle">
+          <div class="tool-select background">
             <div class="inner-shadow">
               <div class="icon align-horizontal-left"></div>
               <div class="icon align-horizontal-center"></div>
@@ -75,21 +77,55 @@
         </div>
       </div>
       <div id="menu-hub">
-        <div class="button">
+        <ul class="menu first">
+          <li class="file center menu-root background mouseover" menu="file-menu">File</li>
+          <li class="edit right menu-root background mouseover" menu="edit-menu">Edit</li>
+          <li class="object right menu-root background mouseover" menu="object-menu">Object</li>
+          <li class="type right menu-root background mouseover" menu="type-menu">Type</li>
+          <li class="select center menu-root background mouseover" menu="select-menu">Select</li>
+          <li class="effect left menu-root background mouseover" menu="effect-menu">Effect</li>
+          <li class="view left menu-root background mouseover" menu="view-menu">View</li>
+          <li class="window left background mouseover">Window</li>
+        </ul>
+        <div class="button background">
           <div class="inner-shadow">
             <div class="icon ai"></div>
           </div>
         </div>
-        <ul class="menu first">
-          <li class="file center menu-root" menu="file-menu">File</li>
-          <li class="edit right menu-root" menu="edit-menu">Edit</li>
-          <li class="object right menu-root" menu="object-menu">Object</li>
-          <li class="type right menu-root" menu="type-menu">Type</li>
-          <li class="select center menu-root" menu="select-menu">Select</li>
-          <li class="effect left menu-root" menu="effect-menu">Effect</li>
-          <li class="view left menu-root" menu="view-menu">View</li>
-          <li class="window left">Window</li>
-        </ul>
+        <div id="configure-init" class="background">
+          <div class="icon configure"></div>
+        </div>
+        <div id="main-configuration-menu">
+          <div id="main-configuration-menu-close" class="config-node background">
+            <div class="icon close"></div>
+          </div>
+          <div id="main-configuration-menu-left"  class="config-node background orientation">
+            <div class="container">
+              <div class="icon left"></div>
+            </div>
+          </div>
+          <div id="main-configuration-menu-right"  class="config-node background orientation">
+            <div class="container">
+              <div class="icon right"></div>
+            </div>
+          </div>
+          <div id="main-configuration-menu-brightness"  class="config-node background">
+            <div class="spinner-container">
+              <div class="spinner"></div>
+              <div class="spinner-mask background"></div>
+              <div class="handle background"></div>
+            </div>
+            <div class="icon brightness"></div>
+          </div>
+          <div id="main-configuration-menu-opacity"  class="config-node background">
+            <div class="spinner-container">
+              <div class="spinner"></div>
+              <div class="spinner-mask background"></div>
+              <div class="handle background"></div>
+            </div>
+            <div class="icon opacity"></div>
+          </div>
+        </div>
       </div>
       <div id="menu-quickpick">
         <div class="left container">
@@ -126,7 +162,7 @@
               <div class="icon pen"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon pen"></div>
                   <div class="icon add-anchor-point"></div>
                   <div class="icon remove-anchor-point"></div>
@@ -141,7 +177,7 @@
               <div class="icon pencil"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon pencil"></div>
                   <div class="icon smooth"></div>
                   <div class="icon path-eraser"></div>
@@ -158,7 +194,7 @@
               <div class="icon scissors"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon scissors"></div>
                   <div class="icon knife"></div>
                 </div>
@@ -168,7 +204,7 @@
               <div class="icon rotate"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon rotate"></div>
                   <div class="icon reflect"></div>
                 </div>
@@ -178,7 +214,7 @@
               <div class="icon scale"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon scale"></div>
                   <div class="icon shear"></div>
                   <div class="icon reshape"></div>
@@ -189,7 +225,7 @@
               <div class="icon width"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon width"></div>
                   <div class="icon warp"></div>
                   <div class="icon twirl"></div>
@@ -208,7 +244,7 @@
               <div class="icon shape-builder"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon shape-builder"></div>
                   <div class="icon live-paint-bucket"></div>
                   <div class="icon live-paint-selection"></div>
@@ -219,7 +255,7 @@
               <div class="icon perspective-grid"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon perspective-grid"></div>
                   <div class="icon perspective-selection"></div>
                 </div>
@@ -235,7 +271,7 @@
               <div class="icon symbol-sprayer"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon symbol-sprayer"></div>
                   <div class="icon symbol-shifter"></div>
                   <div class="icon symbol-scruncher"></div>
@@ -251,7 +287,7 @@
               <div class="icon column-graph"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon column-graph"></div>
                   <div class="icon stacked-column-graph"></div>
                   <div class="icon bar-graph"></div>
@@ -271,7 +307,7 @@
               <div class="icon slice"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon slice"></div>
                   <div class="icon slice-selection"></div>
                 </div>
@@ -434,7 +470,7 @@
               <div class="keyval sprite"></div>
             </div>
           </div>
-          <div id="secondRing" class="ring tool-container">
+          <div id="secondRing" class="ring tool-container border">
             <div class="icon-container">
               <div class="icon selection"></div>
             </div>
@@ -442,7 +478,7 @@
               <div class="icon direct-selection"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon direct-selection"></div>
                   <div class="icon group-selection"></div>
                 </div>
@@ -452,7 +488,7 @@
               <div class="icon type"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon type"></div>
                   <div class="icon area-type"></div>
                   <div class="icon type-on-path"></div>
@@ -466,7 +502,7 @@
               <div class="icon eyedropper"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon eyedropper"></div>
                   <div class="icon measure"></div>
                 </div>
@@ -476,7 +512,7 @@
               <div class="icon line-segment"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon line-segment"></div>
                   <div class="icon arc"></div>
                   <div class="icon spiral"></div>
@@ -489,7 +525,7 @@
               <div class="icon rectangle"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon rectangle"></div>
                   <div class="icon rounded-rectangle"></div>
                   <div class="icon ellipse"></div>
@@ -506,7 +542,7 @@
               <div class="icon hand"></div>
               <div class="more-tools">
                 <div class="arrow"></div>
-                <div class="more-ring">
+                <div class="more-ring background">
                   <div class="icon hand"></div>
                   <div class="icon print-tiling"></div>
                 </div>
@@ -531,7 +567,8 @@
             <div id="drawModes" class="sprite front"></div>
           </div>
         </div>
-      </div>
+        <div class="background opacity"></div>
+      </div> <!-- End Main Wheel -->
     </div>
   </body>
 </html>

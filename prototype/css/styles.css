@@ -1,6 +1,9 @@
 body {
   font-family: Arial, Helvetica, Sans-serif;
   background: url('../illustrator-background.png') no-repeat;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 * {
   margin             : 0;
@@ -56,15 +59,24 @@ body {
   width           : 380px;
   height          : 380px;
   border-radius   : 190px;
-  background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.85) 80%);
-  background-image: -moz-radial-gradient(center,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.85) 80%);
   box-shadow      : 0 1px 6px rgba(0,0,0,0.33);
+  -webkit-transition: all 0.2s;
+  -webkit-transition: opacity 0.5s;
 }
   #main-wheel .inner-shadow {
     width           :380px;
     height          :380px;
     border-radius   : 190px;
     position        : relative;
+  }
+  #main-wheel .background {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: -1;
   }
 
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
@@ -132,8 +144,6 @@ body {
 
   .icon-container .more-tools .more-ring {
     position          : relative;
-    background-image  : -webkit-radial-gradient(center, rgba(255,255,255,0.88) 60%, rgba(220,220,220,0.9) 68%, rgba(255,255,255,0.9) 72%);
-    background-image  : -moz-radial-gradient(center, rgba(255,255,255,0.88) 60%, rgba(220,220,220,0.9) 68%, rgba(255,255,255,0.9) 72%);
     box-shadow        : 0 1px 4px rgba(0,0,0,0.5);
     -webkit-transition: all 0.18s;
     -webkit-transform : scale(0) rotate(90deg);

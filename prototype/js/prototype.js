@@ -1,5 +1,14 @@
 // Global Functions
 
+function mainEventBind() {
+  $('html').on('click',function(){
+    $('.top').removeClass('top');
+    $('.visible').each(function() {
+      $(this).removeClass('visible');
+    });
+  });
+}
+
 function leftRight () {
   if ($('#ai-wheel').hasClass('right-handed')) { return 'right'; }
   return 'left';
@@ -179,12 +188,12 @@ function putOnCircle(object) {
   }
 
   /* --------------------- End Functions ---------------- */
-
 $(function(){
   centerRings();
   protonBind();  
   arrowKeyPos();
   spinnerBind();
+  mainEventBind();
 
   putOnCircle({'parent':$('#secondRing'),'child':$('.icon-container')});
   

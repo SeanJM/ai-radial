@@ -1,11 +1,5 @@
 var iconContainer = {};
 
-function bindBody() {
-  $('body').on('mousemove',function(){
-    iconContainer.drag();
-  });
-}
-
 iconContainer.update = function (callback) {
   putOnCircle({'parent':$('#secondRing'),'child':'.icon-container'});
   putOnCircle({'parent':$('#outter-ring'),'child':'.icon-container'});
@@ -229,5 +223,4 @@ iconContainer.bind = function () {
 }
 $(function(){
   iconContainer.bind();
-  bindBody();
 });

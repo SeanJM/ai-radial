@@ -31,12 +31,6 @@ quicktools.init = function () {
       e.stopPropagation();
     }
   });
-  $('html').on('click',function(){
-    $('.top').removeClass('top');
-    $('.visible').each(function() {
-      $(this).removeClass('visible');
-    });
-  });
 }
 
 /* Onload */

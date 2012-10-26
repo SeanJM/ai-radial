@@ -81,19 +81,24 @@
   width   : 50px;
   height  : 50px;
 }
-  #menu-hub .button:hover,
-  #menu-hub.visible .button {
+  #menu-hub .button:hover{
     top: 0;
+    opacity: 1;
     -webkit-transform: scale(1);
   }
+  #menu-hub.visible .button {
+    -webkit-transform: scale(0);
+  }
   #menu-hub .button {
-    position        : absolute;
-    top             : 24px;
-    width           : 50px;
-    height          : 50px;
-    border-radius   : 25px;
-    background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.6) 0,rgba(255,255,255,0.85) 80%);
-    box-shadow      : 0 1px 8px rgba(0,0,0,0.3);
+    z-index           : 2;
+    position          : absolute;
+    top               : 10px;
+    width             : 50px;
+    height            : 50px;
+    border-radius     : 25px;
+    background        : rgb(255,255,255);
+    box-shadow        : 0 1px 8px rgba(0,0,0,0.3);
+    opacity: 0.8;
     -webkit-transition: all 0.1s;
     -webkit-transform : scale(0.6);
   }
@@ -116,24 +121,22 @@
       z-index         : 1;
       position        : absolute;
       list-style      : none;
-      background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.0) 20%,rgba(255,255,255,0.8) 61%);
-      box-shadow      : inset 0 0 8px rgba(0,0,0,0.3);
     }
     #menu-hub ul.menu > li {
-      position          : absolute;
-      padding           : 0 10px;
-      min-width         : 50px;
-      border-radius     : 15px;
-      text-align        : center;
-      font-size         : 12px;
-      line-height       : 28px;
-      color             : #797979;
-      background-image  : -webkit-linear-gradient(bottom,rgba(220,220,220,0.7) 0,rgba(245,245,245,0.85) 80%);
-      box-shadow        : inset 0 0 8px rgba(0,0,0,0.25) ,0 1px 3px rgba(0,0,0,0.1);
+      position     : absolute;
+      padding      : 0 10px;
+      min-width    : 50px;
+      border-radius: 14px;
+      text-align   : center;
+      font-size    : 12px;
+      line-height  : 27px;
+      color        : #797979;
+      background   : rgba(250,250,250,0.8);
+      cursor       : pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
     }
 
     #menu-hub ul.menu.first {
-      display      : none;
       z-index      : 2;
       position     : absolute;
       top          : -51px;
@@ -142,16 +145,19 @@
       height       : 155px;
       border-radius: 85px;
       list-style   : none;
+      opacity: 0;
+      -webkit-transition: all 0.2s;
+      -webkit-transform: scale(0);
     }
 
     #menu-hub.visible ul.menu.first {
-      display: block;
+      -webkit-transform: scale(1);
+      opacity: 1;
     }
 
       #menu-hub.visible ul.menu.first > li:hover {
-        background-image  : -webkit-linear-gradient(bottom,rgba(230,230,230,0.7) 0,rgba(255,255,255,0.85) 80%);
-        box-shadow        : inset 0 0 6px rgba(0,0,0,0.4);
-        -webkit-transition: all 0.2s;
+        background  : rgba(25,156,255,0.9);
+        color: #fff;
       }
 
       #menu-hub ul.menu.first > li.file {
@@ -287,8 +293,6 @@
     z-index            : 10;
     position           : absolute;
     list-style         : none;
-    background-image   : -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.87), rgba(255, 255, 255, 0.93) );
-    background-image   : linear-gradient(bottom, rgba(255, 255, 255, 0.87), rgba(255, 255, 255, 0.93) );
     box-shadow         : 0 1px 6px rgba(0, 0, 0, 0.4);
   }
   #ai-wheel ul.visible,
@@ -446,3 +450,117 @@
           box-shadow      : inset 0 0 5px rgba(0, 0, 0, 0.5);
         }
   /* End Color Box */
+  /* Global Configure */
+  .visible #configure-init {
+    opacity          : 1;
+    -webkit-transform: scale(1);
+  }
+  #configure-init {
+    z-index           : 1;
+    position          : relative;
+    width             : 50px;
+    height            : 50px;
+    margin            : auto;
+    border-radius     : 25px;
+    opacity           : 0;
+    box-shadow        : 0 1px 4px rgba(0,0,0,0.4);
+    -webkit-transition: all 0.2s;
+    -webkit-transform : scale(0);
+  }
+  #configure-init .icon {
+    position: absolute;
+    top     : 14px;
+    left    : 14px;
+  }
+  #main-configuration-menu {
+    width: 280px;
+    height: 236px;
+    position: absolute;
+    z-index: 1;
+  }
+  #main-configuration-menu .icon {
+    position: absolute;
+  }
+    #main-configuration-menu .config-node {
+      position     : absolute;
+      width        : 80px;
+      height       : 80px;
+      border-radius: 50%;
+      box-shadow   : 0 1px 5px rgba(0,0,0,0.5);
+    }
+    #main-configuration-menu #main-configuration-menu-close {
+      width: 52px;
+      height: 52px;
+    }
+    #main-configuration-menu #main-configuration-menu-brightness {
+      top: 0;
+    }
+    #main-configuration-menu #main-configuration-menu-opacity {
+      bottom: 0;
+    }
+    #main-configuration-menu #main-configuration-menu-left,
+    #main-configuration-menu #main-configuration-menu-right {
+      width: 100px;
+      height: 100px;
+    }
+    /* Left or Right */
+    #main-configuration-menu .orientation {}
+      #main-configuration-menu .orientation .container {
+        width: 96px;
+        height: 96px;
+        position: absolute;
+        top:2px;
+        left: 2px;
+        border-radius: 50%;
+      }
+      #main-configuration-menu .orientation .container:hover {
+        background: rgba(25,156,255,0.96);
+      }
+    #main-configuration-menu #main-configuration-menu-left {
+      left: 0;
+    }
+    .left-handed #main-configuration-menu #main-configuration-menu-left:hover .icon,
+    #main-configuration-menu #main-configuration-menu-left:hover .icon {
+      background-position: -28px 0;
+    }
+    .left-handed #main-configuration-menu #main-configuration-menu-left .icon {
+      background-position: -28px -124px;
+    }
+    #main-configuration-menu #main-configuration-menu-right {
+      right: 0;
+    }
+    .right-handed #main-configuration-menu #main-configuration-menu-right:hover .icon,
+    #main-configuration-menu #main-configuration-menu-right:hover .icon {
+      background-position: -86px 0;
+    }
+    .right-handed #main-configuration-menu #main-configuration-menu-right .icon {
+      background-position: -86px -124px;
+    }
+    #main-configuration-menu .spinner-container {
+      position: absolute;
+      width:70px;
+      height:70px;
+      border-radius: 50%;
+    }
+      #main-configuration-menu .spinner-container .spinner {
+        position: absolute;
+        background: #878787;
+        width: 100%;
+        height: 100%;
+        -webkit-transform: scale(1);
+        border-radius: 50%;
+      }
+      #main-configuration-menu .spinner-container .spinner-mask {
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        -webkit-transform: scale(1);
+        border-radius: 50%;
+      }
+      #main-configuration-menu .spinner-container .handle {
+        width: 8px;
+        height: 8px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        border-radius: 50%;
+        position: absolute;
+      }

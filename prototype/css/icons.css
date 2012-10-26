@@ -8,7 +8,6 @@
   width          : 22px;
   height         : 22px;
   background     : url('../img/ai_tools_100dpi.png') no-repeat;
-  background-size: 266px 242px;
 }
 
 /* Column 1 */
@@ -149,7 +148,7 @@
 .icon.print-tiling                 { background-position: -154px -44px; }
       /* group end */
 .icon.zoom                         { background-position: -154px -66px; }
-.icon.configure                    { background-position: -154px -88px; }
+.icon.configure                    { background-position: -198px -110px; }
 .icon.ai                           { background-position: -198px -88px; }
 .icon.color-mark                   { background-position: -198px -132px; }
 
@@ -180,3 +179,19 @@
 .icon.distribute-horizontal-left   { background-position: -198px -22px; }
 .icon.distribute-horizontal-center { background-position: -198px -44px; }
 .icon.distribute-horizontal-right  { background-position: -198px -66px; }
+/* Config Menu */
+#main-configuration-menu .icon {
+  width           : 28px;
+  height          : 28px;
+  background-image: url('../img/ai_config-assets.png');
+}
+#main-configuration-menu .icon.brightness { background-position: 0 0; }
+#main-configuration-menu .icon.opacity    { background-position: 0 -28px; }
+#main-configuration-menu .icon.close    { background-position: 0 -56px; }
+#main-configuration-menu .icon.left,
+#main-configuration-menu .icon.right { 
+  width : 58px;
+  height: 61px;
+}
+#main-configuration-menu .icon.left    { background-position: -28px -61px; }
+#main-configuration-menu .icon.right    { background-position: -86px -61px; }

@@ -1,7 +1,14 @@
 // Main Menu
 var menu = {};
 
-menu.position = function(child,parent) { child.css('left',(parent.width()/2) - (child.width()/2)); }
+menu.position = function(object) {
+  if (object.horizontal || typeof object.horizontal == 'undefined') { 
+    object.child.css('left',(object.parent.width()/2) - (object.child.width()/2)); 
+  }
+  if (object.vertical || typeof object.vertical == 'undefined') {
+    object.child.css('top',(object.parent.height()/2) - (object.child.height()/2)); 
+  }
+}
 
 menu.setup = function(root) {
   root.on('click',function(e){
@@ -168,16 +175,33 @@ menu.quickMenu.bind = function(root) {
     });
   });
 }
+// Orientation
 
+menu.orientation = function(str) {
+  $('#ai-wheel').attr('class',str + '-handed');
+}
 // Menu Hub
 var menuhub = {};
+menuhub.mainConfigBind = function() {
+  $('#main-configuration-menu .orientation').on('click',function(){
+    menu.orientation($(this).attr('id').split('-')[3]);
+  });
+}
 menuhub.bind = function() {
   $('#menu-hub *').on('contextmenu',function(event){ return false; });
-  $('#menu-hub .ai').click(function(e){ 
+  $('#menu-hub .ai').parent().click(function(e){ 
     $('#menu-hub').addClass('visible'); 
     $('#menu-quickpick').addClass('active');
+    $('#main-wheel').css('opacity','0.5');
     e.stopPropagation();
   });
+  $('#configure-init').on('click',function(){
+    e.stopPropagation();
+  });
+  $('html').on('click',function(){
+    $('#main-wheel').css('opacity','1');
+  });
+  menuhub.mainConfigBind();
 };
 
 menu.inrect = function (object) {
@@ -198,7 +222,7 @@ menu.inrect = function (object) {
 
 menuhub.init = function () {
   menuhub.bind();
-  menu.position($('#menu-hub'),$('#ai-wheel'));
+  menu.position({'child':$('#menu-hub'),'parent':$('#ai-wheel'),'vertical':false});
 }
 
 // Menu Root (Secondary Menu)
@@ -419,7 +443,25 @@ menu.config.create = function(data) {
 
 $(function(){
   menuhub.init()
-  menu.position($('#menu-quickpick'),$('#main-wheel'));
+  menu.position({'child':$('#menu-quickpick'),'parent':$('#main-wheel'),'vertical':false});
+  menu.position({'child':$('#main-configuration-menu'),'parent':$('#menu-hub'),'vertical':true});
+  menu.position({'child':$('#main-configuration-menu-close'),'parent':$('#main-configuration-menu')});
+  menu.position({'child':$('#main-configuration-menu-brightness'),'parent':$('#main-configuration-menu'),'vertical':false});
+  menu.position({'child':$('#main-configuration-menu-opacity'),'parent':$('#main-configuration-menu'),'vertical':false});
+  menu.position({'child':$('#main-configuration-menu-left'),'parent':$('#main-configuration-menu'),'horizontal':false});
+  menu.position({'child':$('#main-configuration-menu-right'),'parent':$('#main-configuration-menu'),'horizontal':false});
+  $('#main-configuration-menu .icon').each(function(){
+    menu.position({'child':$(this),'parent':$(this).parent()});
+  });
+  $('#main-configuration-menu .spinner').each(function(){
+    menu.position({'child':$(this),'parent':$(this).parent()});
+  });
+  $('#main-configuration-menu .spinner-container').each(function(){
+    menu.position({'child':$(this),'parent':$(this).parent()});
+  });
+  $('#main-configuration-menu .spinner-mask').each(function(){
+    menu.position({'child':$(this),'parent':$(this).parent()});
+  });
   menuRoot.loadDropdown();
   menu.quickPick.create();
 }); 
