@@ -10,26 +10,28 @@ var rgb = function (str) {
   return 'rgb(' + num + ')';
 }
 var colors               = {};
+colors.bind = {};
 
 colors.background        = {};
-colors.background.normal = 255;
-colors.background.hover  = '25,126,255';
 
 colors.text              = {}
 colors.text.normal       = 135;
 colors.text.hover        = 255;
 
 colors.opacity           = {};
-colors.opacity.normal    = '0.8';
-colors.opacity.faded     = '0.4';
 
 colors.spinner              = {}
 colors.spinner.empty        = 135;
 colors.spinner.fill         = '25,126,255';
 colors.spinner.handle       = 80;
 
-colors.bind = {};
 colors.bind.background = function(str) {
+  var 
+    active                  = $('#main-configuration-menu-brightness .spinner-container'),
+    spinnerBG;
+  
+  colors.background.hover = '25,126,255';
+
   if (typeof str != 'undefined') {
     var base = parseInt((str/255*190)+60);
     colors.bind.text(255-base);
@@ -53,10 +55,16 @@ colors.bind.background = function(str) {
   }
   
   $('.background').css('background-color',rgb(colors.background.normal));
-
+  spinner.handle({'active':active,'angle':str/255*360});
 }
-colors.bind.opacity = function() {
+colors.bind.opacity = function(str) {
+  colors.opacity.faded = '0.4';
+  if (typeof str != 'undefined') {
+    colors.opacity.normal = (str/100);
+  }
   $('.opacity').css('opacity',colors.opacity.normal);
+  var active = $('#main-configuration-menu-opacity .spinner-container');
+  spinner.handle({'active':active,'angle':str/100*360});
 }
 colors.bind.border = function () {
   $('.border').css('border','1px solid rgba(0,0,0,0.1)');
@@ -80,8 +88,8 @@ colors.bind.spinner = function(str) {
 }
 
 colors.bind.all = function() {
-  colors.bind.background();
-  colors.bind.opacity();
+  colors.bind.background(255);
+  colors.bind.opacity(80);
   colors.bind.border();
   colors.bind.spinner();
 }
@@ -98,37 +106,43 @@ var spinner = {};
 spinner.drag = function(e) {
   if ($('body').hasClass('spinner-drag')) {
     var active = $('#main-configuration-menu .spinner-container.active');
-    var handle = active.find('.handle');
     var spinnerX = (active.offset().left+(active.outerWidth()/2));
     var spinnerY = (active.offset().top+(active.outerHeight()/2));
-    var r = (active.outerWidth()/2)-2;
     var mouseX = e.pageX;
     var mouseY = e.pageY;
     var dx = mouseX - spinnerX;
     var dy = mouseY - spinnerY;
 
     var radians = Math.atan2(dy,dx);
+    var angle = (radians * 180 / Math.PI)+180;
 
-    var angle = radians * 180 / Math.PI;
-    
-    var hx = (r*Math.cos(radians)+r-(handle.width()/2))+2;
-    var hy = (r*Math.sin(radians)+r-(handle.width()/2))+2;
-
-    var spinnerProg = parseInt(((angle+180)/360)*active.find('.prog').size());
-
-    handle.css('left',hx).css('top',hy);
-    active.find('.prog:lt(' + spinnerProg + ')').show();
-    active.find('.prog:gt(' + spinnerProg + ')').hide();
     if (active.closest('#main-configuration-menu-brightness').size() > 0) {
       var brightness = parseInt((radians+Math.PI)/(Math.PI*2)*255);
       colors.bind.background(brightness);
     }
     if (active.closest('#main-configuration-menu-opacity').size() > 0) {
       var opacity = parseInt((radians+Math.PI)/(Math.PI*2)*100);
-      configure.opacity(opacity);
+      colors.bind.opacity(opacity);
     }
   }
 }
+
+spinner.handle = function(object) {
+  var 
+    active      = object.active,
+    angle       = object.angle,
+    handle      = active.find('.handle'),
+    r           = (active.outerWidth()/2)-2;
+    radians     = ((object.angle-180)/180)*Math.PI,
+    hx          = (r*Math.cos(radians)+r-(handle.width()/2))+2,
+    hy          = (r*Math.sin(radians)+r-(handle.width()/2))+2;
+    spinnerProg = parseInt(((angle)/360)*active.find('.prog').size());
+
+    active.find('.prog:lt(' + spinnerProg + ')').show();
+    active.find('.prog:gt(' + spinnerProg + ')').hide();
+    handle.css('left',hx).css('top',hy);
+}
+
 spinner.control = function() {
   $('#main-configuration-menu .spinner-container').on('mousedown',function(e){
     $(this).addClass('active');
