@@ -27,7 +27,7 @@ menu.setup = function(root) {
   });
   
   root.find('ul').each(function(){
-    $(this).attr('level',$(this).parents('ul').length);
+    $(this).addClass('background').attr('level',$(this).parents('ul').length);
     if ($(this).children('li').size() > 0) { $(this).addClass('menu-parent'); }
     if ($(this).closest('li').size() > 0 && $(this).parents('ul').length > 1) { $(this).parent().append($('<span class="disclosure" />')); }
   });
@@ -35,6 +35,7 @@ menu.setup = function(root) {
   var li = root.find('li');
   li.each(function(){
     $(this).on('mouseover',function(e){
+      $(this).addClass('mouseover');
       if ($(this).children('ul').size()) { 
         var 
             target          = $(e.target),
@@ -141,7 +142,7 @@ menu.quickMenu.bind = function(root) {
     elemParent.find('ul.visible').removeClass('visible');
     
     if (elemSubMenu.size()) {
-      elemSubMenu.addClass('visible').removeAttr('style');
+      elemSubMenu.addClass('visible').css('top','').css('left','');
       elemVertPos = (elemSubMenu.offset().top - elemMiniMenu.offset().top)*-1;
       horizOffset = elemMiniMenu.offset().left - (elemSubMenu.offset().left + elemSubMenu.width() + (elemMiniMenu.parent().width()/2));
       if (leftRight() == 'left') { horizOffset = rootPadding - 5; }

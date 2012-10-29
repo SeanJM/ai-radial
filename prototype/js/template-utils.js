@@ -8,5 +8,6 @@ template.load = function (data,callback) {
     newCache = cache.replaceWith(cache.contents());
     newCache.appendTo(data['parent']);
     if (callback) { callback(newCache); }
+    colors.bind.all();
   });
 };

@@ -15,14 +15,12 @@ colors.bind = {};
 colors.background        = {};
 
 colors.text              = {}
-colors.text.normal       = 135;
-colors.text.hover        = 255;
 
 colors.opacity           = {};
 
 colors.spinner              = {}
 colors.spinner.empty        = 135;
-colors.spinner.fill         = '25,126,255';
+colors.spinner.fill         = '0,152,255';
 colors.spinner.handle       = 80;
 
 colors.bind.background = function(str) {
@@ -30,29 +28,33 @@ colors.bind.background = function(str) {
     active                  = $('#main-configuration-menu-brightness .spinner-container'),
     spinnerBG;
   
-  colors.background.hover = '25,126,255';
+  colors.background.hover = '0,152,255';
 
   if (typeof str != 'undefined') {
-    var base = parseInt((str/255*190)+60);
+    var base = parseInt((str/255*190)+51);
     colors.bind.text(255-base);
     colors.background.normal = base;
-    if (base < 250) { spinnerBG = 130; }
+    if (base < 255) { spinnerBG = 130; colors.background.hover = '0,152,255'; }
     if (base < 220) { spinnerBG = 120; }
     if (base < 190) { spinnerBG = 100; }
-    if (base < 140) { spinnerBG = 50; }
+    if (base < 150) { spinnerBG = 50; colors.background.hover = '255,152,20'; }
     if (base < 100) { spinnerBG = 20; }
     colors.bind.spinner(spinnerBG);
   }
-  else {
-    $('.mouseover').on('mouseover',function() {
-        $(this).css('background-color',rgb(colors.background.hover));
-        $(this).css('color',rgb(colors.text.hover));
-    });
-    $('.mouseover').on('mouseleave',function() {
-      $(this).css('background-color',rgb(colors.background.normal));
-      $(this).css('color',rgb(colors.text.normal));
-    });
-  }
+  $('.mouseover').on('mouseover',function(e) {
+    if ($(e.target).hasClass('mouseover')) {
+      if ($(e.target).find('li').size() > 1) {
+        $(e.target).find('li').css('color',colors.text.normal);
+      }
+      $(e.target).css('background-color',rgb(colors.background.hover));
+      $(e.target).css('color',rgb(colors.text.hover));
+     
+      $(e.target).on('mouseleave',function() {
+        $(e.target).css('background-color',rgb(colors.background.normal));
+        $(e.target).css('color',rgb(colors.text.normal));
+      });
+    }
+  });
   
   $('.background').css('background-color',rgb(colors.background.normal));
   spinner.handle({'active':active,'angle':str/255*360});
@@ -70,21 +72,33 @@ colors.bind.border = function () {
   $('.border').css('border','1px solid rgba(0,0,0,0.1)');
 }
 colors.bind.text = function(str) {
+  colors.text.normal       = 135;
+  colors.text.hover        = 255;
   if (typeof str != 'undefined') {
     colors.text.normal = str;
   }
   $('.text-color').css('color',rgb(colors.text.normal));
+  $('.mouseover').css('color',rgb(colors.text.normal));
 }
 colors.bind.spinner = function(str) {
   if (typeof str != 'undefined') {
     colors.spinner.empty = str;
-    if (colors.background.normal < 255) { colors.spinner.handle = 160; }
-    if (colors.background.normal < 170) { colors.spinner.handle = 150; }
+    if (colors.background.normal < 255) { 
+      colors.spinner.handle = 160; 
+      colors.spinner.fill = '0,152,255';
+    }
+    if (colors.background.normal < 150) { 
+      colors.spinner.handle = 160; 
+      colors.spinner.fill = '255,152,20';
+    }
+    if (colors.background.normal < 100) { 
+      colors.spinner.handle = 100; 
+    }
   }
   $('.spinner-empty').css('background',rgb(colors.spinner.empty));
   $('.spinner-fill').css('background',rgb(colors.spinner.fill));
   $('.spinner-container .handle').css('background-image','-webkit-linear-gradient(top,' + rgb(colors.spinner.handle+90) + ',' + rgb(colors.spinner.handle) + ')');
-  $('.spinner-container .handle div').css('background-image','-webkit-linear-gradient(bottom,' + rgb(colors.spinner.handle+90) + ',' + rgb(colors.spinner.handle) + ')');
+  $('.spinner-container .handle div').css('background-image','-webkit-linear-gradient(bottom,' + rgb(colors.spinner.handle+90) + ',' + rgb(colors.spinner.handle+20) + ')');
 }
 
 colors.bind.all = function() {
@@ -92,6 +106,8 @@ colors.bind.all = function() {
   colors.bind.opacity(80);
   colors.bind.border();
   colors.bind.spinner();
+  colors.bind.text();
+  console.log('colors');
 }
 
 var configure = {};

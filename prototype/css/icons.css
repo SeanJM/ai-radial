@@ -191,7 +191,13 @@
 #main-configuration-menu .icon.left,
 #main-configuration-menu .icon.right { 
   width : 58px;
-  height: 61px;
+  height: 63px;
 }
-#main-configuration-menu .icon.left    { background-position: -28px -61px; }
-#main-configuration-menu .icon.right    { background-position: -86px -61px; }
+#main-configuration-menu .icon.left    { background-position: -28px 0px; }
+#main-configuration-menu .icon.right    { background-position: -86px 0px; }
+.right-handed #main-configuration-menu #main-configuration-menu-right .icon.right {
+  background-position: -86px -63px;
+}
+.left-handed #main-configuration-menu #main-configuration-menu-left .icon.left {
+  background-position: -28px -63px;
+}
