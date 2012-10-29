@@ -186,7 +186,7 @@
   background-image: url('../img/ai_config-assets.png');
 }
 #main-configuration-menu .icon.brightness { background-position: 0 0; }
-#main-configuration-menu .icon.opacity    { background-position: 0 -28px; }
+#main-configuration-menu .icon.opacityIcon    { background-position: 0 -28px; }
 #main-configuration-menu .icon.close    { background-position: 0 -56px; }
 #main-configuration-menu .icon.left,
 #main-configuration-menu .icon.right { 

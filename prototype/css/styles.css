@@ -180,7 +180,6 @@ body {
   position  : absolute;
   width     : 91px;
   height    : 93px;
-  background: url('../img/ai_spinner.png');
   -webkit-transform: scale(0);
   -webkit-transition: all 0.1s;
 }
