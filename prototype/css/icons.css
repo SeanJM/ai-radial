@@ -187,7 +187,8 @@
 }
 #main-configuration-menu .icon.brightness { background-position: 0 0; }
 #main-configuration-menu .icon.opacityIcon    { background-position: 0 -28px; }
-#main-configuration-menu .icon.close    { background-position: 0 -56px; }
+.light #main-configuration-menu .icon.close    { background-position: 0 -56px; }
+.dark #main-configuration-menu .icon.close    { background-position: 0 -84px; }
 #main-configuration-menu .icon.left,
 #main-configuration-menu .icon.right { 
   width : 58px;

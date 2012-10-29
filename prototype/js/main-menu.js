@@ -184,8 +184,9 @@ menu.orientation = function(str) {
 // Menu Hub
 var menuhub = {};
 menuhub.mainConfigBind = function() {
-  $('#main-configuration-menu .orientation').on('click',function(){
+  $('#main-configuration-menu .orientation').on('click',function(e){
     menu.orientation($(this).attr('id').split('-')[3]);
+    e.stopPropagation();
   });
 }
 menuhub.bind = function() {
@@ -193,14 +194,20 @@ menuhub.bind = function() {
   $('#menu-hub .ai').parent().click(function(e){ 
     $('#menu-hub').addClass('visible'); 
     $('#menu-quickpick').addClass('active');
-    $('#main-wheel').css('opacity','0.5');
+    $('#main-wheel').addClass('faded');
     e.stopPropagation();
   });
-  $('#configure-init').on('click',function(){
+  $('#menu-hub li').on('click',function(e){
+    $('#configure-init').css('z-index','1');
+    e.stopPropagation();
+  });
+  $('#configure-init').on('click',function(e){
+    $('#main-configuration-menu').addClass('visible');
+    $('#menu-hub ul.menu.first').addClass('faded');
     e.stopPropagation();
   });
   $('html').on('click',function(){
-    $('#main-wheel').css('opacity','1');
+    $('#configure-init').css('z-index','2');
   });
   menuhub.mainConfigBind();
 };

@@ -7,6 +7,10 @@
 .sky    { background: #64E2FF; }
 .yellow { background: #FFD900; }
 .poupre { background: #F500C0; }
+
+.faded {
+  opacity: 0.5;
+}
     
 .checkbox {
   display      : inline-block;
@@ -127,14 +131,12 @@
       height       : 155px;
       border-radius: 85px;
       list-style   : none;
-      opacity: 0;
       -webkit-transition: all 0.2s;
       -webkit-transform: scale(0);
     }
 
     #menu-hub.visible ul.menu.first {
       -webkit-transform: scale(1);
-      opacity: 1;
     }
 
       #menu-hub ul.menu.first > li.file {
@@ -429,7 +431,7 @@
     -webkit-transform: scale(1);
   }
   #configure-init {
-    z-index           : 1;
+    z-index           : 2;
     position          : relative;
     width             : 50px;
     height            : 50px;
@@ -450,6 +452,12 @@
     height: 236px;
     position: absolute;
     z-index: 1;
+    -webkit-transform: scale(0);
+    -webkit-transition: all 0.2s;
+  }
+  #main-configuration-menu.visible {
+    -webkit-transform: scale(1);
+    z-index: 2;
   }
   #main-configuration-menu .icon {
     position: absolute;

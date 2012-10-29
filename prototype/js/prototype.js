@@ -6,6 +6,7 @@ function mainEventBind() {
     $('.visible').each(function() {
       $(this).removeClass('visible');
     });
+    $('.faded').removeClass('faded');
   });
 }
 

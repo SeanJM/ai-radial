@@ -34,10 +34,10 @@ colors.bind.background = function(str) {
     var base = parseInt((str/255*190)+51);
     colors.bind.text(255-base);
     colors.background.normal = base;
-    if (base < 255) { spinnerBG = 130; colors.background.hover = '0,152,255'; }
+    if (base < 255) { spinnerBG = 130; colors.background.hover = '0,152,255'; $('#ai-wheel').removeClass('dark').addClass('light'); }
     if (base < 220) { spinnerBG = 120; }
     if (base < 190) { spinnerBG = 100; }
-    if (base < 150) { spinnerBG = 50; colors.background.hover = '255,152,20'; }
+    if (base < 150) { spinnerBG = 50; colors.background.hover = '255,152,20'; $('#ai-wheel').removeClass('light').addClass('dark'); }
     if (base < 100) { spinnerBG = 20; }
     colors.bind.spinner(spinnerBG);
   }
@@ -170,6 +170,7 @@ spinner.control = function() {
       $('#main-wheel.background').css('-webkit-transition',transitionValue);
       $('#main-configuration-menu .spinner-container.active').removeClass('active');
     });
+    e.stopPropagation();
   });
   $('#main-configuration-menu .spinner-container .spinner').each(function(){
     var r = $(this).width()/2;
