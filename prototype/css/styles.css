@@ -69,7 +69,7 @@ body {
     border-radius   : 190px;
     position        : relative;
   }
-  #main-wheel .background {
+  #main-wheel > .background {
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -147,6 +147,7 @@ body {
     box-shadow        : 0 1px 4px rgba(0,0,0,0.5);
     -webkit-transition: all 0.18s;
     -webkit-transform : scale(0) rotate(90deg);
+    z-index: 1;
   }
 
   .icon-container .more-tools .more-ring.visible {

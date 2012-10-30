@@ -35,7 +35,6 @@
       opacity: 1;
     }
     #menu-quickpick .pick.drag-into {
-      background-image: -webkit-linear-gradient(bottom,rgba(115, 197, 243, 0.56),rgba(159, 230, 248, 0.56));
     }
     #menu-quickpick .left .pick                     { left: 0; }
     #menu-quickpick .right .pick                    { right: 0; }
@@ -62,7 +61,6 @@
       line-height     : 30px;
       list-style      : none;
       color           : #A2A2A2;
-      background-image: -webkit-linear-gradient(bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.95) );
     }
     #menu-quickpick .menu-parent {
       width: 190px;

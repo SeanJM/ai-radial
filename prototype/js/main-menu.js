@@ -1,7 +1,7 @@
 // Main Menu
 var menu = {};
 
-menu.position = function(object) {
+menu.position = function (object) {
   if (object.horizontal || typeof object.horizontal == 'undefined') { 
     object.child.css('left',(object.parent.width()/2) - (object.child.width()/2)); 
   }
@@ -10,69 +10,92 @@ menu.position = function(object) {
   }
 }
 
-menu.setup = function(root) {
+// Add Disclosure Indicator for menu items
+menu.addDisclosure = function (root) {
+  root.find('ul').each(function(){
+    $(this).addClass('background').attr('level',$(this).parents('ul').length);
+    if ($(this).children('li').size() > 0) { $(this).addClass('menu-parent'); }
+    if ($(this).closest('li').size() > 0 && $(this).parents('ul').length > 1) { 
+      $(this).parent().append($('<span class="disclosure" />')); 
+    }
+  });
+}
+
+// Sub Menu Appearance
+menu.submenu = function(element) {
+  element.on('mouseover',function(e){
+    element.addClass('mouseover');
+    if (element.children('ul').size()) { 
+      var 
+          target          = $(e.target),
+          offset          = parseInt(target.parent().css('width'))-4,
+          subMenu         = target.children('ul'),
+          level           = subMenu.attr('level'),
+          vertical_offset = target.outerHeight() * -1,
+          width           = subMenu.children('li').width();
+      
+      if (level > 1 && level%2 == 1) { 
+        if (subMenu.closest('#menu-quickpick').size() > 0) { 
+          $('#menu-quickpick').css('z-index','1000'); 
+          subMenu.on('mouseleave',function(){ $('#menu-quickpick').css('z-index','-1'); });
+        }
+        offset = (parseInt(target.parent().css('width'))*-1)+4; 
+      }
+      if (subMenu.is(':hidden'))     { 
+        subMenu.addClass('visible').css('left',offset).css('top',vertical_offset); 
+      }
+    }
+  });
+}
+
+// Listen for right click on menus
+menu.configListen = function(element) {
+  element.on('mousedown',function(event) {
+    /* Right Click Options */
+    if (event.which == 3) {
+      menu.config.create(event);
+    }
+    event.stopPropagation();
+  });
+}
+
+// When a menu item with a checkbox is clicked, check it
+menu.checkboxListen = function (element) {
+  element.on('click',function(e) {
+    if ($(e.target).children('.checkbox').size() > 0) { element.toggleClass('checked'); }
+  });
+}
+
+menu.setup = function (root) {
+
+  menu.addDisclosure(root);
+
   root.on('click',function(e){
     var target    = $(e.target),
         targetID  = target.closest('.menu-root-child').attr('id');
-    if ($('.menu-root-child.visible').size() > 0) {
+    if ($('.menu-root-child.visible').size()) {
       $('.menu-root-child.visible').each(function(){
         if (targetID != $(this).attr('id')) { $(this).removeClass('visible'); }
       });
     }
     target.children('ul').each(function() { $(this).addClass('visible'); });
-    // Scale all the quick menus
-    target.find('ul').each(function() { $(this).children('.mini-menu-container').height($(this).height()); });
 
     e.stopPropagation();
-  });
-  
-  root.find('ul').each(function(){
-    $(this).addClass('background').attr('level',$(this).parents('ul').length);
-    if ($(this).children('li').size() > 0) { $(this).addClass('menu-parent'); }
-    if ($(this).closest('li').size() > 0 && $(this).parents('ul').length > 1) { $(this).parent().append($('<span class="disclosure" />')); }
   });
 
   var li = root.find('li');
   li.each(function(){
-    $(this).on('mouseover',function(e){
-      $(this).addClass('mouseover');
-      if ($(this).children('ul').size()) { 
-        var 
-            target          = $(e.target),
-            offset          = parseInt(target.parent().css('width'))-4,
-            subMenu         = target.children('ul'),
-            level           = subMenu.attr('level'),
-            vertical_offset = target.outerHeight() * -1,
-            width           = subMenu.children('li').width();
-        
-        if (level > 1 && level%2 == 1) { 
-          if (subMenu.closest('#menu-quickpick').size() > 0) { 
-            $('#menu-quickpick').css('z-index','1000'); 
-            subMenu.on('mouseleave',function(){ $('#menu-quickpick').css('z-index','-1'); });
-          }
-          offset = (parseInt(target.parent().css('width'))*-1)+4; 
-        }
-        if (subMenu.is(':hidden'))     { 
-          subMenu.addClass('visible').css('left',offset).css('top',vertical_offset); 
-        }
-      }
-    });
 
-    $(this).on('mousedown',function(event) {
-      /* Right Click Options */
-      if (event.which == 3) {
-        menu.config.create(event);
-      }
-      event.stopPropagation();
-    });
+    menu.submenu($(this));
 
-    $(this).on('click',function(e) {
-      if ($(e.target).children('.checkbox').size() > 0) { $(this).toggleClass('checked'); }
-    });
+    menu.configListen($(this));
+
+    menu.checkboxListen($(this));
+  
   });
   
   menu.quickMenu.create(root);
-  menu.quickMenu.bind(root);
+
 }
 
 menu.quickMenu = {};
@@ -108,13 +131,36 @@ menu.quickMenu.create = function (root) {
     $(this).append(miniContainer);
   
   });
-}
 
-// When clicking on the menu bar options
+  menu.quickMenu.bind(root);
+
+}
 
 // Quick Menu
 
+menu.quickMenu.hover = function (element) {
+  var 
+    elemParent    = element.parent(),
+    elemIndex     = element.attr('index'),
+    elemSubMenu   = element.children('ul'),
+    elemMiniMenu  = elemParent.children('.mini-menu-container').children('.miniMenu[index="' + elemIndex + '"]'),
+    elemVertPos   = '',
+    horizOffset   = '-8px';
+  
+  elemParent.find('ul.visible').removeClass('visible');
+  
+  if (elemSubMenu.size()) {
+    elemSubMenu.addClass('visible').css('top','').css('left','');
+    elemVertPos = (elemSubMenu.offset().top - elemMiniMenu.offset().top)*-1;
+    horizOffset = elemMiniMenu.offset().left - (elemSubMenu.offset().left + elemSubMenu.width() + (elemMiniMenu.parent().width()/2));
+    if (leftRight() == 'left') { horizOffset = rootPadding - 5; }
+    elemSubMenu.css('left',horizOffset).css('top',elemVertPos);
+  }
+
+}
+
 menu.quickMenu.bind = function(root) {
+
   var 
     mini = root.find('.miniMenu'),
     li   = root.find('li');
@@ -125,30 +171,10 @@ menu.quickMenu.bind = function(root) {
       li     = parent.children('li[index="' + index + '"]'),
       mini   = parent.children('.mini-menu-container').children('.miniMenu[index="' + index + '"]');
 
-    parent.find('.hover').removeClass('hover');
-    li.addClass('hover');
-    mini.addClass('hover');
+    hover(li);
+    hover(mini);
   }
 
-  function minihover (element) {
-    var 
-      elemParent    = element.parent(),
-      elemIndex     = element.attr('index'),
-      elemSubMenu   = element.children('ul'),
-      elemMiniMenu  = elemParent.children('.mini-menu-container').children('.miniMenu[index="' + elemIndex + '"]'),
-      elemVertPos   = '',
-      horizOffset   = '-8px';
-    
-    elemParent.find('ul.visible').removeClass('visible');
-    
-    if (elemSubMenu.size()) {
-      elemSubMenu.addClass('visible').css('top','').css('left','');
-      elemVertPos = (elemSubMenu.offset().top - elemMiniMenu.offset().top)*-1;
-      horizOffset = elemMiniMenu.offset().left - (elemSubMenu.offset().left + elemSubMenu.width() + (elemMiniMenu.parent().width()/2));
-      if (leftRight() == 'left') { horizOffset = rootPadding - 5; }
-      elemSubMenu.css('left',horizOffset).css('top',elemVertPos);
-    }
-  }
 
   li.each(function() {
     var el        = $(this),
@@ -161,7 +187,6 @@ menu.quickMenu.bind = function(root) {
 
     // Sub list elements
     el.on('mouseleave',function(){
-      miniMenu.removeClass('hover');
       if (el.children('ul').size() && $('#configure-menu').is(':hidden') || $('#configure-menu').size() < 1) { 
         el.children('ul').removeClass('visible').trigger('minileave'); 
       }
@@ -172,7 +197,7 @@ menu.quickMenu.bind = function(root) {
     $(this).on('mouseover',function(){
       var index  = $(this).attr('index');
       clear($(this),index);
-      minihover($(this).closest('ul').children('li[index="' + index + '"]'));
+      menu.quickMenu.hover($(this).closest('ul').children('li[index="' + index + '"]'));
     });
   });
 }
@@ -253,6 +278,12 @@ menuRoot.loadDropdown = function() {
         dragDrop.init(
           { 'drag':el,'target':$('#menu-quickpick .pick') },{
             'start': (function(){ el.closest('.menu-root-child').css('opacity','0.3'); }),
+            'mouseleave': (function(){
+              mouseleave($('#menu-quickpick .hover'));
+            }),
+            'mouseover': (function(){
+              hover($('.drag-into'));
+            }),
             'complete': (function(){ 
               el.closest('.menu-root-child').css('opacity','1'); 
               var
@@ -275,10 +306,12 @@ menuRoot.loadDropdown = function() {
                 if (left != 0) { dragInto.css('left',left); }
 
                 // Bind the dropped element
-                dragInto.find('.visible').removeClass('visible');
+                dragInto.find('.visible').removeClass('visible')
+                dragInto.children().addClass('mouseover').addClass('background');
+                dragInto.css('background','');
                 menu.quickMenu.bind(dragInto);
                 menu.setup(dragInto);
-
+                colors.bind.all();
             }) }); 
       });
       if (menuChild == '#type-menu') { menu.fonts(parent); }
@@ -308,23 +341,6 @@ menu.quickPick.create = function() {
     if (!$('#menu-hub').hasClass('visible')) { $(this).removeClass('active'); }
   });
 
-  $('html').on('mousemove',function(event){
-    if ($('#drag-clone').size() < 1 || quickPick.find('.pick .hover').size() < 1) {
-      for (var i=0;i<pick.size();i++) {
-        var mouseX = event.pageX,
-            mouseY = event.pageY,
-            curPick = pick.eq(i);
-            pickX  = curPick.offset().left,
-            pickY  = curPick.offset().top,
-            pickW  = curPick.outerWidth(),
-            pickH  = curPick.outerHeight(),
-            inrect = 0;
-        if (mouseX > pickX && mouseX < pickX+pickW && mouseY > pickY && mouseY < pickY+pickH) { inrect = 1; }
-        if (inrect == 1 && !curPick.hasClass('hover')) { curPick.addClass('hover'); }
-        if (inrect == 0 && curPick.hasClass('hover') && !curPick.children('li').hasClass('hover')) { curPick.removeClass('hover'); }
-      }
-    }
-  });
 }
 
 // Fonts Menu

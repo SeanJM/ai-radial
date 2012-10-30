@@ -1,22 +1,44 @@
 // Drag and Drop Functionality
 dragDrop = {};
 
-dragDrop.test = function (object) {
+dragDrop.test = function (object,callback) {
   var targetGroup = object.target;
   for (var i = 0;i<targetGroup.size();i++) {
-    var target        = {};
-        target.el     = targetGroup.eq(i);
-        target.left   = target.el.offset().left;
-        target.top    = target.el.offset().top;
-        target.bottom = target.el.offset().top + target.el.height();
-        target.right  = target.el.offset().left + target.el.width();
+    var 
+      target          = {},
+      dragInto        = {};
+      target.el       = targetGroup.eq(i);
+      target.left     = target.el.offset().left;
+      target.top      = target.el.offset().top;
+      target.bottom   = target.el.offset().top + target.el.height();
+      target.right    = target.el.offset().left + target.el.width();
+      dragInto.el     = $('.drag-into');
+    
     // Check to see if the dragged element is inside the target
-    if (!menu.inrect({'active':object.active,'passive':target.el})) {
-      target.el.removeClass('drag-into');
-    }
-    if (menu.inrect({'active':object.active,'passive':target.el})) {
-      $('.drag-into').removeClass('drag-into');
-      target.el.addClass('drag-into'); 
+    
+    if (dragInto.el.size()) {
+      
+      dragInto.top    = dragInto.el.offset().top;
+      dragInto.right  = dragInto.el.offset().left + dragInto.el.width();
+      dragInto.bottom = dragInto.el.offset().top + dragInto.el.height();
+      dragInto.left   = dragInto.el.offset().left;
+      
+      if (target.top == dragInto.top && target.right == dragInto.right && target.bottom == dragInto.bottom && target.left == dragInto.left) {
+        if (object.mouseY < dragInto.top || object.mouseX > dragInto.right || object.mouseX < dragInto.left || object.mouseY > dragInto.bottom) {
+          if (typeof callback.mouseleave == 'function') { callback.mouseleave(); }
+          dragInto.el.removeClass('drag-into');
+        }
+      }
+    
+    } 
+    
+    if (!dragInto.el.size()) {
+      if (object.mouseX > target.left && object.mouseX < target.right && object.mouseY > target.top && object.mouseY < target.bottom) {
+        $('.drag-into').removeClass('drag-into');
+        
+        target.el.addClass('drag-into');
+        if (typeof callback.mouseover == 'function') { callback.mouseover(); }
+      }
     }
   }
 }
@@ -50,7 +72,7 @@ dragDrop.drag = function (object,callback) {
     if (dragClone.size() < 1 || dragClone.is(':hidden')) { if (callback) { callback.start(); } }
     if (dragClone.size() < 1) { dragDrop.ghost(el); }
     if (dragClone.size() > 0) {
-      dragDrop.test({'active':dragClone,'target':object.target,'mouseX':object.mouseX,'mouseY':object.mouseY});
+      dragDrop.test({'active':dragClone,'target':object.target,'mouseX':object.mouseX,'mouseY':object.mouseY},callback);
       dragClone.css('left',object.mouseX-(dragClone.width()/2)).css('top',object.mouseY-(dragClone.height()/2)); 
       if (dragClone.is(':hidden')) { dragClone.show(); }
     }
@@ -86,7 +108,7 @@ dragDrop.drop = function (el,callback) {
         .addClass('dropped')
         .children().removeAttr('style');
 
-      if (callback) { callback.complete(); }
+      if (typeof callback.complete() == 'function') { callback.complete(); }
     }
   }
   el.closest('.menu-root-child').css('opacity','1');

@@ -16,10 +16,7 @@ function leftRight () {
 }
 
 
-  /* ----------------------- Functions ------------------ */
-  
-
-  /* Drawing Icons on a Circle */
+/* Drawing Icons on a Circle */
 
 function putOnCircle(object) {
   var parent     = object['parent'],
@@ -46,147 +43,147 @@ function putOnCircle(object) {
   
   /* More tools */
 
-  function moreRad(n) {
-    var value = { 1:10, 2:40, 3:45, 4:45, 5:55, 6:60, 7:70, 8:75, 9:80 };
-    return value[n];
-  }
+function moreRad(n) {
+  var value = { 1:10, 2:40, 3:45, 4:45, 5:55, 6:60, 7:70, 8:75, 9:80 };
+  return value[n];
+}
 
-  /* Keyboard */
+/* Keyboard */
+
+function arrowKeyPos() {
+  var arrowkey  = $('#arrows'),
+      arrowkeyW = arrowkey.width(),
+      keyboardW = $('#keyboard').width();
   
-  function arrowKeyPos() {
-    var arrowkey  = $('#arrows'),
-        arrowkeyW = arrowkey.width(),
-        keyboardW = $('#keyboard').width();
-    
-    arrowkey.css('left',(keyboardW/2) - (arrowkeyW/2));
+  arrowkey.css('left',(keyboardW/2) - (arrowkeyW/2));
+}
+
+/* Spinner */
+function spinnerInput(data) {
+  var key = data['key'],
+      el  = data['el'];
+
+  /* Arrow Down */
+  if (key == '40') { spinnerVal({'el': el, 'inc': -1 }); }
+  /* Arrow Up */
+  if (key == '38') { spinnerVal({'el': el, 'inc': 1 }); }
+  /* Spacebar */
+  if (key == '13') { 
+    el
+      .toggleClass('edit')
+      .toggleClass('visible'); 
   }
+}
 
-  /* Spinner */
-  function spinnerInput(data) {
-    var key = data['key'],
-        el  = data['el'];
+function spinnerVal(data) {
+  var el  = data['el'],
+      inc = data['inc'],
+      value = el.find('.value').text(),
+      inputValue = el.find('input').val(),
+      val = parseInt(value) + inc;
 
-    /* Arrow Down */
-    if (key == '40') { spinnerVal({'el': el, 'inc': -1 }); }
-    /* Arrow Up */
-    if (key == '38') { spinnerVal({'el': el, 'inc': 1 }); }
-    /* Spacebar */
-    if (key == '13') { 
-      el
-        .toggleClass('edit')
-        .toggleClass('visible'); 
+  if (inputValue != value) { val = parseInt(inputValue) + inc; }
+  if (/%/i.test(value)) { val = val + '%'; }
+  
+  el.find('input').val(val);
+  el.find('.value').text(val);
+}
+
+function centerRings() {
+  $('.ring').each(function(){
+    var outterRingW   = $('#outter-ring').width()/2,
+        innerRingW    = $(this).width()/2,
+        innerRingPos  = outterRingW-innerRingW;
+    
+    $(this)
+      .css('left',innerRingPos)
+      .css('top',innerRingPos);
+  });
+}
+
+function protonBind() {
+  
+  $('#fillStroke').click(function(){
+    $(this).toggleClass('stroke');
+    $('#microFillControl').toggleClass('stroke');
+  });
+  
+  $('#swapFillStroke').click(function(){
+    $('#fillStroke').toggleClass('swap');
+  });
+  
+  $('#dFillStroke').click(function(){
+    $('#fillStroke').addClass('default');
+  });
+  
+  $('#drawModes').click(function(){
+    if ($(this).hasClass('front')) {
+      $(this).removeClass('front').addClass('behind');
+      return false;
     }
-  }
+    if ($(this).hasClass('behind')) {
+      $(this).removeClass('behind').addClass('clip');
+      return false;
+    }
+    if ($(this).hasClass('clip')) {
+      $(this).removeClass('clip').addClass('front');
+      return false;
+    }
+  });
+}
 
-  function spinnerVal(data) {
-    var el  = data['el'],
-        inc = data['inc'],
-        value = el.find('.value').text(),
-        inputValue = el.find('input').val(),
-        val = parseInt(value) + inc;
+function moreToolCircle(element) {
+  console.log(element);
+  var 
+      icon       = element.find('.icon'),
+      totalIcons = icon.size(),
+      rad        = moreRad(totalIcons),
+      moreRing   = element.find('.more-ring'),
+      timer;
+    
+    moreRing
+      .css('width'        ,(rad*2))
+      .css('height'       ,(rad*2))
+      .css('top'          ,(rad*-1))
+      .css('left'         ,(rad*-1))
+      .css('border-radius',(rad));
+  
+  timer = setInterval(function() {
+    if (moreRing.width() == rad*2) {
+      clearInterval(timer);
+      putOnCircle({'parent':moreRing, 'child':moreRing.find('.icon')});
+      moreRing.addClass('visible');
+      moreRing.on('mouseleave',function() { moreRing.removeClass('visible'); });
+    }
+  },10);
+}
 
-    if (inputValue != value) { val = parseInt(inputValue) + inc; }
-    if (/%/i.test(value)) { val = val + '%'; }
-    
-    el.find('input').val(val);
-    el.find('.value').text(val);
-  }
-
-  function centerRings() {
-    $('.ring').each(function(){
-      var outterRingW   = $('#outter-ring').width()/2,
-          innerRingW    = $(this).width()/2,
-          innerRingPos  = outterRingW-innerRingW;
-      
-      $(this)
-        .css('left',innerRingPos)
-        .css('top',innerRingPos);
-    });
-  }
-
-  function protonBind() {
-    
-    $('#fillStroke').click(function(){
-      $(this).toggleClass('stroke');
-      $('#microFillControl').toggleClass('stroke');
-    });
-    
-    $('#swapFillStroke').click(function(){
-      $('#fillStroke').toggleClass('swap');
-    });
-    
-    $('#dFillStroke').click(function(){
-      $('#fillStroke').addClass('default');
-    });
-    
-    $('#drawModes').click(function(){
-      if ($(this).hasClass('front')) {
-        $(this).removeClass('front').addClass('behind');
-        return false;
-      }
-      if ($(this).hasClass('behind')) {
-        $(this).removeClass('behind').addClass('clip');
-        return false;
-      }
-      if ($(this).hasClass('clip')) {
-        $(this).removeClass('clip').addClass('front');
-        return false;
+function spinnerBind() {
+  $('html').on('keydown',function(event){
+    $('.spinner').each(function(){
+      if ($(this).is(':visible') && !$(this).hasClass('edit') && $(this).hasClass('visible')) {
+        spinnerInput({'key':event.which,'el': $(this)});
       }
     });
-  }
+  }); 
 
-  function moreToolCircle(element) {
-    console.log(element);
-    var 
-        icon       = element.find('.icon'),
-        totalIcons = icon.size(),
-        rad        = moreRad(totalIcons),
-        moreRing   = element.find('.more-ring'),
-        timer;
-      
-      moreRing
-        .css('width'        ,(rad*2))
-        .css('height'       ,(rad*2))
-        .css('top'          ,(rad*-1))
-        .css('left'         ,(rad*-1))
-        .css('border-radius',(rad));
+  $('.spinner').on('click',function(event){ event.stopPropagation(); });
+  
+  $('.spinner .value').on('click',function(event){
+    var input   = $(this).parents('.spinner').find('input'),
+        spinner = $(this).parents('.spinner'),
+        value   = $(this).parents('.spinner').find('.value').text();
+
+    spinner.toggleClass('edit');
+    input.focus().val(value);
     
-    timer = setInterval(function() {
-      if (moreRing.width() == rad*2) {
-        clearInterval(timer);
-        putOnCircle({'parent':moreRing, 'child':moreRing.find('.icon')});
-        moreRing.addClass('visible');
-        moreRing.on('mouseleave',function() { moreRing.removeClass('visible'); });
-      }
-    },10);
-  }
+  });
 
-  function spinnerBind() {
-    $('html').on('keydown',function(event){
-      $('.spinner').each(function(){
-        if ($(this).is(':visible') && !$(this).hasClass('edit') && $(this).hasClass('visible')) {
-          spinnerInput({'key':event.which,'el': $(this)});
-        }
-      });
-    }); 
+  $('.spinner').on('keydown',function(event){
+    spinnerInput({'key': event.which, 'el': $(this)});
+  });
 
-    $('.spinner').on('click',function(event){ event.stopPropagation(); });
-    
-    $('.spinner .value').on('click',function(event){
-      var input   = $(this).parents('.spinner').find('input'),
-          spinner = $(this).parents('.spinner'),
-          value   = $(this).parents('.spinner').find('.value').text();
-
-      spinner.toggleClass('edit');
-      input.focus().val(value);
-      
-    });
-
-    $('.spinner').on('keydown',function(event){
-      spinnerInput({'key': event.which, 'el': $(this)});
-    });
-
-  }
+}
 
   /* --------------------- End Functions ---------------- */
 $(function(){

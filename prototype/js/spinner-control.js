@@ -1,3 +1,25 @@
+
+var hover = function (element) {
+  var oldHover = element.parent().find('.hover');
+  mouseleave(oldHover);  
+  mouseover(element);
+
+}
+
+var mouseleave = function (element) {
+  element
+    .removeClass('hover')
+    .css('background-color','')
+    .css('color','');
+}
+
+var mouseover = function (element) {
+  element
+    .addClass('hover')
+    .css('background-color',rgb(colors.background.hover))
+    .css('color',rgb(colors.text.hover));
+}
+
 var rgb = function (str) {
   var num;
   if (typeof str == 'string') { 
