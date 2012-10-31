@@ -1,6 +1,59 @@
 // Main Menu
 
+function elementName(self) {
+  var str = self.clone().children().remove().end().text(),
+      tag = self.prop('tagName').toLowerCase();
+  return '<' + tag + ' class="' + self.attr('class') + '" index="' + self.index() + '">' + $.trim(str) + '</' + tag + '>'; 
+}
+
+// Setup
+
 var menu = {};
+
+menu.setup = function (root) {
+  var li = root.find('li');
+
+  console.log('Menu setup for: ' + elementName(root));
+
+  menu.submenu(root);
+  menu.configListen(li);
+  menu.checkboxListen(li);
+  
+  menu.addDisclosure(root);
+  menu.dropdown(root);
+  menu.quickMenu.create(root);
+}
+
+// Sub Menu Appearance
+menu.submenu = function(element) {
+  console.log('Setting up submenu for: ' + elementName(element));
+  element.on('mouseover',function(e){
+    var 
+        target         = $(e.target),
+        targetSubmenu  = target.children('ul'),
+        offset         = parseInt(target.parent().css('width'))-4,
+        level          = targetSubmenu.attr('level'),
+        verticalOffset = target.outerHeight() * -1;
+    
+    if (targetSubmenu.size()) { 
+      
+      if (level > 1 && level%2 == 1) { 
+        if (targetSubmenu.closest('#menu-quickpick').size() > 0) { 
+          $('#menu-quickpick').css('z-index','1000'); 
+          targetSubmenu.on('mouseleave',function(){ 
+            $('#menu-quickpick').css('z-index','-1'); 
+          });
+        }
+        offset = (parseInt(target.parent().css('width'))*-1)+4; 
+      }
+
+      if (targetSubmenu.is(':hidden'))     { 
+        targetSubmenu.addClass('visible').css('left',offset).css('top',verticalOffset); 
+      }
+
+    }
+  });
+}
 
 menu.rootHover = function (self) {
  self.on('mouseover',function(event){
@@ -54,32 +107,6 @@ menu.dropdown = function (root) {
   });
 }
 
-// Sub Menu Appearance
-menu.submenu = function(element) {
-  element.on('mouseover',function(e){
-    if (element.children('ul').size()) { 
-      var 
-          target          = $(e.target),
-          offset          = parseInt(target.parent().css('width'))-4,
-          subMenu         = target.children('ul'),
-          level           = subMenu.attr('level'),
-          vertical_offset = target.outerHeight() * -1,
-          width           = subMenu.children('li').width();
-      
-      if (level > 1 && level%2 == 1) { 
-        if (subMenu.closest('#menu-quickpick').size() > 0) { 
-          $('#menu-quickpick').css('z-index','1000'); 
-          subMenu.on('mouseleave',function(){ $('#menu-quickpick').css('z-index','-1'); });
-        }
-        offset = (parseInt(target.parent().css('width'))*-1)+4; 
-      }
-      if (subMenu.is(':hidden'))     { 
-        subMenu.addClass('visible').css('left',offset).css('top',vertical_offset); 
-      }
-    }
-  });
-}
-
 // Listen for right click on menus
 menu.configListen = function(element) {
   element.on('mousedown',function(event) {
@@ -98,21 +125,6 @@ menu.checkboxListen = function (element) {
   });
 }
 
-menu.setup = function (root) {
-  menu.addDisclosure(root);
-  menu.dropdown(root);
-
-  var li = root.find('li');
-  li.each(function(){
-
-    menu.submenu($(this));
-    menu.configListen($(this));
-    menu.checkboxListen($(this));
-  
-  });
-  
-  menu.quickMenu.create(root);
-}
 
 menu.quickMenu = {};
 
@@ -152,7 +164,7 @@ menu.quickMenu.create = function (root) {
   
   });
 
-  menu.quickMenu.bind(root);
+  menu.quickMenu.bindHover(root);
 
 }
 
@@ -166,6 +178,8 @@ menu.quickMenu.hover = function (element) {
     elemVertPos   = '',
     horizOffset   = '-8px';
   
+  console.log('quick menu bind');
+
   elemParent.find('ul.visible').removeClass('visible');
   
   if (elemSubMenu.size()) {
@@ -178,17 +192,19 @@ menu.quickMenu.hover = function (element) {
 
 }
 
-menu.quickMenu.bind = function(root) {
+menu.quickMenu.bindHover = function(root) {
   var 
     mini = root.find('.miniMenu'),
     li   = root.find('li'),
     loadMsg;
+
   if (typeof root.attr('menu') != 'undefined') {
     loadMsg = 'Quickmenu Bind: ' + root.attr('menu');
   }
   if (typeof root.attr('menu') == 'undefined') {
-    loadMsg = root;
+    loadMsg = 'Quickmenu Bind: ' + elementName(root);
   }
+
   console.log(loadMsg);
 
   function clear (element) { 
@@ -346,16 +362,48 @@ menu.quickPick = {};
 
 // When the menu is dropped in the quickpick
 menu.quickPick.setup = function (self) {
-  console.log('Menu has been dropped');
+  console.log('Setting up quickpick menu: ' + elementName(self));
 
-  self.find('.visible').removeClass('visible')
+  menu.quickPick.hoverInit();
+  menu.setup(self);
+  menu.quickMenu.bindHover(self);
   self.addClass('background');
   self.css('background','');
-  hover(self.children('li'));
-  menu.quickMenu.bind(self);
-  menu.setup(self);
-  hover(self);
   colors.bind.all();
+
+}
+
+// Hover
+menu.quickPick.hoverInit = function () {
+  $('body').addClass('hover-pick');
+}
+
+menu.quickPick.click = function (event) {
+  var target = $('.pick > li.hover');
+  if (target.size()) {
+    if (event.pageX > target.offset().left && event.pageY > target.offset().top && event.pageX < (target.offset().left + target.width()) && event.pageY < (target.offset().top + target.height())) {
+      target.trigger('click');
+    }  
+  }
+}
+
+menu.quickPick.hover = function (event) {
+  if ($('body').hasClass('hover-pick')) {
+    $('.pick > li').each(function(){
+      if (event.pageX > $(this).offset().left && event.pageY > $(this).offset().top && event.pageX < ($(this).offset().left + $(this).width()) && event.pageY < ($(this).offset().top + $(this).height())) {
+        if (!$(this).hasClass('hover')) {
+          mouseover($(this));
+          $(this).trigger('mouseover');
+        }
+      }
+      else {
+        if ($(this).hasClass('hover')) { 
+          mouseleave($(this)); 
+          /*$(this).trigger('mouseleave');*/
+        }
+      }
+    });
+  }
 }
 
 menu.quickPick.create = function() {

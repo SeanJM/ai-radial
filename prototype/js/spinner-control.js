@@ -3,11 +3,11 @@ var hover = function (element) {
   var oldHover = element.parent().find('.hover');
   mouseleave(oldHover);  
   mouseover(element);
+  element.trigger('hover');
 }
 
 var mouseleave = function (element,callback) {
   element.removeClass('hover');
-
   if (typeof callback == 'function') { callback(); }
 }
 

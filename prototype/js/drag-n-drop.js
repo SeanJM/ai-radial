@@ -109,6 +109,8 @@ dragDrop.drop = function (el,callback) {
         .children().removeAttr('style');
 
       if (typeof callback.complete() == 'function') { callback.complete(); }
+
+      $('.drag-into').removeClass('drag-into');
     }
   }
   el.closest('.menu-root-child').css('opacity','1');

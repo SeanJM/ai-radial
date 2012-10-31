@@ -53,6 +53,7 @@
     #menu-quickpick .right .pick:nth-child(6)       { right: 6px; }
     #menu-quickpick .right .pick:nth-child(7)       { right: 22px; }
     #menu-quickpick .right .pick:nth-child(8)       { right: 50px; }
+
     .pick li {
       border-radius   : 15px;
       text-align      : center;
@@ -61,10 +62,12 @@
       list-style      : none;
       color           : #A2A2A2;
     }
+
     #menu-quickpick .menu-parent {
       width: 190px;
       position: absolute;
     }
+
     #drag-clone.more,
     #menu-quickpick li.more {
       text-align: left;
