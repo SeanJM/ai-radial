@@ -21,10 +21,33 @@ menu.addDisclosure = function (root) {
   });
 }
 
+// Control visibility of the dropdown menu
+menu.dropdown = function (root) {
+  root.on('click',function(e){
+    var target    = $(e.target).closest('.menu-root'),
+        targetID  = target.closest('.menu-root-child').attr('id'),
+        visible   = $('.menu-root-child.visible');
+
+    if (visible.size()) {
+      visible.each(function(){
+        if (targetID != $(this).attr('id')) { 
+          $(this).removeClass('visible'); 
+        }
+      });
+    }
+
+    target.children('ul').each(function() { 
+      $(this).addClass('visible'); 
+    });
+
+    e.stopPropagation();
+  
+  });
+}
+
 // Sub Menu Appearance
 menu.submenu = function(element) {
   element.on('mouseover',function(e){
-    element.addClass('mouseover');
     if (element.children('ul').size()) { 
       var 
           target          = $(e.target),
@@ -67,35 +90,19 @@ menu.checkboxListen = function (element) {
 }
 
 menu.setup = function (root) {
-
   menu.addDisclosure(root);
-
-  root.on('click',function(e){
-    var target    = $(e.target),
-        targetID  = target.closest('.menu-root-child').attr('id');
-    if ($('.menu-root-child.visible').size()) {
-      $('.menu-root-child.visible').each(function(){
-        if (targetID != $(this).attr('id')) { $(this).removeClass('visible'); }
-      });
-    }
-    target.children('ul').each(function() { $(this).addClass('visible'); });
-
-    e.stopPropagation();
-  });
+  menu.dropdown(root);
 
   var li = root.find('li');
   li.each(function(){
 
     menu.submenu($(this));
-
     menu.configListen($(this));
-
     menu.checkboxListen($(this));
   
   });
   
   menu.quickMenu.create(root);
-
 }
 
 menu.quickMenu = {};
@@ -119,13 +126,17 @@ menu.quickMenu.create = function (root) {
       
       $(this).attr('index',n);
       
-      if (marker.size() < 1) { marker = $(markerTmplt); $(this).prepend(marker); }
+      if (marker.size() < 1) { 
+        marker = $(markerTmplt); 
+        $(this).prepend(marker); 
+      }
 
       if ($(this).children('.checkbox').size() > 0) { $(this).addClass('checkbox-container'); }
       
       markerColor = marker.attr('class').replace('marker','').trim();
       miniMenu.attr('class','miniMenu ' + markerColor);
       miniContainer.append(miniMenu);
+    
     });
 
     $(this).append(miniContainer);
@@ -137,7 +148,6 @@ menu.quickMenu.create = function (root) {
 }
 
 // Quick Menu
-
 menu.quickMenu.hover = function (element) {
   var 
     elemParent    = element.parent(),
@@ -160,45 +170,45 @@ menu.quickMenu.hover = function (element) {
 }
 
 menu.quickMenu.bind = function(root) {
-
+  console.log('Quickmenu Bind: ' + root.attr('menu'));
   var 
     mini = root.find('.miniMenu'),
     li   = root.find('li');
 
-  function clear (element,index) { 
+  function clear (element) { 
     var 
       parent = element.closest('ul'),
+      index  = element.attr('index'),
       li     = parent.children('li[index="' + index + '"]'),
       mini   = parent.children('.mini-menu-container').children('.miniMenu[index="' + index + '"]');
+
+    console.log(mini);
 
     hover(li);
     hover(mini);
   }
 
-
-  li.each(function() {
-    var el        = $(this),
-        index     = el.attr('index'),
-        miniMenu  = el.parent().find('.miniMenu[index="' + index + '"]');
-
-    el.on('mouseover',function(){
-      clear(el,index);
-    });
-
-    // Sub list elements
-    el.on('mouseleave',function(){
-      if (el.children('ul').size() && $('#configure-menu').is(':hidden') || $('#configure-menu').size() < 1) { 
-        el.children('ul').removeClass('visible').trigger('minileave'); 
-      }
-    });
+  li.on('mouseover',function(event){
+    if ($(this).parents().size() == $(event.target).parents().size()) {
+      clear($(event.target));
+    }
   });
 
-  mini.each(function() {
-    $(this).on('mouseover',function(){
-      var index  = $(this).attr('index');
-      clear($(this),index);
-      menu.quickMenu.hover($(this).closest('ul').children('li[index="' + index + '"]'));
-    });
+  // Sub list elements
+  li.on('mouseleave',function(event){
+    var self         = $(this),
+        configHidden = $('#configure-menu').is(':hidden'),
+        childrenSize = self.children('ul').size();
+
+    if (childrenSize && configHidden || $('#configure-menu').size() < 1) { 
+      self.children('ul').removeClass('visible'); 
+    }
+  });
+
+  mini.on('mouseover',function(){
+    console.log('mini hover');
+    clear($(this));
+    /*menu.quickMenu.hover($(this).closest('ul').children('li[index="' + index + '"]'));*/
   });
 }
 // Orientation

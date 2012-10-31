@@ -3,21 +3,28 @@ var hover = function (element) {
   var oldHover = element.parent().find('.hover');
   mouseleave(oldHover);  
   mouseover(element);
-
 }
 
-var mouseleave = function (element) {
+var mouseleave = function (element,callback) {
   element
     .removeClass('hover')
     .css('background-color','')
-    .css('color','');
+    .css('color',rgb(colors.text.normal));
+
+  if (typeof callback == 'function') { callback(); }
 }
 
-var mouseover = function (element) {
+var mouseover = function (element,callback) {
   element
     .addClass('hover')
     .css('background-color',rgb(colors.background.hover))
     .css('color',rgb(colors.text.hover));
+  
+  element.on('mouseleave',function(){
+    mouseleave(element);
+  });
+
+  if (typeof callback == 'function') { callback(); }
 }
 
 var rgb = function (str) {
@@ -63,24 +70,18 @@ colors.bind.background = function(str) {
     if (base < 100) { spinnerBG = 20; }
     colors.bind.spinner(spinnerBG);
   }
+  
   $('.mouseover').on('mouseover',function(e) {
     if ($(e.target).hasClass('mouseover')) {
-      if ($(e.target).find('li').size() > 1) {
-        $(e.target).find('li').css('color',colors.text.normal);
-      }
-      $(e.target).css('background-color',rgb(colors.background.hover));
-      $(e.target).css('color',rgb(colors.text.hover));
-     
-      $(e.target).on('mouseleave',function() {
-        $(e.target).css('background-color',rgb(colors.background.normal));
-        $(e.target).css('color',rgb(colors.text.normal));
-      });
+      hover($(e.target));
     }
   });
   
   $('.background').css('background-color',rgb(colors.background.normal));
   spinner.handle({'active':active,'angle':str/255*360});
+
 }
+
 colors.bind.opacity = function(str) {
   colors.opacity.faded = '0.4';
   if (typeof str != 'undefined') {
@@ -90,9 +91,11 @@ colors.bind.opacity = function(str) {
   var active = $('#main-configuration-menu-opacity .spinner-container');
   spinner.handle({'active':active,'angle':str/100*360});
 }
+
 colors.bind.border = function () {
   $('.border').css('border','1px solid rgba(0,0,0,0.1)');
 }
+
 colors.bind.text = function(str) {
   colors.text.normal       = 135;
   colors.text.hover        = 255;
@@ -102,6 +105,7 @@ colors.bind.text = function(str) {
   $('.text-color').css('color',rgb(colors.text.normal));
   $('.mouseover').css('color',rgb(colors.text.normal));
 }
+
 colors.bind.spinner = function(str) {
   if (typeof str != 'undefined') {
     colors.spinner.empty = str;
@@ -124,12 +128,11 @@ colors.bind.spinner = function(str) {
 }
 
 colors.bind.all = function() {
-  colors.bind.background(255);
-  colors.bind.opacity(80);
+  colors.bind.background();
+  colors.bind.opacity();
   colors.bind.border();
   colors.bind.spinner();
   colors.bind.text();
-  console.log('colors');
 }
 
 var configure = {};
@@ -141,6 +144,7 @@ configure.opacity = function (opacity) {
 }
 
 var spinner = {};
+
 spinner.drag = function(e) {
   if ($('body').hasClass('spinner-drag')) {
     var active = $('#main-configuration-menu .spinner-container.active');
@@ -204,7 +208,10 @@ spinner.control = function() {
     }
   });
 }
+
 $(function() {
   spinner.control();
+  colors.bind.background(255);
+  colors.bind.opacity(90);
   colors.bind.all();
 });

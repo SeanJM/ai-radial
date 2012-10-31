@@ -71,7 +71,6 @@
 }
   #menu-hub .button:hover{
     top: 0;
-    opacity: 1;
     -webkit-transform: scale(1);
   }
   #menu-hub.visible .button {
@@ -86,15 +85,13 @@
     border-radius     : 25px;
     background        : rgb(255,255,255);
     box-shadow        : 0 1px 8px rgba(0,0,0,0.3);
-    opacity: 0.8;
     -webkit-transition: all 0.1s;
     -webkit-transform : scale(0.6);
   }
     #menu-hub .button .inner-shadow {
      width           : 100%;
      height          : 100%;
-     border-radius   : 25px;
-     box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+     border-radius   : 50%;
     }
     #menu-hub .button .icon {
       position: absolute;
@@ -110,17 +107,22 @@
       position        : absolute;
       list-style      : none;
     }
-    #menu-hub ul.menu > li {
-      position     : absolute;
-      padding      : 0 10px;
-      min-width    : 50px;
-      border-radius: 14px;
-      text-align   : center;
-      font-size    : 12px;
-      line-height  : 27px;
-      cursor       : pointer;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-    }
+      #menu-hub ul.menu > li {
+        position     : absolute;
+        width        : 70px;
+        border-radius: 14px;
+        text-align   : center;
+        font-size    : 12px;
+        line-height  : 27px;
+        box-shadow   : 0 1px 3px rgba(0,0,0,0.3);
+        cursor       : pointer;
+      }
+        #menu-hub ul.menu.first > li > span {
+          display      : block;
+          width        : 100%;
+          border-radius: 14px;
+          text-align   : center;
+        }
 
     #menu-hub ul.menu.first {
       z-index      : 2;
