@@ -55,9 +55,9 @@
     border-radius: 0;
   }
   .menu-parent li.hidden{
-    line-height: 1px;
-    background: rgba(0,0,0,0.07);
+    line-height: 0px;
     color: transparent;
+    text-shadow: none;
     margin:0;
   }
     .menu-parent li.hidden .disclosure{
@@ -345,10 +345,8 @@
       margin            : 0 8px 4px 8px;
       border-radius     : 2px;
       overflow          : hidden;
-      -webkit-transition: all 0.3s; 
     }
-    #ai-wheel .mini-menu-container .miniMenu:hover,
-    #ai-wheel .mini-menu-container .miniMenu.hover { background-image: -webkit-linear-gradient(bottom,rgba(25,156,255,1),rgba(25,156,255,1)); }
+
     #ai-wheel .mini-menu-container .miniMenu.hidden { height: 0; margin: 0; }
 
       #ai-wheel .mini-menu-container .miniMenu .innerShadow {
@@ -371,22 +369,26 @@
 
 /* Configure Menu */
 #configure-menu {
-  background-image: -webkit-linear-gradient(bottom, rgba(255,255,255,0.8),rgba(255,255,255,1));
-  width: 180px;
-  height: 120px;
-  position: absolute;
+  z-index   : 3;
+  position  : absolute;
+  width     : 200px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.5);
-  z-index: 3;
 }
   #configure-menu p{
-    color: #A2A2A2;
-    font-size: 12px;
-    float: left;
+    float      : left;
+    width      : 100%;
+    margin     : 10px 0;
+    text-indent: 16px;
+    font-size  : 12px;
+    color      : #A2A2A2;
   }
-  #configure-menu p{
-    margin: 6px 10px;
+  #configure-menu ul {
+    float: left;
+    width: 100%;
+    padding: 0 0 6px 0;
   }
   #configure-menu li {
+    padding: 0 0 0 16px;
   }
   #configure-menu .color-container {
     float        : left;
@@ -403,14 +405,22 @@
   }
     #configure-menu #color-box .container {
       float        : left;
-      padding      : 3px;
+      padding      : 4px;
       border       : 1px solid transparent;
-      border-radius: 6px;
       margin: 0 2px 0 0;
     }
-    #configure-menu #color-box .container:hover,
-    #configure-menu #color-box .container.selected {
-      border: 1px solid rgba(0, 0, 0, 0.3); 
+    .dark #configure-menu #color-box .container:hover,
+    .dark #configure-menu #color-box .container.selected {
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.4); 
+      background: rgba(0,0,0,0.4);
+      box-shadow:0 1px 0 rgba(255,255,255,0.2);
+    }
+    .light #configure-menu #color-box .container:hover,
+    .light #configure-menu #color-box .container.selected {
+      border-radius: 12px;
+      background-image: -webkit-linear-gradient(bottom,rgba(0,0,0,0.02) 90%,rgba(0,0,0,0.1) 100%);
+      box-shadow:inset 0 0 2px rgba(0,0,0,0.3);
     }
       #configure-menu #color-box .container .mark {
         float        : left;

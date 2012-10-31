@@ -1,5 +1,14 @@
 // Main Menu
+
 var menu = {};
+
+menu.rootHover = function (self) {
+ self.on('mouseover',function(event){
+    if (self.children('span').parents().size() == $(event.target).parents().size()) {
+      hover($(this).children('span'));
+    }
+  });
+}
 
 menu.position = function (object) {
   if (object.horizontal || typeof object.horizontal == 'undefined') { 
@@ -170,10 +179,17 @@ menu.quickMenu.hover = function (element) {
 }
 
 menu.quickMenu.bind = function(root) {
-  console.log('Quickmenu Bind: ' + root.attr('menu'));
   var 
     mini = root.find('.miniMenu'),
-    li   = root.find('li');
+    li   = root.find('li'),
+    loadMsg;
+  if (typeof root.attr('menu') != 'undefined') {
+    loadMsg = 'Quickmenu Bind: ' + root.attr('menu');
+  }
+  if (typeof root.attr('menu') == 'undefined') {
+    loadMsg = root;
+  }
+  console.log(loadMsg);
 
   function clear (element) { 
     var 
@@ -181,8 +197,6 @@ menu.quickMenu.bind = function(root) {
       index  = element.attr('index'),
       li     = parent.children('li[index="' + index + '"]'),
       mini   = parent.children('.mini-menu-container').children('.miniMenu[index="' + index + '"]');
-
-    console.log(mini);
 
     hover(li);
     hover(mini);
@@ -207,8 +221,9 @@ menu.quickMenu.bind = function(root) {
 
   mini.on('mouseover',function(){
     console.log('mini hover');
+    var liTarget = $(this).closest('ul').children('li[index="' + $(this).attr('index') + '"]');
     clear($(this));
-    /*menu.quickMenu.hover($(this).closest('ul').children('li[index="' + index + '"]'));*/
+    menu.quickMenu.hover(liTarget);
   });
 }
 // Orientation
@@ -276,8 +291,8 @@ menuRoot.loadDropdown = function() {
     var menuChild = '#' + $(this).attr('menu'),
         parent    = $(this);
     console.log('Loading Dropdown menu for: ' + menuChild);
-    template.load(
-    {
+    
+    template.load({
       'template-file':'menu',
       'template':menuChild,
       'parent':parent
@@ -316,21 +331,32 @@ menuRoot.loadDropdown = function() {
                 if (left != 0) { dragInto.css('left',left); }
 
                 // Bind the dropped element
-                dragInto.find('.visible').removeClass('visible')
-                dragInto.children().addClass('mouseover').addClass('background');
-                dragInto.css('background','');
-                menu.quickMenu.bind(dragInto);
-                menu.setup(dragInto);
-                colors.bind.all();
+                menu.quickPick.setup(dragInto);
             }) }); 
       });
       if (menuChild == '#type-menu') { menu.fonts(parent); }
     });
+    // End Template Load
+    menu.rootHover($(this));
   });
 }
 
 // Create Object for miniMenu Functions
 menu.quickPick = {};
+
+// When the menu is dropped in the quickpick
+menu.quickPick.setup = function (self) {
+  console.log('Menu has been dropped');
+
+  self.find('.visible').removeClass('visible')
+  self.addClass('background');
+  self.css('background','');
+  hover(self.children('li'));
+  menu.quickMenu.bind(self);
+  menu.setup(self);
+  hover(self);
+  colors.bind.all();
+}
 
 menu.quickPick.create = function() {
   var quickPick = $('#menu-quickpick'),
@@ -446,6 +472,10 @@ menu.config.bind = function(data) {
     mini.attr('class','miniMenu ' + color);
   });
   
+  config.find('li').on('hover',function(){
+    hover($(this));
+  });
+
   config.css('top',data.pageY-10).css('left',data.pageX-10);
 
   $('#hide-entry').off('click');
@@ -465,7 +495,8 @@ menu.config.bind = function(data) {
 
 menu.config.create = function(data) {
   var element = '#configure-menu';
-  if ($(element).size() < 1) { 
+  if ($(element).
+    size() < 1) { 
     template.load({'template-file':'menu','template':element,'parent':'body'},function() { 
       menu.config.bind(data); 
     }); 

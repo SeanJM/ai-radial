@@ -13,6 +13,27 @@ body {
   user-select        : none;
   -ms-user-select    : none;
 }
+
+  .light * {
+    color: #666666;
+  }
+
+  .light *.hover {
+    background: #0098FF;
+    color: white !important;
+  }
+
+  .dark * {
+    color: #9F9F9F;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+  }
+
+  .dark *.hover {
+    background: #FF9900;
+    color: white !important;
+    text-shadow: none;
+  }
+
 .top { z-index: 1000; }
 .sprite {
   background: url('../img/ai-sprite-01.png') no-repeat;

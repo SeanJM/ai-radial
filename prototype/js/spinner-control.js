@@ -6,19 +6,13 @@ var hover = function (element) {
 }
 
 var mouseleave = function (element,callback) {
-  element
-    .removeClass('hover')
-    .css('background-color','')
-    .css('color',rgb(colors.text.normal));
+  element.removeClass('hover');
 
   if (typeof callback == 'function') { callback(); }
 }
 
 var mouseover = function (element,callback) {
-  element
-    .addClass('hover')
-    .css('background-color',rgb(colors.background.hover))
-    .css('color',rgb(colors.text.hover));
+  element.addClass('hover');
   
   element.on('mouseleave',function(){
     mouseleave(element);
@@ -54,28 +48,25 @@ colors.spinner.handle       = 80;
 
 colors.bind.background = function(str) {
   var 
-    active                  = $('#main-configuration-menu-brightness .spinner-container'),
+    active = $('#main-configuration-menu-brightness .spinner-container'),
     spinnerBG;
   
   colors.background.hover = '0,152,255';
 
   if (typeof str != 'undefined') {
     var base = parseInt((str/255*190)+51);
+    
     colors.bind.text(255-base);
     colors.background.normal = base;
-    if (base < 255) { spinnerBG = 130; colors.background.hover = '0,152,255'; $('#ai-wheel').removeClass('dark').addClass('light'); }
+    
+    if (base < 255) { spinnerBG = 130; colors.background.hover = '0,152,255'; $('body').removeClass('dark').addClass('light'); }
     if (base < 220) { spinnerBG = 120; }
     if (base < 190) { spinnerBG = 100; }
-    if (base < 150) { spinnerBG = 50; colors.background.hover = '255,152,20'; $('#ai-wheel').removeClass('light').addClass('dark'); }
+    if (base < 150) { spinnerBG = 50; colors.background.hover = '255,152,20'; $('body').removeClass('light').addClass('dark'); }
     if (base < 100) { spinnerBG = 20; }
+    
     colors.bind.spinner(spinnerBG);
   }
-  
-  $('.mouseover').on('mouseover',function(e) {
-    if ($(e.target).hasClass('mouseover')) {
-      hover($(e.target));
-    }
-  });
   
   $('.background').css('background-color',rgb(colors.background.normal));
   spinner.handle({'active':active,'angle':str/255*360});
@@ -102,8 +93,6 @@ colors.bind.text = function(str) {
   if (typeof str != 'undefined') {
     colors.text.normal = str;
   }
-  $('.text-color').css('color',rgb(colors.text.normal));
-  $('.mouseover').css('color',rgb(colors.text.normal));
 }
 
 colors.bind.spinner = function(str) {
