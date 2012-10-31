@@ -3,8 +3,11 @@
 /*                 Keyboard                 */
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 
-#keyboard .sprite {
-  background: url('../img/ai_keyboard.png') no-repeat;
+.light #keyboard .sprite {
+  background: url('../img/ai_keyboard-light.png') no-repeat;
+}
+.dark #keyboard .sprite {
+  background: url('../img/ai_keyboard-dark.png') no-repeat;
 }
 
 #keyboard {
@@ -20,6 +23,7 @@
     width   : 42px;
     height  : 52px;
     position: absolute;
+    background: none !important;
   }
 
     #keyboard .key-container .key {
@@ -69,46 +73,40 @@
   }
 /* Arrow Keys */
 
-#keyboard #arrows.key-container:hover{
-  -webkit-transform:scale(1.4);
-  -webkit-transition:all 0.1s;
-}
 #keyboard #arrows.key-container{
   bottom          : 3px;
   width           : 51px;
   height          : 51px;
   border-radius   : 26px;
+}
+.light #keyboard #arrows.key-container{
   background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.3) 40%,rgba(255,255,255,0.7) 70%);
 }
 
 #keyboard #arrows.key-container:hover{
   z-index         : 1;
-  opacity         : 1;
-  background-image: -webkit-radial-gradient(center,rgba(255,255,255,0.7) 30%,rgba(255,255,255,0.9) 70%);
-  box-shadow      : 0 1px 6px rgba(0,0,0,0.5);
 }
 #keyboard #arrows .key {
   position           : absolute;
   width              : 51px;
   height             : 51px;
   border-radius      : 26px;
-  background-image   : -webkit-radial-gradient(center,transparent 56%,rgba(0, 0, 0, 0.2) 71%,rgba(0, 0, 0, 0.25) 87%);
   background-position: 0 0;
-}
-#keyboard #arrows:hover .key {
-  background-image   : -webkit-radial-gradient(center,transparent 63%,rgba(0, 0, 0, 0.18) 76%);
 }
 
 #keyboard #arrows .key.up {
+  background-position: -150px -73px;
 }
 
 #keyboard #arrows .key.hover {
+  background-position: -150px -124px;
 }
 
 #keyboard #arrows .arrow {
   width   : 12px;
   height  : 12px;
   position: absolute;
+  -webkit-transition: none;
 }
 #keyboard #arrows .arrow.left {
   background-position: -42px -22px;
