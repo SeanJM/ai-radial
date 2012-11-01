@@ -8,6 +8,7 @@ function bindBody() {
   $('body').on('click',function(e){
     menu.quickPick.click(e);
   });
+  
 }
 $(function(){
   bindBody();

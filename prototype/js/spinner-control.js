@@ -60,10 +60,10 @@ colors.bind.background = function(str) {
     colors.background.normal = base;
     
     if (base < 255) { spinnerBG = 130; colors.background.hover = '0,152,255'; $('body').removeClass('dark').addClass('light'); }
-    if (base < 220) { spinnerBG = 120; }
-    if (base < 190) { spinnerBG = 100; }
-    if (base < 150) { spinnerBG = 50; colors.background.hover = '255,152,20'; $('body').removeClass('light').addClass('dark'); }
-    if (base < 100) { spinnerBG = 20; }
+    if (base < 220) { spinnerBG = 120; $('body').removeClass('medium'); }
+    if (base < 190) { spinnerBG = 100; $('body').addClass('medium'); }
+    if (base < 150) { spinnerBG = 50; colors.background.hover = '255,152,20'; $('body').removeClass('light').addClass('dark').addClass('medium'); }
+    if (base < 100) { spinnerBG = 20; $('body').removeClass('medium'); }
     
     colors.bind.spinner(spinnerBG);
   }

@@ -79,7 +79,7 @@ body {
   width           : 380px;
   height          : 380px;
   border-radius   : 190px;
-  box-shadow      : 0 1px 6px rgba(0,0,0,0.33);
+  box-shadow      : 0 1px 6px rgba(0,0,0,0.5);
   -webkit-transition: all 0.2s;
   -webkit-transition: opacity 0.5s;
 }
@@ -160,6 +160,7 @@ body {
     position: relative;
     top     : -1px;
     right   : 7px;
+    display: none;
   }
 
   .icon-container .more-tools .more-ring {
@@ -183,12 +184,13 @@ body {
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>> */
 
 #secondRing {
-  width           :171px;
-  height          :171px;
+  width           :169px;
+  height          :169px;
   position        : absolute;
-  border-radius   : 136px;
+  border-radius   : 50%;
   background-image: -webkit-radial-gradient(center, rgba(0, 0, 0, 0.0) 69%, rgba(0, 0, 0, 0.1) 71% );
   background-image: -moz-radial-gradient(center, rgba(0, 0, 0, 0.0) 69%, rgba(0, 0, 0, 0.1) 71% );
+  box-shadow: 0 1px 1px rgba(255,255,255,0.1);
 }
 
 #secondRing:hover {

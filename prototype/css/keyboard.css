@@ -17,6 +17,7 @@
   border-radius   : 144px;
   background-image: -webkit-radial-gradient(center, rgba(0, 0, 0, 0.0) 69%, rgba(0, 0, 0, 0.1) 70% );
   background-image: -moz-radial-gradient(center, rgba(0, 0, 0, 0.0) 69%, rgba(0, 0, 0, 0.1) 70% );
+  box-shadow: 0 1px 1px rgba(255,255,255,0.1);
 }
 
   #keyboard .key-container {

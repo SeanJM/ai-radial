@@ -185,6 +185,11 @@ function spinnerBind() {
 
 }
 
+function iconSetup() {
+  putOnCircle({'parent':$('#secondRing'),'child':$('.icon-container')});
+  putOnCircle({'parent':$('#outter-ring'),'child':$('.icon-container')});
+}
+
   /* --------------------- End Functions ---------------- */
 $(function(){
   centerRings();
@@ -192,8 +197,7 @@ $(function(){
   arrowKeyPos();
   spinnerBind();
   mainEventBind();
-
-  putOnCircle({'parent':$('#secondRing'),'child':$('.icon-container')});
+  iconSetup();
   
   $('.key-container').hover(function(){
     $(this).addClass('hover');
@@ -222,5 +226,4 @@ $(function(){
 
   /* Outter Wheel */
   
-  putOnCircle({'parent':$('#outter-ring'),'child':$('.icon-container')});
 });

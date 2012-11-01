@@ -7,8 +7,9 @@
   height          :83px;
   position        : absolute;
   border-radius   : 43px;
-  background-image: -webkit-radial-gradient(center, rgba(0,0,0,0.0) 61%, rgba(0,0,0,0.1) 69%);
-  background-image: -moz-radial-gradient(center, rgba(0,0,0,0.0) 61%, rgba(0,0,0,0.1) 69%);
+  background-image: -webkit-radial-gradient(center, rgba(0, 0, 0, 0.0) 66%, rgba(0, 0, 0, 0.15) 69%);
+  background-image: -moz-radial-gradient(center, rgba(0, 0, 0, 0.0) 66%, rgba(0, 0, 0, 0.15) 69%);
+  box-shadow: 0 1px 1px rgba(255,255,255,0.1);
 }
 #proton:hover {
   opacity: 1;
